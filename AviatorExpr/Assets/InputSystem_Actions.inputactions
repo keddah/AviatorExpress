@@ -267,7 +267,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard&Mouse",
                     "action": "StartEngine",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -278,7 +278,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Gamepad",
                     "action": "StartEngine",
                     "isComposite": false,
                     "isPartOfComposite": false
