@@ -19,11 +19,13 @@ public class HelicopterController : MonoBehaviour
     
     [Header("SpinAxis")]
     [SerializeField] 
-    private float maxSpinRate = 100;
+    private float maxSpinRate = 200;
     
-    [FormerlySerializedAs("spinAcceleration")] [SerializeField, Tooltip("The torque to add per frame.")] 
-    private float spinDeceleration = 2;
-    private float spinAcceleration = .05f;
+    [SerializeField, Tooltip("The torque to add per frame.")] 
+    private float spinDeceleration = 1.2f;
+    
+    [SerializeField, Tooltip("The torque to add per frame.")] 
+    private float spinAcceleration = 1.02f;
     
     private float currentSpinRate = 0;
     private float mainBladeSpeed = 0;
@@ -39,14 +41,33 @@ public class HelicopterController : MonoBehaviour
     private Rigidbody heliBody;
 
 
+    
+    
+    
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         heliBody = helicopter.GetComponent<Rigidbody>();
         heliBody.centerOfMass = centerMass.transform.localPosition;
+        print(heliBody.centerOfMass);
         
         tailBladeBody = tailBlades.GetComponent<Rigidbody>();
         mainBladeBody = mainBlades.GetComponent<Rigidbody>();
+    }
+    
+    private void FixedUpdate()
+    {
+        SpinBlades();
+        Lift();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        mainBladeSpeed = mainBladeBody.angularVelocity.magnitude * .001f;
+        altitude = helicopter.transform.position.y; 
     }
 
     private void Lift()
@@ -66,36 +87,25 @@ public class HelicopterController : MonoBehaviour
     {
         if (!engineOn)
         {
-            currentSpinRate = Math.Max(currentSpinRate - spinDeceleration, 0);
+            currentSpinRate -= currentSpinRate * spinDeceleration;
+            currentSpinRate = Math.Max(0, currentSpinRate);
+            
             tailBladeBody.AddRelativeTorque(tailSpinAxis * currentSpinRate); 
             mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
             print(currentSpinRate);
             return;
         }
 
-        currentSpinRate = Math.Min(currentSpinRate + spinAcceleration, maxSpinRate);
+        currentSpinRate = Math.Min(currentSpinRate * spinAcceleration, maxSpinRate);
         tailBladeBody.AddRelativeTorque(tailSpinAxis * currentSpinRate); 
         mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
         print(currentSpinRate);
     }
     
-    private void FixedUpdate()
-    {
-        SpinBlades();
-        Lift();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        mainBladeSpeed = mainBladeBody.angularVelocity.magnitude;
-        altitude = helicopter.transform.position.y; 
-    }
-    
     public void OnStartEngine()
     {
         engineOn = !engineOn;
-        print(engineOn);
+        if (engineOn && currentSpinRate <= 0) currentSpinRate += 1f;
     }
     
     public void OnThrottleUp()

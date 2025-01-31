@@ -507,6 +507,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 665482112613956395, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: m_Name
+      value: FreeLook Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 1520919211888021023, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.00000168707
@@ -535,7 +539,47 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.6000003
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4256389235292441741, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: m_Name
+      value: cm
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403366655884834167, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: 'm_Rigs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403366655884834167, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: 'm_Rigs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403366655884834167, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: 'm_Rigs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599194454929041986, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[0].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599194454929041986, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[1].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599194454929041986, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[2].Owner
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4681126272853642019, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 158768858180905152, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 7541944378360355693, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 9016425747071457811, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 4959850180137142356, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 5403366655884834167, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 8858998805599756267, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 513453240200394366, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 2766432180307552967, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 5360823757794331688, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 4461029172627331281, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
+    - {fileID: 5901331565710648544, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
