@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class HelicopterController : MonoBehaviour
@@ -16,25 +17,49 @@ public class HelicopterController : MonoBehaviour
     [SerializeField] private float mainBladeRadius = 22.5f;
     [SerializeField] private float tailBladeRadius = 5f;
     
+    [FormerlySerializedAs("maxAccelerationSpinRate")]
+    [FormerlySerializedAs("maxSpinRate")]
     [FormerlySerializedAs("spinRate")]
     [Space]
     
-    [Header("SpinAxis")]
+    [Header("Spin Rate")]
     [SerializeField] 
-    private float maxSpinRate = 200;
+    private float maxMainAccelSpinRate = 60;
     
-    [SerializeField, Tooltip("The torque to add per frame.")] 
+    [FormerlySerializedAs("maxHoverSpinRate")] [SerializeField] 
+    private float maxMainHoverSpinRate = 30;
+    
+    [FormerlySerializedAs("maxDecelerationSpinRate")] [SerializeField] 
+    private float maxMainDecelSpinRate = 5;
+    
+    [Header("Spin Rate")]
+    [SerializeField] 
+    private float maxTailAccelSpinRate = 60;
+    
+    [SerializeField] 
+    private float maxTailHoverSpinRate = 20;
+    
+    private float maxMainSpinRate;
+    private float maxTailSpinRate;
+    
+    [SerializeField, Tooltip("The torque to multiplied per frame.")] 
     private float spinDeceleration = 1.2f;
     
-    [SerializeField, Tooltip("The torque to add per frame.")] 
+    [SerializeField, Tooltip("The torque to be multiplied per frame.")] 
     private float spinAcceleration = 1.02f;
     
-    private float currentSpinRate = 0;
+    private float currentMainSpinRate = 0;
+    private float currentTailSpinRate = 0;
     private float mainBladeSpeed = 0;
     private float tailBladeSpeed = 0;
+    
+    [Header("SpinAxis")]
     [SerializeField] private Vector3 mainSpinAxis = new Vector3(0, 1, 0);
     [SerializeField] private Vector3 tailSpinAxis = new Vector3(0,0, 1);
 
+    private const float mainBladePowerScaling = .0049075f;
+    private const float tailBladePowerScaling = .001f;
+    
     // In meters
     private float altitude = 0; 
     
@@ -45,11 +70,16 @@ public class HelicopterController : MonoBehaviour
 
     private float totalMass;
 
-    
-    
-    
-    
-    
+    private InputController inputManager;
+
+
+    private void Awake()
+    {
+        inputManager = GetComponent<InputController>();
+        maxMainSpinRate = maxTailHoverSpinRate;
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,12 +89,14 @@ public class HelicopterController : MonoBehaviour
         tailBladeBody = tailBlades.GetComponent<Rigidbody>();
         mainBladeBody = mainBlades.GetComponent<Rigidbody>();
 
+        mainBladeBody.maxAngularVelocity = 300;
+        tailBladeBody.maxAngularVelocity = 100;
+        
         // Calculate mass
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
         {
             totalMass += rb.mass;
         }
-        OnStartEngine();
     }
     
     private void FixedUpdate()
@@ -76,65 +108,90 @@ public class HelicopterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         mainBladeSpeed = mainBladeBody.angularVelocity.magnitude;
         tailBladeSpeed = tailBladeBody.angularVelocity.magnitude;
-        altitude = helicopter.transform.position.y; 
+        altitude = helicopter.transform.position.y;
+    
+        ThrottleControl();
+        TailSteering();
     }
 
+    private void TailSteering()
+    {
+        float multiplier = inputManager.moveInput.x < 0 ? inputManager.moveInput.x - 1 : inputManager.moveInput.x + 1; 
+        maxTailSpinRate = maxTailAccelSpinRate * multiplier;
+        print(maxTailSpinRate);
+        // else if (inputManager.throttleDownPressed) maxMainSpinRate = maxTailDecelSpinRate;
+        // else maxMainSpinRate = maxTailHoverSpinRate;
+    }
+    
+    private void ThrottleControl()
+    {
+        if (inputManager.throttleUpPressed) maxMainSpinRate = maxMainAccelSpinRate;
+        else if (inputManager.throttleDownPressed) maxMainSpinRate = maxMainDecelSpinRate;
+        else maxMainSpinRate = maxMainHoverSpinRate;
+        
+        // print("max: " + maxSpinRate);
+        // print("current: " + mainBladeSpeed);
+    }
+    
     private void Lift()
     {
         // Hovering
         // Thrust = ½ × Air Density × ( Rotor Radius × Rotor Angular Velocity)² × π × Rotor Radius² 
         double mainThrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(mainBladeRadius) * Mathf.Pow(mainBladeSpeed, 2);
-        heliBody.AddForceAtPosition(mainBladeBody.transform.up * (float)(mainThrust * .0049075f), mainBlades.transform.position);
+        heliBody.AddForceAtPosition(mainBladeBody.transform.up * (float)(mainThrust * mainBladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
         double tailThrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2);
-        heliBody.AddForceAtPosition(tailBladeBody.transform.forward * (float)(tailThrust * Mathf.Pow(.0049075f, 2)), tailBladeBody.transform.position);
+        heliBody.AddForceAtPosition(tailBladeBody.transform.forward * (float)(tailThrust * Mathf.Pow(tailBladePowerScaling, 2)), tailBladeBody.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
     }
     
     private void SpinBlades()
     {
+        // Decelerate the blades whenever the engine is off
         if (!engineOn)
         {
-            currentSpinRate -= currentSpinRate * spinDeceleration;
-            currentSpinRate = Math.Max(0, currentSpinRate);
+            // Main Blade
+            currentMainSpinRate -= currentMainSpinRate * spinDeceleration;
+            currentMainSpinRate = Math.Max(0, currentMainSpinRate);
+
+            // Tail blade
+            currentTailSpinRate -= currentTailSpinRate * spinDeceleration;
+            currentTailSpinRate = Math.Max(0, currentTailSpinRate);
             
-            tailBladeBody.AddRelativeTorque(tailSpinAxis * currentSpinRate); 
-            mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
-            // print(currentSpinRate);
+            tailBladeBody.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
+            mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
             return;
         }
 
-        currentSpinRate = Math.Min(currentSpinRate * spinAcceleration, maxSpinRate);
-        tailBladeBody.AddRelativeTorque(tailSpinAxis * (5 * currentSpinRate)); 
-        mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
-        // print(currentSpinRate);
+        // Accelerate the blades.
+        // Clamp the max spin speed
+        currentMainSpinRate = Math.Min(currentMainSpinRate * spinAcceleration, maxMainSpinRate);
+        currentTailSpinRate = Math.Min(currentTailSpinRate * spinAcceleration, maxTailSpinRate);
+        
+        // Add torque... Clamp its angular velocity
+        mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
+        mainBladeBody.angularVelocity = Math.Min(mainBladeBody.angularVelocity.magnitude, maxMainSpinRate) * mainBladeBody.transform.up;
+        
+        tailBladeBody.AddRelativeTorque(tailSpinAxis * (5 * currentTailSpinRate)); 
+        tailBladeBody.angularVelocity = Math.Min(tailBladeBody.angularVelocity.magnitude, maxTailSpinRate) * tailBladeBody.transform.forward;
+        print(tailBladeBody.angularVelocity.magnitude);
     }
+    
+    
+    
     
     public void OnStartEngine()
     {
-        print("hola");
         engineOn = !engineOn;
-        if (engineOn && currentSpinRate < 1) currentSpinRate += 1f;
+        if (engineOn && currentMainSpinRate < 1) currentMainSpinRate += 1f;
     }
     
-    public void OnThrottleUp()
-    {
-       
-    }
-    
-    public void OnThrottleDown()
-    {
-       
-    }
-
-    static float GetBladeArea(float radius)
-    {
-        return (float)(Math.PI * (radius * radius));
-    }
+    static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
     
     static float GetAirDensity(float altitude)
     {

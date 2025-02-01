@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 557731377030159678}
   - component: {fileID: 7601307485761673088}
   - component: {fileID: 1165758442437778502}
+  - component: {fileID: 4374471677464834237}
   m_Layer: 0
   m_Name: Helicopter
   m_TagString: Untagged
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_NotificationBehavior: 1
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -173,11 +174,26 @@ MonoBehaviour:
   tailBlades: {fileID: 4020275113124490643}
   mainBladeRadius: 22.5
   tailBladeRadius: 5
-  maxSpinRate: 450
+  maxAccelerationSpinRate: 60
+  maxHoverSpinRate: 48
+  maxDecelerationSpinRate: 40
   spinDeceleration: 1.2
   spinAcceleration: 1.02
   mainSpinAxis: {x: 0, y: 1, z: 0}
   tailSpinAxis: {x: 0, y: 0, z: 1}
+--- !u!114 &4374471677464834237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024884398816509677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a07f6ab0ca40ba48bb12423493a581d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonMapping: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &3787783684018754288
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,8 +484,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6744102, y: 0.6744102, z: 0.2125345, w: -0.2125345}
-  m_LocalPosition: {x: -0.0000017339536, y: -16.679033, z: 23.834656}
+  m_LocalRotation: {x: 0.69357127, y: 0.6950576, z: 0.12998067, w: -0.13769154}
+  m_LocalPosition: {x: 0.32803068, y: -10.978921, z: 27.420044}
   m_LocalScale: {x: 3.6363633, y: 3.6363637, z: 3.6363637}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -552,7 +568,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -145.01642
+    Value: -158.17896
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -562,7 +578,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -10
+    Value: -7.6507754
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
