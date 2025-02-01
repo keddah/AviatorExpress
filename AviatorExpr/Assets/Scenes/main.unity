@@ -493,8 +493,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657071922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19092655, y: 0.6237605, z: -0.16078642, w: 0.74068725}
-  m_LocalPosition: {x: -9.406533, y: 8.166559, z: -1.5992794}
+  m_LocalRotation: {x: 0.000000017086906, y: 0.9537601, z: 0.00000005421984, w: -0.3005691}
+  m_LocalPosition: {x: 3.3022342, y: 3.6149483, z: 6.357591}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -650,31 +650,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.551321
+      value: -0.0000013004652
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29.53467
+      value: -16.679033
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.099416
+      value: 23.834656
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.41005188
+      value: -0.21253444
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5760707
+      value: 0.6744102
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.3060598
+      value: 0.6744102
       objectReference: {fileID: 0}
     - target: {fileID: 2641883097041581860, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.63743824
+      value: 0.21253453
       objectReference: {fileID: 0}
     - target: {fileID: 2978199345303007507, guid: c843f7d12074a224c9a7e522195c7072, type: 3}
       propertyPath: m_TranslationOffset.x
