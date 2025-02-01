@@ -12,7 +12,9 @@ public class HelicopterController : MonoBehaviour
     [Header("Blade Objects")]
     [SerializeField] private GameObject mainBlades;
     [SerializeField] private GameObject tailBlades;
+    
     [SerializeField] private float mainBladeRadius = 22.5f;
+    [SerializeField] private float tailBladeRadius = 5f;
     
     [FormerlySerializedAs("spinRate")]
     [Space]
@@ -40,6 +42,7 @@ public class HelicopterController : MonoBehaviour
     private Rigidbody mainBladeBody;
     private Rigidbody heliBody;
 
+    private float totalMass;
 
     
     
@@ -51,10 +54,15 @@ public class HelicopterController : MonoBehaviour
     {
         heliBody = helicopter.GetComponent<Rigidbody>();
         heliBody.centerOfMass = centerMass.transform.localPosition;
-        print(heliBody.centerOfMass);
         
         tailBladeBody = tailBlades.GetComponent<Rigidbody>();
         mainBladeBody = mainBlades.GetComponent<Rigidbody>();
+
+        // Calculate mass
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            totalMass += rb.mass;
+        }
     }
     
     private void FixedUpdate()
@@ -66,7 +74,7 @@ public class HelicopterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mainBladeSpeed = mainBladeBody.angularVelocity.magnitude * .001f;
+        mainBladeSpeed = mainBladeBody.angularVelocity.magnitude;
         altitude = helicopter.transform.position.y; 
     }
 
@@ -77,9 +85,13 @@ public class HelicopterController : MonoBehaviour
         // float thrust = 2 * GetAirDensity(altitude) * GetBladeArea(mainBladeRadius) * 
         
         // Thrust = ½ × Air Density × ( Rotor Radius × Rotor Angular Velocity)² × π × Rotor Radius² 
-        double thrust = .5f * GetAirDensity(altitude) * Math.Pow(mainBladeRadius * mainBladeSpeed, 2) * Math.PI * mainBladeRadius * mainBladeRadius;
-        heliBody.AddForce(mainBladeBody.transform.up * (float)(thrust));
+        // double thrust = .5f * GetAirDensity(altitude) * Math.Pow(mainBladeRadius * mainBladeSpeed, 2) * Math.PI * mainBladeRadius * mainBladeRadius;
         
+//        float thrust = massInKg * Mathf.Pow(distanceInMeters, 4) / Mathf.Pow(timeInSeconds, 2);
+        double thrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(mainBladeRadius) * Mathf.Pow(mainBladeSpeed, 2);
+        heliBody.AddForceAtPosition(mainBladeBody.transform.up * (float)(thrust * .0049f), mainBlades.transform.position);
+        print(thrust);
+
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
     }
     
@@ -92,14 +104,14 @@ public class HelicopterController : MonoBehaviour
             
             tailBladeBody.AddRelativeTorque(tailSpinAxis * currentSpinRate); 
             mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
-            print(currentSpinRate);
+            // print(currentSpinRate);
             return;
         }
 
         currentSpinRate = Math.Min(currentSpinRate * spinAcceleration, maxSpinRate);
         tailBladeBody.AddRelativeTorque(tailSpinAxis * currentSpinRate); 
         mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentSpinRate));
-        print(currentSpinRate);
+        // print(currentSpinRate);
     }
     
     public void OnStartEngine()

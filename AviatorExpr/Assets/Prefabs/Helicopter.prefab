@@ -25,7 +25,38 @@ Transform:
   m_GameObject: {fileID: 1168461157210645567}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -5.04, y: 0, z: 0.71614516}
+  m_LocalPosition: {x: -5.32, y: -0.68, z: 0.21}
+  m_LocalScale: {x: 3.6363628, y: 3.6363633, z: 3.6363633}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6724230675186798714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1516021517074914310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667589509097741766}
+  m_Layer: 0
+  m_Name: centerMass (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667589509097741766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516021517074914310}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -5.0361767, y: -4.670906, z: 0.71614516}
   m_LocalScale: {x: 3.6363628, y: 3.6363633, z: 3.6363633}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -172,7 +203,8 @@ MonoBehaviour:
   mainBlades: {fileID: 7566114758524279232}
   tailBlades: {fileID: 4020275113124490643}
   mainBladeRadius: 22.5
-  maxSpinRate: 3000
+  tailBladeRadius: 5
+  maxSpinRate: 450
   spinDeceleration: 1.2
   spinAcceleration: 1.02
   mainSpinAxis: {x: 0, y: 1, z: 0}
@@ -467,8 +499,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6723426, y: 0.6607949, z: -0.25169444, w: 0.21898733}
-  m_LocalPosition: {x: 1.4735968, y: 18.844427, z: 23.360407}
+  m_LocalRotation: {x: 0.5760707, y: 0.30605978, z: -0.6374382, w: 0.41005185}
+  m_LocalPosition: {x: 16.551321, y: 29.53467, z: -5.099416}
   m_LocalScale: {x: 3.6363633, y: 3.6363637, z: 3.6363637}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -551,7 +583,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: 141.1075
+    Value: 80.20397
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -561,7 +593,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -1.1335164
+    Value: 38.02538
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -1162,8 +1194,9 @@ Transform:
   - {fileID: 3474786632767886447}
   - {fileID: 8090449791160896837}
   - {fileID: 2846111336828719673}
-  - {fileID: 2450553719448491551}
   - {fileID: 2641883097041581860}
+  - {fileID: 2450553719448491551}
+  - {fileID: 667589509097741766}
   m_Father: {fileID: 557731377030159678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5141032799850172334
