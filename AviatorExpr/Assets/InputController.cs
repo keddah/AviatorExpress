@@ -40,6 +40,11 @@ public class InputController : MonoBehaviour
         moveAction.Disable();
     }
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -90,7 +90,7 @@ public class HelicopterController : MonoBehaviour
         mainBladeBody = mainBlades.GetComponent<Rigidbody>();
 
         mainBladeBody.maxAngularVelocity = 300;
-        tailBladeBody.maxAngularVelocity = 100;
+        tailBladeBody.maxAngularVelocity = 1000;
         
         // Calculate mass
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
@@ -108,7 +108,6 @@ public class HelicopterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         mainBladeSpeed = mainBladeBody.angularVelocity.magnitude;
         tailBladeSpeed = tailBladeBody.angularVelocity.magnitude;
         altitude = helicopter.transform.position.y;
@@ -119,9 +118,19 @@ public class HelicopterController : MonoBehaviour
 
     private void TailSteering()
     {
-        float multiplier = inputManager.moveInput.x < 0 ? inputManager.moveInput.x - 1 : inputManager.moveInput.x + 1; 
+        if (inputManager.moveInput.magnitude == 0)
+        {
+            maxTailSpinRate = maxTailHoverSpinRate;
+            return;
+        }
+
+        float xValue = inputManager.moveInput.x;
+        bool isDecimal = xValue % 1 != 0;
+
+        float multiplier = isDecimal ? (xValue < 0 ? xValue - 1 : xValue + 1) : xValue;  
+        // print(multiplier);
         maxTailSpinRate = maxTailAccelSpinRate * multiplier;
-        print(maxTailSpinRate);
+        // print(maxTailSpinRate);
         // else if (inputManager.throttleDownPressed) maxMainSpinRate = maxTailDecelSpinRate;
         // else maxMainSpinRate = maxTailHoverSpinRate;
     }
@@ -177,8 +186,8 @@ public class HelicopterController : MonoBehaviour
         mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
         mainBladeBody.angularVelocity = Math.Min(mainBladeBody.angularVelocity.magnitude, maxMainSpinRate) * mainBladeBody.transform.up;
         
-        tailBladeBody.AddRelativeTorque(tailSpinAxis * (5 * currentTailSpinRate)); 
-        tailBladeBody.angularVelocity = Math.Min(tailBladeBody.angularVelocity.magnitude, maxTailSpinRate) * tailBladeBody.transform.forward;
+        tailBladeBody.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
+        tailBladeBody.angularVelocity = Math.Clamp(tailBladeBody.angularVelocity.magnitude, -maxTailSpinRate, maxTailSpinRate) * tailBladeBody.transform.forward;
         print(tailBladeBody.angularVelocity.magnitude);
     }
     
