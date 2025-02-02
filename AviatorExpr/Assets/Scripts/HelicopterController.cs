@@ -74,8 +74,12 @@ public class HelicopterController : MonoBehaviour
 
     private InputController inputManager;
 
+    [Header("Gyro Control")]
     [SerializeField]
     private float gyroPower = 200;
+    
+    [SerializeField]
+    private float gyroAssistStrength = .2f;
 
     private void Awake()
     {
@@ -123,6 +127,17 @@ public class HelicopterController : MonoBehaviour
         TailSteering();
     }
 
+    private void Stabiliser()
+    {
+        
+    }
+    
+    private void GyroAssist()
+    {
+        // Constantly fight against the angular velocity to try to stabilise
+        heliBody.angularVelocity = Vector3.Lerp(heliBody.angularVelocity, Vector3.zero, Time.deltaTime * gyroAssistStrength);
+    }
+    
     private void GyroControl()
     {
         Vector2 input = inputManager.moveInput;
@@ -131,6 +146,8 @@ public class HelicopterController : MonoBehaviour
         velocityToAdd.x = input.x * gyroPower;
         velocityToAdd.z = -input.y * gyroPower;
         heliBody.AddRelativeTorque(velocityToAdd);
+        
+        GyroAssist();
     }
     
     private void TailSteering()
@@ -161,7 +178,7 @@ public class HelicopterController : MonoBehaviour
         heliBody.AddForceAtPosition(mainBladeRb.transform.up * (float)(mainThrust * bladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
-        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? -1 : 1);
+        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2));
         heliBody.AddForceAtPosition(-tailBladeRb.transform.forward * (float)(tailThrust * bladePowerScaling), tailBladeRb.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
