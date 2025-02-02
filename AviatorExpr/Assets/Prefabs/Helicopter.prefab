@@ -177,14 +177,16 @@ MonoBehaviour:
   maxMainAccelSpinRate: 150
   maxMainHoverSpinRate: 139
   maxMainDecelSpinRate: 128
-  maxTailAccelSpinRate: 250
+  maxTailAccelSpinRate: 400
   maxTailHoverSpinRate: 20
   spinDeceleration: 1.2
   spinAcceleration: 1.02
+  copterUpAxis: {x: 1, y: 0, z: 0}
   mainSpinAxis: {x: 0, y: 1, z: 0}
   tailSpinAxis: {x: 0, y: 0, z: 1}
   gyroPower: 150
-  gyroAssistStrength: 1
+  gyroAssistStrength: 0.75
+  stabilisationStrength: 80
 --- !u!114 &4374471677464834237
 MonoBehaviour:
   m_ObjectHideFlags: 0

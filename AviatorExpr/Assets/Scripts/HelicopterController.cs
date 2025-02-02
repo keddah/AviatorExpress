@@ -54,7 +54,8 @@ public class HelicopterController : MonoBehaviour
     private float mainBladeSpeed = 0;
     private float tailBladeSpeed = 0;
     
-    [Header("SpinAxis")]
+    [Header("Axis")]
+    [SerializeField] private Vector3 copterUpAxis = new Vector3(1, 0, 0);
     [SerializeField] private Vector3 mainSpinAxis = new Vector3(0, 1, 0);
     [SerializeField] private Vector3 tailSpinAxis = new Vector3(0,0, 1);
 
@@ -80,6 +81,9 @@ public class HelicopterController : MonoBehaviour
     
     [SerializeField]
     private float gyroAssistStrength = .2f;
+    
+    [SerializeField]
+    private float stabilisationStrength = 2000;
 
     private void Awake()
     {
@@ -129,13 +133,21 @@ public class HelicopterController : MonoBehaviour
 
     private void Stabiliser()
     {
+        Vector3 localUp = new();
+        if (copterUpAxis == Vector3.right) localUp = heliBody.transform.right;
+        else if (copterUpAxis == Vector3.up) localUp = heliBody.transform.up;
+        else if (copterUpAxis == Vector3.forward) localUp = heliBody.transform.forward;
         
+        Vector3 correctionVector = Vector3.Cross(localUp,Vector3.up);
+        heliBody.AddTorque(correctionVector * stabilisationStrength);
     }
     
     private void GyroAssist()
     {
         // Constantly fight against the angular velocity to try to stabilise
         heliBody.angularVelocity = Vector3.Lerp(heliBody.angularVelocity, Vector3.zero, Time.deltaTime * gyroAssistStrength);
+        
+        Stabiliser();
     }
     
     private void GyroControl()
@@ -178,7 +190,7 @@ public class HelicopterController : MonoBehaviour
         heliBody.AddForceAtPosition(mainBladeRb.transform.up * (float)(mainThrust * bladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
-        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2));
+        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? 1 : -1);
         heliBody.AddForceAtPosition(-tailBladeRb.transform.forward * (float)(tailThrust * bladePowerScaling), tailBladeRb.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
