@@ -26,10 +26,10 @@ public class HelicopterController : MonoBehaviour
     [SerializeField] 
     private float maxMainAccelSpinRate = 60;
     
-    [FormerlySerializedAs("maxHoverSpinRate")] [SerializeField] 
+    [SerializeField] 
     private float maxMainHoverSpinRate = 30;
     
-    [FormerlySerializedAs("maxDecelerationSpinRate")] [SerializeField] 
+    [SerializeField] 
     private float maxMainDecelSpinRate = 5;
     
     [Header("Spin Rate")]
@@ -186,11 +186,11 @@ public class HelicopterController : MonoBehaviour
     {
         // Hovering
         // Thrust = ½ × Air Density × ( Rotor Radius × Rotor Angular Velocity)² × π × Rotor Radius² 
-        double mainThrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(mainBladeRadius) * Mathf.Pow(mainBladeSpeed, 2);
+        double mainThrust = 0.5f * AeroPhysics.GetAirDensity(altitude) * AeroPhysics.GetBladeArea(mainBladeRadius) * Mathf.Pow(mainBladeSpeed, 2);
         heliBody.AddForceAtPosition(mainBladeRb.transform.up * (float)(mainThrust * bladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
-        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? 1 : -1);
+        double tailThrust = (0.5f * AeroPhysics.GetAirDensity(altitude) * AeroPhysics.GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? 1 : -1);
         heliBody.AddForceAtPosition(-tailBladeRb.transform.forward * (float)(tailThrust * bladePowerScaling), tailBladeRb.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
@@ -238,9 +238,13 @@ public class HelicopterController : MonoBehaviour
         if (engineOn && currentTailSpinRate < 1) currentTailSpinRate += 1f;
     }
     
-    static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
+}
+
+class AeroPhysics
+{
+    public static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
     
-    static float GetAirDensity(float altitude)
+    public static float GetAirDensity(float altitude)
     {
         // Sea-level temperature (Kelvin)
         const float seaLvlTemp = 288.15f; 
