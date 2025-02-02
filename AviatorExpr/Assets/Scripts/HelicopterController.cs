@@ -41,6 +41,7 @@ public class HelicopterController : MonoBehaviour
     
     private float maxMainSpinRate;
     private float maxTailSpinRate;
+    private bool turningLeft;
     
     [SerializeField, Tooltip("The torque to multiplied per frame.")] 
     private float spinDeceleration = 1.2f;
@@ -57,8 +58,13 @@ public class HelicopterController : MonoBehaviour
     [SerializeField] private Vector3 mainSpinAxis = new Vector3(0, 1, 0);
     [SerializeField] private Vector3 tailSpinAxis = new Vector3(0,0, 1);
 
-    private const float mainBladePowerScaling = .0049075f;
-    private const float tailBladePowerScaling = .001f;
+    
+    [Header("Power")]
+    [SerializeField]
+    private const float mainBladePowerScaling = .01f;
+    
+    [SerializeField]
+    private const float tailBladePowerScaling = .01f;
     
     // In meters
     private float altitude = 0; 
@@ -89,8 +95,9 @@ public class HelicopterController : MonoBehaviour
         tailBladeBody = tailBlades.GetComponent<Rigidbody>();
         mainBladeBody = mainBlades.GetComponent<Rigidbody>();
 
-        mainBladeBody.maxAngularVelocity = 300;
-        tailBladeBody.maxAngularVelocity = 1000;
+        // Set the max angular velocity (wouldn't need to be that much bigger than the max acceleration spin rate)
+        mainBladeBody.maxAngularVelocity = maxMainAccelSpinRate + 50;
+        tailBladeBody.maxAngularVelocity = maxTailAccelSpinRate + 50;
         
         // Calculate mass
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
@@ -112,27 +119,19 @@ public class HelicopterController : MonoBehaviour
         tailBladeSpeed = tailBladeBody.angularVelocity.magnitude;
         altitude = helicopter.transform.position.y;
     
+        print(maxMainSpinRate);
         ThrottleControl();
         TailSteering();
     }
 
     private void TailSteering()
     {
-        if (inputManager.moveInput.magnitude == 0)
-        {
-            maxTailSpinRate = maxTailHoverSpinRate;
-            return;
-        }
-
-        float xValue = inputManager.moveInput.x;
-        bool isDecimal = xValue % 1 != 0;
-
-        float multiplier = isDecimal ? (xValue < 0 ? xValue - 1 : xValue + 1) : xValue;  
-        // print(multiplier);
-        maxTailSpinRate = maxTailAccelSpinRate * multiplier;
-        // print(maxTailSpinRate);
-        // else if (inputManager.throttleDownPressed) maxMainSpinRate = maxTailDecelSpinRate;
-        // else maxMainSpinRate = maxTailHoverSpinRate;
+        turningLeft = inputManager.leftPressed;
+        
+        // Same max speed
+        // Flip the direction in SpinBlades()
+        if (inputManager.rightPressed || turningLeft) maxTailSpinRate = maxTailAccelSpinRate;
+        else maxTailSpinRate = maxTailHoverSpinRate;
     }
     
     private void ThrottleControl()
@@ -153,8 +152,8 @@ public class HelicopterController : MonoBehaviour
         heliBody.AddForceAtPosition(mainBladeBody.transform.up * (float)(mainThrust * mainBladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
-        double tailThrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2);
-        heliBody.AddForceAtPosition(tailBladeBody.transform.forward * (float)(tailThrust * Mathf.Pow(tailBladePowerScaling, 2)), tailBladeBody.transform.position);
+        double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? -1 : 1);
+        heliBody.AddForceAtPosition(tailBladeBody.transform.forward * (float)(tailThrust * tailBladePowerScaling), tailBladeBody.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
     }
@@ -188,7 +187,7 @@ public class HelicopterController : MonoBehaviour
         
         tailBladeBody.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
         tailBladeBody.angularVelocity = Math.Clamp(tailBladeBody.angularVelocity.magnitude, -maxTailSpinRate, maxTailSpinRate) * tailBladeBody.transform.forward;
-        print(tailBladeBody.angularVelocity.magnitude);
+        // print(tailBladeBody.angularVelocity);
     }
     
     
@@ -198,6 +197,7 @@ public class HelicopterController : MonoBehaviour
     {
         engineOn = !engineOn;
         if (engineOn && currentMainSpinRate < 1) currentMainSpinRate += 1f;
+        if (engineOn && currentTailSpinRate < 1) currentTailSpinRate += 1f;
     }
     
     static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
