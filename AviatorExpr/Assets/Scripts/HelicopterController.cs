@@ -266,4 +266,16 @@ class AeroPhysics
         // Air density using Ideal Gas Law: ρ = P / (R * T)
         return pressureAtAltitude / (gasConstant * tempAtAltitude);;
     }
+
+    // Total wingspan (meters)
+    // root chord = Width of wing at the center of the plane
+    // tip chord = Width of the wing at the end of the wing
+    // Number of sections per wing
+    public static float FindWingAreaPerSection(float wingSpan = 14, float rootChord = 1.8f, float tipChord = 1.5f, float wingSectionCount = 2)
+    {
+        float totalWingArea = wingSpan * ((rootChord + tipChord) / 2);
+        
+        // Multiply by 2 since there are two wings
+        return   totalWingArea / (wingSectionCount * 2);
+    }
 }

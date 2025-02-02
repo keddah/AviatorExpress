@@ -66,6 +66,11 @@ public class PlaneController : MonoBehaviour
     private float propellerPowerScaling = 1f;    
     private float altitude;
 
+    [SerializeField] 
+    private float wingspan = 14;
+    
+    [SerializeField]
+    float liftCoefficient = 1.2f;
     
     private void Awake()
     {
@@ -111,6 +116,16 @@ public class PlaneController : MonoBehaviour
     private void FixedUpdate()
     {
         Thrust(true);
+
+        foreach (Rigidbody wingSection in flapRbs)
+        {
+            ApplyAerodynamicForces(wingSection.transform);
+        }
+        
+        foreach (Rigidbody wingSection in aileronRbs)
+        {
+            ApplyAerodynamicForces(wingSection.transform);
+        }
     }
 
     private void ThrottleControl()
@@ -153,6 +168,31 @@ public class PlaneController : MonoBehaviour
         // Thrust = ½ × Air Density × ( Rotor Radius × Rotor Angular Velocity)² × π × Rotor Radius² 
         double mainThrust = 0.5f * AeroPhysics.GetAirDensity(altitude) * AeroPhysics.GetBladeArea(propellerRadius) * Mathf.Pow(propellerSpeed, 2);
         planeRb.AddForceAtPosition((invert ? -GetPropellerForwardAxis() : GetPropellerForwardAxis()) * (float)(mainThrust * propellerPowerScaling), propellerRb.transform.position);
+    }
+    
+    void ApplyAerodynamicForces(Transform section)
+    {
+        Vector3 velocityAtPoint = planeRb.GetPointVelocity(section.position);
+        float speed = velocityAtPoint.magnitude;
+        Vector3 airflow = velocityAtPoint.normalized;
+
+        // Calculate angle of attack
+        float angleOfAttack = Vector3.Dot(section.forward, airflow);
+
+        float airDensity = AeroPhysics.GetAirDensity(altitude);
+        float windAreaPerSection = AeroPhysics.FindWingAreaPerSection();
+        
+        // Calculate lift force
+        float liftForce = liftCoefficient * 0.5f * airDensity * speed * speed * windAreaPerSection * Mathf.Clamp(angleOfAttack, -1f, 1f);
+        Vector3 liftDirection = Vector3.Cross(airflow, section.right).normalized;
+        
+        // Apply lift at the wing section position
+        planeRb.AddForceAtPosition(liftDirection * liftForce, section.position, ForceMode.Force);
+
+        // Calculate and apply drag force
+        float dragForce = planeRb.linearDamping * 0.5f * airDensity * speed * speed * windAreaPerSection;
+        Vector3 dragDirection = -airflow;
+        planeRb.AddForceAtPosition(dragDirection * dragForce, section.position, ForceMode.Force);
     }
 
     private Vector3 GetPropellerForwardAxis()
