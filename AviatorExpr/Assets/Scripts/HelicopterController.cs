@@ -60,24 +60,22 @@ public class HelicopterController : MonoBehaviour
 
     
     [Header("Power")]
-    [SerializeField]
-    private const float mainBladePowerScaling = .01f;
-    
-    [SerializeField]
-    private const float tailBladePowerScaling = .01f;
+    private const float bladePowerScaling = .01f;
     
     // In meters
     private float altitude = 0; 
     
     private bool engineOn;
-    private Rigidbody tailBladeBody;
-    private Rigidbody mainBladeBody;
+    private Rigidbody tailBladeRb;
+    private Rigidbody mainBladeRb;
     private Rigidbody heliBody;
 
     private float totalMass;
 
     private InputController inputManager;
 
+    [SerializeField]
+    private float gyroPower = 200;
 
     private void Awake()
     {
@@ -92,12 +90,12 @@ public class HelicopterController : MonoBehaviour
         heliBody = helicopter.GetComponent<Rigidbody>();
         heliBody.centerOfMass = centerMass.transform.localPosition;
         
-        tailBladeBody = tailBlades.GetComponent<Rigidbody>();
-        mainBladeBody = mainBlades.GetComponent<Rigidbody>();
+        tailBladeRb = tailBlades.GetComponent<Rigidbody>();
+        mainBladeRb = mainBlades.GetComponent<Rigidbody>();
 
         // Set the max angular velocity (wouldn't need to be that much bigger than the max acceleration spin rate)
-        mainBladeBody.maxAngularVelocity = maxMainAccelSpinRate + 50;
-        tailBladeBody.maxAngularVelocity = maxTailAccelSpinRate + 50;
+        mainBladeRb.maxAngularVelocity = maxMainAccelSpinRate + 50;
+        tailBladeRb.maxAngularVelocity = maxTailAccelSpinRate + 50;
         
         // Calculate mass
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
@@ -115,15 +113,26 @@ public class HelicopterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mainBladeSpeed = mainBladeBody.angularVelocity.magnitude;
-        tailBladeSpeed = tailBladeBody.angularVelocity.magnitude;
+        mainBladeSpeed = mainBladeRb.angularVelocity.magnitude;
+        tailBladeSpeed = tailBladeRb.angularVelocity.magnitude;
         altitude = helicopter.transform.position.y;
     
         print(maxMainSpinRate);
+        GyroControl();
         ThrottleControl();
         TailSteering();
     }
 
+    private void GyroControl()
+    {
+        Vector2 input = inputManager.moveInput;
+
+        Vector3 velocityToAdd = new();
+        velocityToAdd.x = input.x * gyroPower;
+        velocityToAdd.z = -input.y * gyroPower;
+        heliBody.AddRelativeTorque(velocityToAdd);
+    }
+    
     private void TailSteering()
     {
         turningLeft = inputManager.leftPressed;
@@ -149,11 +158,11 @@ public class HelicopterController : MonoBehaviour
         // Hovering
         // Thrust = ½ × Air Density × ( Rotor Radius × Rotor Angular Velocity)² × π × Rotor Radius² 
         double mainThrust = 0.5f * GetAirDensity(altitude) * GetBladeArea(mainBladeRadius) * Mathf.Pow(mainBladeSpeed, 2);
-        heliBody.AddForceAtPosition(mainBladeBody.transform.up * (float)(mainThrust * mainBladePowerScaling), mainBlades.transform.position);
+        heliBody.AddForceAtPosition(mainBladeRb.transform.up * (float)(mainThrust * bladePowerScaling), mainBlades.transform.position);
         
         // Tail stabilisation
         double tailThrust = (0.5f * GetAirDensity(altitude) * GetBladeArea(tailBladeRadius) * Mathf.Pow(tailBladeSpeed, 2)) * (turningLeft ? -1 : 1);
-        heliBody.AddForceAtPosition(tailBladeBody.transform.forward * (float)(tailThrust * tailBladePowerScaling), tailBladeBody.transform.position);
+        heliBody.AddForceAtPosition(-tailBladeRb.transform.forward * (float)(tailThrust * bladePowerScaling), tailBladeRb.transform.position);
 
         // Lift Equation: L = 0.5 * airDensity * velocity² * area * lift coefficient
     }
@@ -171,8 +180,8 @@ public class HelicopterController : MonoBehaviour
             currentTailSpinRate -= currentTailSpinRate * spinDeceleration;
             currentTailSpinRate = Math.Max(0, currentTailSpinRate);
             
-            tailBladeBody.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
-            mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
+            tailBladeRb.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
+            mainBladeRb.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
             return;
         }
 
@@ -182,11 +191,11 @@ public class HelicopterController : MonoBehaviour
         currentTailSpinRate = Math.Min(currentTailSpinRate * spinAcceleration, maxTailSpinRate);
         
         // Add torque... Clamp its angular velocity
-        mainBladeBody.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
-        mainBladeBody.angularVelocity = Math.Min(mainBladeBody.angularVelocity.magnitude, maxMainSpinRate) * mainBladeBody.transform.up;
+        mainBladeRb.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
+        mainBladeRb.angularVelocity = Math.Min(mainBladeRb.angularVelocity.magnitude, maxMainSpinRate) * mainBladeRb.transform.up;
         
-        tailBladeBody.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
-        tailBladeBody.angularVelocity = Math.Clamp(tailBladeBody.angularVelocity.magnitude, -maxTailSpinRate, maxTailSpinRate) * tailBladeBody.transform.forward;
+        tailBladeRb.AddRelativeTorque(tailSpinAxis * currentTailSpinRate); 
+        tailBladeRb.angularVelocity = Math.Clamp(tailBladeRb.angularVelocity.magnitude, -maxTailSpinRate, maxTailSpinRate) * tailBladeRb.transform.forward;
         // print(tailBladeBody.angularVelocity);
     }
     
