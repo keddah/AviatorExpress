@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1114216178900048319}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.041124344, y: -2.92, z: -0.374}
+  m_LocalPosition: {x: -0.041124344, y: -2.075, z: -0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1594,7 +1594,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7714678845008638639}
   serializedVersion: 4
-  m_Mass: 5.94
+  m_Mass: 8.13
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1681,8 +1681,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.50866467, y: -0.49118254, z: -0.49118254, w: 0.50866467}
-  m_LocalPosition: {x: 6.1500845, y: 0.21513063, z: 0.000000029802322}
+  m_LocalRotation: {x: 0.6833741, y: -0.18165873, z: -0.18165873, w: 0.6833741}
+  m_LocalPosition: {x: 3.0557747, y: 5.3415422, z: 0.00000047683716}
   m_LocalScale: {x: 0.7692306, y: 0.7692307, z: 0.7692308}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1765,7 +1765,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -87.996605
+    Value: -29.772894
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
