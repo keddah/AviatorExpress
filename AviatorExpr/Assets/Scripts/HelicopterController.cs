@@ -114,6 +114,7 @@ public class HelicopterController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        GyroControl();
         SpinBlades();
         Lift();
     }
@@ -125,8 +126,6 @@ public class HelicopterController : MonoBehaviour
         tailBladeSpeed = tailBladeRb.angularVelocity.magnitude;
         altitude = helicopter.transform.position.y;
     
-        print(maxMainSpinRate);
-        GyroControl();
         ThrottleControl();
         TailSteering();
     }
@@ -242,6 +241,11 @@ public class HelicopterController : MonoBehaviour
 
 class AeroPhysics
 {
+    public static bool QuatApproximately(Quaternion a, Quaternion b)
+    {
+        return Mathf.Approximately(a.x, b.x) && Mathf.Approximately(a.y, b.y) && Mathf.Approximately(a.z, b.z);
+    }
+    
     public static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
     
     public static float GetAirDensity(float altitude)

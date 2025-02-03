@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlaneController : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlaneController : MonoBehaviour
     [Header("Objects")] 
     [SerializeField] private GameObject plane;
 
+    [Space]
     [SerializeField] private GameObject rudder;
 
     [SerializeField] private GameObject elevator;
@@ -22,10 +24,12 @@ public class PlaneController : MonoBehaviour
     private Rigidbody planeRb;
 
     // left right
-    private List<Rigidbody> aeroParts;
+    private List<Rigidbody> aeroParts = new();
 
     private Rigidbody propellerRb;
+    private Rigidbody rudderRb;
 
+    private Vector3 defaultRudderDir;
 
     [SerializeField] 
     private float propellerRadius = 1;
@@ -58,13 +62,26 @@ public class PlaneController : MonoBehaviour
     private float propellerSpeed;
 
     private InputController inputManager;
+    private bool invertPitch = true;
 
+
+    [Header("Rudder")]
+    [SerializeField] 
+    private float maxRudderAngle = 30;
+
+    [SerializeField] 
+    private float rudderTurnSpeed = 20;
+    
+    
     [SerializeField]
     private float propellerPowerScaling = 1f;    
     private float altitude;
 
     [SerializeField, Tooltip("The forward axis for the plane parts (rudder, ailerons, etc...")] 
     private Vector3 chordlineAxis = new(0, 1, 0);
+
+    [SerializeField]
+    private bool flipChordlineAxis = true;
     
     [SerializeField] 
     private float wingspan = 14;
@@ -78,6 +95,7 @@ public class PlaneController : MonoBehaviour
         
         planeRb = plane.GetComponent<Rigidbody>();
         
+        rudderRb = rudder.GetComponent<Rigidbody>();
         propellerRb = propeller.GetComponent<Rigidbody>();
         propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
     }
@@ -88,9 +106,6 @@ public class PlaneController : MonoBehaviour
         planeRb.centerOfMass = centerMass.transform.localPosition;
         
         // Add plane parts to list.
-        aeroParts.Add(rudder.GetComponent<Rigidbody>());
-        aeroParts.Add(elevator.GetComponent<Rigidbody>());
-        
         foreach (GameObject flap in flaps)
         {
             aeroParts.Add(flap.GetComponent<Rigidbody>());
@@ -100,6 +115,14 @@ public class PlaneController : MonoBehaviour
         {
             aeroParts.Add(aileron.GetComponent<Rigidbody>());
         }
+        aeroParts.Add(rudder.GetComponent<Rigidbody>());
+        aeroParts.Add(elevator.GetComponent<Rigidbody>());
+
+        HingeJoint rudderHinge = rudder.GetComponent<HingeJoint>();
+        JointLimits hingeLimits = new JointLimits { min = -maxRudderAngle, max = maxRudderAngle };
+        rudderHinge.useLimits = true;
+        rudderHinge.limits = hingeLimits;
+        defaultRudderDir = GetAeroAxis(Vector3.forward, rudderRb.transform);
     }
 
     // Update is called once per frame
@@ -107,9 +130,9 @@ public class PlaneController : MonoBehaviour
     {
         altitude = planeRb.transform.position.y;
         
+        RudderControl();
         SpinPropeller();
         ThrottleControl();
-        print(propellerSpinRate);
     }
 
     private void FixedUpdate()
@@ -130,6 +153,28 @@ public class PlaneController : MonoBehaviour
         
         // print("max: " + maxSpinRate);
         // print("current: " + mainBladeSpeed);
+    }
+
+    private void RudderControl()
+    {
+        if (!inputManager.leftPressed && !inputManager.rightPressed)
+        {
+            // Remove angular velocity
+            rudderRb.angularVelocity = Vector3.zero;
+            
+            // Manually reset the rotation
+            rudderRb.transform.localRotation = 
+                Quaternion.Lerp(rudderRb.transform.localRotation, Quaternion.identity, Time.deltaTime * rudderTurnSpeed * 2);
+            return;
+        }
+
+        bool left = inputManager.leftPressed;
+        rudderRb.AddTorque(Vector3.right * (rudderTurnSpeed * (left? -1 : 1)));
+    }
+
+    private void GyroControl()
+    {
+        
     }
     
     private void SpinPropeller()
@@ -171,7 +216,7 @@ public class PlaneController : MonoBehaviour
         Vector3 airflow = velocityAtPoint.normalized;
 
         // Calculate angle of attack
-        float angleOfAttack = Vector3.Dot(GetAeroAxis(chordlineAxis, section), airflow);
+        float angleOfAttack = Vector3.Dot(GetAeroAxis(flipChordlineAxis? -chordlineAxis : chordlineAxis, section), airflow);
 
         float airDensity = AeroPhysics.GetAirDensity(altitude);
         float windAreaPerSection = AeroPhysics.FindWingAreaPerSection();
@@ -213,8 +258,7 @@ public class PlaneController : MonoBehaviour
             return localForward;
         }
 
-        print(Vector3.Cross(chordlineAxis, axisToGet));
-        return Vector3.Cross(chordlineAxis, axisToGet);
+        return Vector3.Cross(flipChordlineAxis? -chordlineAxis : chordlineAxis, axisToGet);
     }
     
     public void OnStartEngine()
@@ -222,7 +266,6 @@ public class PlaneController : MonoBehaviour
         engineOn = !engineOn;
         if (engineOn && propellerSpinRate < 1) propellerSpinRate += 1f;
 
-        print("hola");
     }
 
 }

@@ -1279,7 +1279,7 @@ GameObject:
   - component: {fileID: 2959780778773042988}
   - component: {fileID: 8947353470697894503}
   - component: {fileID: 9086629145820655467}
-  - component: {fileID: 5613197759066331130}
+  - component: {fileID: 5038410247835819565}
   m_Layer: 0
   m_Name: Rudder
   m_TagString: Untagged
@@ -1365,7 +1365,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 5
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.06
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1382,7 +1382,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!59 &5613197759066331130
+--- !u!59 &5038410247835819565
 HingeJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1393,7 +1393,7 @@ HingeJoint:
   m_ConnectedBody: {fileID: 3131715885771469599}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0.2, z: 1}
+  m_Axis: {x: 0, y: 0.5, z: 1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
@@ -1406,14 +1406,14 @@ HingeJoint:
     targetVelocity: 0
     force: 0
     freeSpin: 0
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
-    min: 0
-    max: 0
+    min: -10
+    max: 10
     bounciness: 0
-    bounceMinVelocity: 0.2
+    bounceMinVelocity: 0
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -1516,8 +1516,11 @@ MonoBehaviour:
   propellerSpinAxis: {x: 0, y: 1, z: 0}
   propellerSpinAccel: 1.02
   propellerSpinDecel: 0.9
+  maxRudderAngle: 15
+  rudderTurnSpeed: 10
   propellerPowerScaling: 0.1
-  chordlineAxis: {x: 0, y: 0, z: 0}
+  chordlineAxis: {x: 0, y: 1, z: 0}
+  flipChordlineAxis: 1
   wingspan: 14
   liftCoefficient: 1.2
 --- !u!114 &6626265020268962062
@@ -1716,8 +1719,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5005589, y: -0.5538453, z: -0.493623, w: 0.44613075}
-  m_LocalPosition: {x: 6.2440605, y: -0.63272816, z: 0.72405213}
+  m_LocalRotation: {x: 0.44296193, y: -0.5747905, z: -0.5449841, w: 0.41999167}
+  m_LocalPosition: {x: 6.139518, y: -1.6176329, z: 0.3382399}
   m_LocalScale: {x: 0.7692306, y: 0.7692307, z: 0.7692308}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1800,7 +1803,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -95.78619
+    Value: -104.76075
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1810,7 +1813,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 6.7851663
+    Value: -0.53084195
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
