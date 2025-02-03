@@ -20,12 +20,9 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private GameObject centerMass;
 
     private Rigidbody planeRb;
-    private Rigidbody rudderRb;
-    private Rigidbody elevatorRb;
 
     // left right
-    private List<Rigidbody> flapRbs;
-    private List<Rigidbody> aileronRbs;
+    private List<Rigidbody> aeroParts;
 
     private Rigidbody propellerRb;
 
@@ -66,6 +63,9 @@ public class PlaneController : MonoBehaviour
     private float propellerPowerScaling = 1f;    
     private float altitude;
 
+    [SerializeField, Tooltip("The forward axis for the plane parts (rudder, ailerons, etc...")] 
+    private Vector3 chordlineAxis = new(0, 1, 0);
+    
     [SerializeField] 
     private float wingspan = 14;
     
@@ -77,12 +77,8 @@ public class PlaneController : MonoBehaviour
         inputManager = GetComponent<InputController>();
         
         planeRb = plane.GetComponent<Rigidbody>();
-                                                       
-        rudderRb = rudder.GetComponent<Rigidbody>();
-        elevatorRb = elevator.GetComponent<Rigidbody>();
         
         propellerRb = propeller.GetComponent<Rigidbody>();
-        
         propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
     }
 
@@ -91,16 +87,19 @@ public class PlaneController : MonoBehaviour
     {
         planeRb.centerOfMass = centerMass.transform.localPosition;
         
+        // Add plane parts to list.
+        aeroParts.Add(rudder.GetComponent<Rigidbody>());
+        aeroParts.Add(elevator.GetComponent<Rigidbody>());
+        
         foreach (GameObject flap in flaps)
         {
-            flapRbs.Add(flap.GetComponent<Rigidbody>());
+            aeroParts.Add(flap.GetComponent<Rigidbody>());
         }
         
         foreach (GameObject aileron in ailerons)
         {
-            aileronRbs.Add(aileron.GetComponent<Rigidbody>());
+            aeroParts.Add(aileron.GetComponent<Rigidbody>());
         }
-        
     }
 
     // Update is called once per frame
@@ -117,12 +116,7 @@ public class PlaneController : MonoBehaviour
     {
         Thrust(true);
 
-        foreach (Rigidbody wingSection in flapRbs)
-        {
-            ApplyAerodynamicForces(wingSection.transform);
-        }
-        
-        foreach (Rigidbody wingSection in aileronRbs)
+        foreach (Rigidbody wingSection in aeroParts)
         {
             ApplyAerodynamicForces(wingSection.transform);
         }
@@ -177,14 +171,14 @@ public class PlaneController : MonoBehaviour
         Vector3 airflow = velocityAtPoint.normalized;
 
         // Calculate angle of attack
-        float angleOfAttack = Vector3.Dot(section.forward, airflow);
+        float angleOfAttack = Vector3.Dot(GetAeroAxis(chordlineAxis, section), airflow);
 
         float airDensity = AeroPhysics.GetAirDensity(altitude);
         float windAreaPerSection = AeroPhysics.FindWingAreaPerSection();
         
         // Calculate lift force
         float liftForce = liftCoefficient * 0.5f * airDensity * speed * speed * windAreaPerSection * Mathf.Clamp(angleOfAttack, -1f, 1f);
-        Vector3 liftDirection = Vector3.Cross(airflow, section.right).normalized;
+        Vector3 liftDirection = Vector3.Cross(airflow, GetAeroAxis(Vector3.up, section)).normalized;
         
         // Apply lift at the wing section position
         planeRb.AddForceAtPosition(liftDirection * liftForce, section.position, ForceMode.Force);
@@ -204,7 +198,25 @@ public class PlaneController : MonoBehaviour
 
         return localForward;
     }
+    
+    // The specific axis for the parts involved in the aero physics 
+    private Vector3 GetAeroAxis(Vector3 axisToGet, Transform obj)
+    {
+        if (axisToGet == Vector3.forward)
+        {
+            Vector3 localForward;
+            
+            if (chordlineAxis == Vector3.right) localForward = obj.right;
+            else if (chordlineAxis == Vector3.up) localForward = obj.up;
+            else localForward = obj.forward;
 
+            return localForward;
+        }
+
+        print(Vector3.Cross(chordlineAxis, axisToGet));
+        return Vector3.Cross(chordlineAxis, axisToGet);
+    }
+    
     public void OnStartEngine()
     {
         engineOn = !engineOn;
