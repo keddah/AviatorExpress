@@ -249,7 +249,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 8
   m_Drag: 0
-  m_AngularDrag: 0.1
+  m_AngularDrag: 0.4
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1510,20 +1510,21 @@ MonoBehaviour:
   propeller: {fileID: 7714678845008638639}
   centerMass: {fileID: 1114216178900048319}
   propellerRadius: 1
-  maxPropellerAccelSpinRate: 330
-  maxPropellerIdleSpinRate: 260
-  maxPropellerDecelSpinRate: 160
+  maxPropellerAccelSpinRate: 500
+  maxPropellerIdleSpinRate: 280
   propellerSpinAxis: {x: 0, y: 1, z: 0}
-  propellerSpinAccel: 1.02
+  propellerSpinAccel: 1.001
   propellerSpinDecel: 0.9
-  maxFlapAngle: 60
+  maxAileronAngle: 75
+  maxFlapAngle: 80
+  minFlapAngle: -60
   maxRudderAngle: 20
-  maxElevatorAngle: 20
-  rudderPower: 25
+  maxElevatorAngle: 45
+  rudderPower: 250
   rudderToNeutralSpeed: 10
-  aileronPower: 200
-  flapPower: 20
-  elevatorPower: 2000
+  aileronPower: 50
+  flapPower: 100
+  elevatorPower: 100
   aileronToNeutralSpeed: 10
   flapToNeutralSpeed: 10
   elevatorToNeutralSpeed: 10
@@ -1728,8 +1729,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.47732422, y: -0.52557325, z: -0.52131695, w: 0.47345868}
-  m_LocalPosition: {x: 6.1983914, y: -0.59778845, z: 0.050635695}
+  m_LocalRotation: {x: 0.48894992, y: -0.62568223, z: -0.47892952, w: 0.37426758}
+  m_LocalPosition: {x: 5.9743295, y: -1.4881406, z: 1.6653327}
   m_LocalScale: {x: 0.7692306, y: 0.7692307, z: 0.7692308}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1812,7 +1813,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -95.50871
+    Value: -103.98711
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1822,7 +1823,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -8.257453
+    Value: 18.85262
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -2042,7 +2043,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 14
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2196,7 +2197,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 6
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.4
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

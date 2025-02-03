@@ -133,13 +133,14 @@ public class PlaneController : MonoBehaviour
         
         planeRb.centerOfMass = centerMass.transform.localPosition;
         
-        // Add plane parts to list.
+        // Add flaps to its rigidbody list and aero parts list
         foreach (GameObject flap in flaps)
         {
             aeroParts.Add(flap.GetComponent<Rigidbody>());
             flapRbs.Add(flap.GetComponent<Rigidbody>());
         }
         
+        // Add ailerons to its rigidbody list and aero parts list
         for(int i = 0; i < ailerons.Length; i++)
         {
             aeroParts.Add(ailerons[i].GetComponent<Rigidbody>());
@@ -171,7 +172,7 @@ public class PlaneController : MonoBehaviour
         }
 
         // Limit how much the flaps are allowed to rotate
-        JointLimits flapLimits = new JointLimits { min = -minFlapAngle, max = maxFlapAngle };
+        JointLimits flapLimits = new JointLimits { min = minFlapAngle, max = maxFlapAngle };
         foreach (GameObject flap in flaps)
         {
             HingeJoint hinge = flap.GetComponent<HingeJoint>();
@@ -239,7 +240,7 @@ public class PlaneController : MonoBehaviour
         {
             // brake makes the flaps tip upwards
             // Otherwise it tips downwards to assist with takeoffs
-            flap.AddRelativeTorque(GetAeroAxis(Vector3.forward, flap.transform) * (brake ? -flapPower : flapPower));
+            flap.AddRelativeTorque(Vector3.right * (brake ? flapPower : -flapPower));
         }
     }
     
@@ -257,7 +258,7 @@ public class PlaneController : MonoBehaviour
         }
 
         bool left = inputManager.leftPressed;
-        rudderRb.AddRelativeTorque(GetAeroAxis(Vector3.right, rudderRb.transform) * (rudderPower * (left? -1 : 1)));
+        rudderRb.AddRelativeTorque(Vector3.forward * (rudderPower * (left? -1 : 1)));
     }
 
     private void RollControl()
@@ -284,8 +285,11 @@ public class PlaneController : MonoBehaviour
         Rigidbody rightAileron = aileronRbs[1];
 
         // Add opposing torque
-        leftAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * input.x));
-        rightAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * -input.x));
+        // leftAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * input.x));
+        // rightAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * -input.x));
+        
+        leftAileron.AddRelativeTorque(Vector3.right * (aileronPower * input.x));
+        rightAileron.AddRelativeTorque(Vector3.right * (aileronPower * -input.x));
     }
     
     private void PitchControl()
@@ -301,7 +305,7 @@ public class PlaneController : MonoBehaviour
             return;
         }
         
-        elevatorRb.AddRelativeTorque(GetAeroAxis(Vector3.forward, elevatorRb.transform) * (elevatorPower * input.y));
+        elevatorRb.AddRelativeTorque(Vector3.right * (elevatorPower * (invertPitch ? -input.y : input.y)));
     }
     
     private void SpinPropeller()
@@ -311,10 +315,9 @@ public class PlaneController : MonoBehaviour
         // Decelerate the blades whenever the engine is off
         if (!engineOn)
         {
-            // Main Blade
             propellerSpinRate -= propellerSpinRate * propellerSpinDecel;
             propellerSpinRate = Math.Max(0, propellerSpinRate);
-            propellerRb.AddRelativeTorque(propellerSpinAxis * (propellerSpinRate));
+            propellerRb.AddTorque(propellerRb.transform.up * (propellerSpinRate));
             return;
         }
 
@@ -323,7 +326,7 @@ public class PlaneController : MonoBehaviour
         propellerSpinRate = Math.Min(propellerSpinRate * propellerSpinAccel, maxPropellerSpinRate);
         
         // Add torque... Clamp its angular velocity
-        propellerRb.AddRelativeTorque(GetAeroAxis(Vector3.forward, propellerRb.transform) * (propellerSpinRate));
+        propellerRb.AddTorque(propellerRb.transform.up * (propellerSpinRate));
 
         propellerRb.angularVelocity = Math.Min(propellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * GetPropellerForwardAxis();
     }
