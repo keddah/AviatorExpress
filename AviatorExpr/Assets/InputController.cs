@@ -12,11 +12,16 @@ public class InputController : MonoBehaviour
     private InputAction moveAction;
     private InputAction leftAction;
     private InputAction rightAction;
+    private InputAction brakeAction;
+    private InputAction takeOffAction;
     
     public Vector2 moveInput { get; private set; }
 
     public bool throttleUpPressed { get; private set; }
     public bool throttleDownPressed { get; private set; }
+    
+    public bool brakePressed { get; private set; }
+    public bool takeOffPressed { get; private set; }
     
     public bool leftPressed { get; private set; }
     public bool rightPressed { get; private set; }
@@ -30,6 +35,9 @@ public class InputController : MonoBehaviour
         
         leftAction = buttonMapping.FindAction("TurnLeft");
         rightAction = buttonMapping.FindAction("TurnRight");
+        
+        brakeAction = buttonMapping.FindAction("Brake");
+        takeOffAction = buttonMapping.FindAction("TakeOff");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -44,6 +52,9 @@ public class InputController : MonoBehaviour
         
         leftAction.Enable();
         rightAction.Enable();
+        
+        brakeAction.Enable();
+        takeOffAction.Enable();
     }
 
     private void OnDisable()
@@ -57,6 +68,9 @@ public class InputController : MonoBehaviour
         
         leftAction.Disable();
         rightAction.Disable();
+
+        brakeAction.Disable();
+        takeOffAction.Disable();
     }
 
     private void Start()
@@ -74,5 +88,8 @@ public class InputController : MonoBehaviour
         
         leftPressed = leftAction.IsPressed();
         rightPressed = rightAction.IsPressed();
+
+        brakePressed = brakeAction.IsPressed();
+        takeOffPressed = takeOffAction.IsPressed();
     }
 }

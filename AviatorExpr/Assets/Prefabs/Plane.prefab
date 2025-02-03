@@ -249,7 +249,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 8
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -401,9 +401,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3218083064462210270}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 8
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.4
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1209,9 +1209,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606737342625424778}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 8
   m_Drag: 0
-  m_AngularDrag: 0.2
+  m_AngularDrag: 0.4
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1363,9 +1363,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5640716617277193019}
   serializedVersion: 4
-  m_Mass: 5
+  m_Mass: 6
   m_Drag: 0
-  m_AngularDrag: 0.06
+  m_AngularDrag: 0.3
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1510,14 +1510,23 @@ MonoBehaviour:
   propeller: {fileID: 7714678845008638639}
   centerMass: {fileID: 1114216178900048319}
   propellerRadius: 1
-  maxPropellerAccelSpinRate: 300
-  maxPropellerIdleSpinRate: 200
+  maxPropellerAccelSpinRate: 330
+  maxPropellerIdleSpinRate: 260
   maxPropellerDecelSpinRate: 160
   propellerSpinAxis: {x: 0, y: 1, z: 0}
   propellerSpinAccel: 1.02
   propellerSpinDecel: 0.9
-  maxRudderAngle: 15
-  rudderTurnSpeed: 10
+  maxFlapAngle: 60
+  maxRudderAngle: 20
+  maxElevatorAngle: 20
+  rudderPower: 25
+  rudderToNeutralSpeed: 10
+  aileronPower: 200
+  flapPower: 20
+  elevatorPower: 2000
+  aileronToNeutralSpeed: 10
+  flapToNeutralSpeed: 10
+  elevatorToNeutralSpeed: 10
   propellerPowerScaling: 0.1
   chordlineAxis: {x: 0, y: 1, z: 0}
   flipChordlineAxis: 1
@@ -1719,8 +1728,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.44296193, y: -0.5747905, z: -0.5449841, w: 0.41999167}
-  m_LocalPosition: {x: 6.139518, y: -1.6176329, z: 0.3382399}
+  m_LocalRotation: {x: 0.47732422, y: -0.52557325, z: -0.52131695, w: 0.47345868}
+  m_LocalPosition: {x: 6.1983914, y: -0.59778845, z: 0.050635695}
   m_LocalScale: {x: 0.7692306, y: 0.7692307, z: 0.7692308}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1803,7 +1812,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -104.76075
+    Value: -95.50871
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1813,7 +1822,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -0.53084195
+    Value: -8.257453
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -2031,7 +2040,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8741877598739876033}
   serializedVersion: 4
-  m_Mass: 12
+  m_Mass: 14
   m_Drag: 0
   m_AngularDrag: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2185,7 +2194,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8786437419089114769}
   serializedVersion: 4
-  m_Mass: 8
+  m_Mass: 6
   m_Drag: 0
   m_AngularDrag: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlaneController : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class PlaneController : MonoBehaviour
 
     [SerializeField] private GameObject elevator;
 
+    // left, right
     [SerializeField] private GameObject[] flaps;
-
     [SerializeField] private GameObject[] ailerons;
 
     [SerializeField] private GameObject propeller;
@@ -23,14 +23,17 @@ public class PlaneController : MonoBehaviour
 
     private Rigidbody planeRb;
 
-    // left right
     private List<Rigidbody> aeroParts = new();
 
     private Rigidbody propellerRb;
     private Rigidbody rudderRb;
-
-    private Vector3 defaultRudderDir;
-
+    private Rigidbody elevatorRb;
+    
+    // left, right
+    private List<Rigidbody> aileronRbs = new();
+    private List<Rigidbody> flapRbs = new();
+    private Quaternion[] aileronRotations = new Quaternion [2];
+    
     [SerializeField] 
     private float propellerRadius = 1;
 
@@ -44,9 +47,6 @@ public class PlaneController : MonoBehaviour
     
     [SerializeField] 
     private float maxPropellerIdleSpinRate = 210;
-    
-    [SerializeField] 
-    private float maxPropellerDecelSpinRate = 100;
     
     private float propellerSpinRate;
 
@@ -64,14 +64,44 @@ public class PlaneController : MonoBehaviour
     private InputController inputManager;
     private bool invertPitch = true;
 
-
+    [SerializeField] 
+    private float maxAileronAngle = 75;
+    
+    [SerializeField] 
+    private float maxFlapAngle = 80;
+    [SerializeField] 
+    private float minFlapAngle = -60;
+    
     [Header("Rudder")]
     [SerializeField] 
     private float maxRudderAngle = 30;
 
     [SerializeField] 
-    private float rudderTurnSpeed = 20;
+    private float maxElevatorAngle = 20;
     
+    [SerializeField] 
+    private float rudderPower = 50;
+  
+    [SerializeField] 
+    private float rudderToNeutralSpeed = 10;
+
+    [SerializeField] 
+    private float aileronPower = 20;
+    
+    [SerializeField] 
+    private float flapPower = 20;
+    
+    [SerializeField] 
+    private float elevatorPower = 300;
+    
+    [SerializeField] 
+    private float aileronToNeutralSpeed = 10;
+    
+    [SerializeField] 
+    private float flapToNeutralSpeed = 10;
+    
+    [SerializeField] 
+    private float elevatorToNeutralSpeed = 10;
     
     [SerializeField]
     private float propellerPowerScaling = 1f;    
@@ -96,33 +126,63 @@ public class PlaneController : MonoBehaviour
         planeRb = plane.GetComponent<Rigidbody>();
         
         rudderRb = rudder.GetComponent<Rigidbody>();
+        elevatorRb = elevator.GetComponent<Rigidbody>();
+        
         propellerRb = propeller.GetComponent<Rigidbody>();
         propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+        
         planeRb.centerOfMass = centerMass.transform.localPosition;
         
         // Add plane parts to list.
         foreach (GameObject flap in flaps)
         {
             aeroParts.Add(flap.GetComponent<Rigidbody>());
+            flapRbs.Add(flap.GetComponent<Rigidbody>());
         }
         
-        foreach (GameObject aileron in ailerons)
+        for(int i = 0; i < ailerons.Length; i++)
         {
-            aeroParts.Add(aileron.GetComponent<Rigidbody>());
+            aeroParts.Add(ailerons[i].GetComponent<Rigidbody>());
+            aileronRbs.Add(ailerons[i].GetComponent<Rigidbody>());
+            aileronRotations[i] = ailerons[i].transform.localRotation;
         }
         aeroParts.Add(rudder.GetComponent<Rigidbody>());
         aeroParts.Add(elevator.GetComponent<Rigidbody>());
-
+        
+        // Limit how much the elevator is allowed to rotate
+        HingeJoint elevatorHinge = elevator.GetComponent<HingeJoint>();
+        JointLimits elevatorHingeLimits = new JointLimits { min = -maxElevatorAngle, max = maxElevatorAngle };
+        elevatorHinge.useLimits = true;
+        elevatorHinge.limits = elevatorHingeLimits;
+        
+        // Limit how much the rudder is allowed to rotate
         HingeJoint rudderHinge = rudder.GetComponent<HingeJoint>();
-        JointLimits hingeLimits = new JointLimits { min = -maxRudderAngle, max = maxRudderAngle };
+        JointLimits rudderHingeLimits = new JointLimits { min = -maxRudderAngle, max = maxRudderAngle };
         rudderHinge.useLimits = true;
-        rudderHinge.limits = hingeLimits;
-        defaultRudderDir = GetAeroAxis(Vector3.forward, rudderRb.transform);
+        rudderHinge.limits = rudderHingeLimits;
+        
+        // Limit how much the ailerons are allowed to rotate
+        JointLimits aileronLimits = new JointLimits { min = -maxAileronAngle, max = maxAileronAngle };
+        foreach (GameObject aileron in ailerons)
+        {
+            HingeJoint hinge = aileron.GetComponent<HingeJoint>();
+            hinge.useLimits = true;
+            hinge.limits = aileronLimits;
+        }
+
+        // Limit how much the flaps are allowed to rotate
+        JointLimits flapLimits = new JointLimits { min = -minFlapAngle, max = maxFlapAngle };
+        foreach (GameObject flap in flaps)
+        {
+            HingeJoint hinge = flap.GetComponent<HingeJoint>();
+            hinge.useLimits = true;
+            hinge.limits = flapLimits;
+        }
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -130,9 +190,15 @@ public class PlaneController : MonoBehaviour
     {
         altitude = planeRb.transform.position.y;
         
-        RudderControl();
         SpinPropeller();
+        
         ThrottleControl();
+        YawControl();
+        RollControl();
+        PitchControl();
+        
+        // For braking/taking off
+        FlapControl();
     }
 
     private void FixedUpdate()
@@ -147,15 +213,37 @@ public class PlaneController : MonoBehaviour
 
     private void ThrottleControl()
     {
-        if (inputManager.throttleUpPressed) maxPropellerSpinRate = maxPropellerAccelSpinRate;
-        else if (inputManager.throttleDownPressed) maxPropellerSpinRate = maxPropellerDecelSpinRate;
-        else maxPropellerSpinRate = maxPropellerIdleSpinRate;
-        
-        // print("max: " + maxSpinRate);
-        // print("current: " + mainBladeSpeed);
+        maxPropellerSpinRate = inputManager.throttleUpPressed ? maxPropellerAccelSpinRate : maxPropellerIdleSpinRate;
     }
 
-    private void RudderControl()
+    private void FlapControl()
+    {
+        // Reset to neutral position when there's no input
+        if (!inputManager.throttleDownPressed && !inputManager.brakePressed && !inputManager.takeOffPressed)
+        {
+            // Remove angular velocity
+            foreach (Rigidbody flap in flapRbs)
+            {
+                flap.angularVelocity = Vector3.zero;
+                
+                // Manually reset the rotation
+                flap.transform.localRotation = 
+                    Quaternion.Lerp(flap.transform.localRotation, Quaternion.identity, Time.deltaTime * flapToNeutralSpeed);
+            }
+
+            return;
+        }
+
+        bool brake = inputManager.throttleDownPressed || inputManager.brakePressed;
+        foreach (Rigidbody flap in flapRbs)
+        {
+            // brake makes the flaps tip upwards
+            // Otherwise it tips downwards to assist with takeoffs
+            flap.AddRelativeTorque(GetAeroAxis(Vector3.forward, flap.transform) * (brake ? -flapPower : flapPower));
+        }
+    }
+    
+    private void YawControl()
     {
         if (!inputManager.leftPressed && !inputManager.rightPressed)
         {
@@ -164,17 +252,56 @@ public class PlaneController : MonoBehaviour
             
             // Manually reset the rotation
             rudderRb.transform.localRotation = 
-                Quaternion.Lerp(rudderRb.transform.localRotation, Quaternion.identity, Time.deltaTime * rudderTurnSpeed * 2);
+                Quaternion.Lerp(rudderRb.transform.localRotation, Quaternion.identity, Time.deltaTime * rudderToNeutralSpeed);
             return;
         }
 
         bool left = inputManager.leftPressed;
-        rudderRb.AddTorque(Vector3.right * (rudderTurnSpeed * (left? -1 : 1)));
+        rudderRb.AddRelativeTorque(GetAeroAxis(Vector3.right, rudderRb.transform) * (rudderPower * (left? -1 : 1)));
     }
 
-    private void GyroControl()
+    private void RollControl()
     {
+        Vector2 input = inputManager.moveInput;
         
+        // Reset to neutral position when there's no input
+        if (input == Vector2.zero)
+        {
+            // Remove angular velocity
+            for(int i = 0; i < aileronRbs.Count; i++)
+            {
+                aileronRbs[i].angularVelocity = Vector3.zero;
+                
+                // Manually reset the rotation
+                aileronRbs[i].transform.localRotation = 
+                    Quaternion.Lerp(aileronRbs[i].transform.localRotation, aileronRotations[i], Time.deltaTime * aileronToNeutralSpeed);
+            }
+            return;
+        }
+        
+        // Assign left and right ailerons
+        Rigidbody leftAileron = aileronRbs[0];
+        Rigidbody rightAileron = aileronRbs[1];
+
+        // Add opposing torque
+        leftAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * input.x));
+        rightAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * -input.x));
+    }
+    
+    private void PitchControl()
+    {
+        Vector2 input = inputManager.moveInput;
+        
+        // Reset to neutral position when there's no input
+        if (input == Vector2.zero)
+        {
+            elevatorRb.angularVelocity = Vector3.zero;
+            elevatorRb.transform.localRotation = 
+                    Quaternion.Lerp(elevatorRb.transform.localRotation, Quaternion.identity, Time.deltaTime * elevatorToNeutralSpeed);
+            return;
+        }
+        
+        elevatorRb.AddRelativeTorque(GetAeroAxis(Vector3.forward, elevatorRb.transform) * (elevatorPower * input.y));
     }
     
     private void SpinPropeller()
@@ -196,7 +323,7 @@ public class PlaneController : MonoBehaviour
         propellerSpinRate = Math.Min(propellerSpinRate * propellerSpinAccel, maxPropellerSpinRate);
         
         // Add torque... Clamp its angular velocity
-        propellerRb.AddRelativeTorque(propellerSpinAxis * (propellerSpinRate));
+        propellerRb.AddRelativeTorque(GetAeroAxis(Vector3.forward, propellerRb.transform) * (propellerSpinRate));
 
         propellerRb.angularVelocity = Math.Min(propellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * GetPropellerForwardAxis();
     }
