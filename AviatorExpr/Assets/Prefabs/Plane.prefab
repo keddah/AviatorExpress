@@ -516,8 +516,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -670,8 +670,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1220,8 +1220,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1446,8 +1446,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1974,13 +1974,13 @@ MonoBehaviour:
   maxRudderAngle: 20
   maxElevatorAngle: 45
   rudderPower: 250
-  rudderToNeutralSpeed: 10
   aileronPower: 50
   flapPower: 100
   elevatorPower: 100
-  aileronToNeutralSpeed: 10
-  flapToNeutralSpeed: 30
-  elevatorToNeutralSpeed: 30
+  rudderToNeutralForce: 3
+  aileronToNeutralForce: 3
+  flapToNeutralForce: 3
+  elevatorToNeutralForce: 3
   propellerPowerScaling: 0.1
   chordlineAxis: {x: 0, y: 1, z: 0}
   flipChordlineAxis: 1
@@ -2130,8 +2130,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -2536,8 +2536,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
-    damper: 0
+    spring: 1000
+    damper: 250
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -2754,8 +2754,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.47927868, y: -0.5291024, z: -0.5189797, w: 0.4701092}
-  m_LocalPosition: {x: 6.2619305, y: -0.620313, z: 0.12156258}
+  m_LocalRotation: {x: 0.4723122, y: 0.6439929, z: 0.4852971, w: 0.35592282}
+  m_LocalPosition: {x: -5.8782177, y: -1.851867, z: 1.767038}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2838,7 +2838,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -95.65731
+    Value: 107.48644
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2848,7 +2848,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -6.057367
+    Value: 19.901352
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
