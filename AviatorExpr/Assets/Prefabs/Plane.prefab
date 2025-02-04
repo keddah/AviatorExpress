@@ -870,7 +870,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 8894603024043010899}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Anchor: {x: 0, y: 0.002, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -1920,7 +1920,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 8347249550852847812}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Anchor: {x: 0, y: 0.002, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -2207,8 +2207,8 @@ MonoBehaviour:
   flapPower: 100
   elevatorPower: 100
   aileronToNeutralSpeed: 10
-  flapToNeutralSpeed: 10
-  elevatorToNeutralSpeed: 10
+  flapToNeutralSpeed: 30
+  elevatorToNeutralSpeed: 30
   propellerPowerScaling: 0.1
   chordlineAxis: {x: 0, y: 1, z: 0}
   flipChordlineAxis: 1
@@ -2639,7 +2639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.48195648, y: -0.5212998, z: -0.5171093, w: 0.4780822}
+  m_LocalRotation: {x: 0.48195645, y: -0.52129984, z: -0.5171093, w: 0.47808215}
   m_LocalPosition: {x: 6.207577, y: -0.48761892, z: 0.05025703}
   m_LocalScale: {x: 0.7692306, y: 0.7692307, z: 0.76923084}
   m_ConstrainProportionsScale: 0

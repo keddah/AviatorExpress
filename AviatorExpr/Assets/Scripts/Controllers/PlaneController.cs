@@ -35,7 +35,10 @@ public class PlaneController : MonoBehaviour
     // left, right
     private List<Rigidbody> aileronRbs = new();
     private List<Rigidbody> flapRbs = new();
+    
     private Quaternion[] aileronRotations = new Quaternion [2];
+    private Quaternion flapRestingRot;
+    private Quaternion elevatorRestingRot;
     
     [SerializeField] 
     private float propellerRadius = 1;
@@ -142,6 +145,7 @@ public class PlaneController : MonoBehaviour
             aeroParts.Add(flap.GetComponent<Rigidbody>());
             flapRbs.Add(flap.GetComponent<Rigidbody>());
         }
+        flapRestingRot = flaps[0].transform.localRotation;
         
         // Add ailerons to its rigidbody list and aero parts list
         for(int i = 0; i < ailerons.Length; i++)
@@ -152,6 +156,8 @@ public class PlaneController : MonoBehaviour
         }
         aeroParts.Add(rudder.GetComponent<Rigidbody>());
         aeroParts.Add(elevator.GetComponent<Rigidbody>());
+
+        elevatorRestingRot = elevator.transform.localRotation;
         
         // Limit how much the elevator is allowed to rotate
         HingeJoint elevatorHinge = elevator.GetComponent<HingeJoint>();
@@ -197,17 +203,17 @@ public class PlaneController : MonoBehaviour
         SpinPropeller();
         
         ThrottleControl();
+    }
+
+    private void FixedUpdate()
+    {
+        Thrust(true);
         YawControl();
         RollControl();
         PitchControl();
         
         // For braking/taking off
         FlapControl();
-    }
-
-    private void FixedUpdate()
-    {
-        Thrust(true);
 
         foreach (Rigidbody wingSection in aeroParts)
         {
@@ -229,12 +235,13 @@ public class PlaneController : MonoBehaviour
             foreach (Rigidbody flap in flapRbs)
             {
                 flap.angularVelocity = Vector3.zero;
-                
+
                 // Manually reset the rotation
                 flap.transform.localRotation = 
-                    Quaternion.Lerp(flap.transform.localRotation, Quaternion.identity, Time.deltaTime * flapToNeutralSpeed);
+                    Quaternion.Lerp(flap.transform.localRotation, flapRestingRot, Time.deltaTime * flapToNeutralSpeed);
+                
+                print(flap.transform.localRotation);
             }
-
             return;
         }
 
@@ -266,10 +273,10 @@ public class PlaneController : MonoBehaviour
 
     private void RollControl()
     {
-        Vector2 input = inputManager.moveInput;
+        float input = inputManager.moveInput.x;
         
         // Reset to neutral position when there's no input
-        if (input == Vector2.zero)
+        if (input == 0)
         {
             // Remove angular velocity
             for(int i = 0; i < aileronRbs.Count; i++)
@@ -291,8 +298,8 @@ public class PlaneController : MonoBehaviour
         // leftAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * input.x));
         // rightAileron.AddRelativeTorque(GetAeroAxis(Vector3.forward, leftAileron.transform) * (aileronPower * -input.x));
         
-        leftAileron.AddRelativeTorque(Vector3.right * (aileronPower * input.x));
-        rightAileron.AddRelativeTorque(Vector3.right * (aileronPower * -input.x));
+        leftAileron.AddRelativeTorque(Vector3.right * (aileronPower * input));
+        rightAileron.AddRelativeTorque(Vector3.right * (aileronPower * -input));
     }
     
     private void PitchControl()
@@ -304,7 +311,7 @@ public class PlaneController : MonoBehaviour
         {
             elevatorRb.angularVelocity = Vector3.zero;
             elevatorRb.transform.localRotation = 
-                    Quaternion.Lerp(elevatorRb.transform.localRotation, Quaternion.identity, Time.deltaTime * elevatorToNeutralSpeed);
+                    Quaternion.Lerp(elevatorRb.transform.localRotation, elevatorRestingRot, Time.deltaTime * elevatorToNeutralSpeed);
             return;
         }
         
