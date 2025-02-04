@@ -373,16 +373,15 @@ public class PlaneController : MonoBehaviour
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
         
         sectionBody.AddForce(liftForce * liftDirection);
-        print(planeRb.linearVelocity);
     }
 
     void ApplyWingSurfaceForces(Rigidbody sectionBody)
     {
         Vector3 velocity = sectionBody.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
-        print(speed);
         
         Vector3 airflow = -velocity.normalized;
+        print(airflow);
         Vector3 chordline = -sectionBody.transform.up;
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
@@ -398,9 +397,9 @@ public class PlaneController : MonoBehaviour
 
         float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.green);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
         
-        sectionBody.AddForce(liftForce * liftDirection * 10);
+        sectionBody.AddForce(liftDirection * ((liftForce) * 10000000000));
     }
 
     private void GetSectionDimensions(string section, ref float span, ref float chordLength)
