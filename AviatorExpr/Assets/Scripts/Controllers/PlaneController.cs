@@ -204,6 +204,7 @@ public class PlaneController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Time.timeScale = .5f;
     }
 
     // Update is called once per frame
@@ -250,8 +251,6 @@ public class PlaneController : MonoBehaviour
                 // Manually reset the rotation
                 flap.transform.localRotation = 
                     Quaternion.Lerp(flap.transform.localRotation, flapRestingRot, Time.deltaTime * flapToNeutralSpeed);
-                
-                print(flap.transform.localRotation);
             }
             return;
         }
@@ -362,30 +361,43 @@ public class PlaneController : MonoBehaviour
     
     void ApplyAerodynamicForces(Rigidbody sectionBody)
     {
-        Vector3 velocityAtPoint = sectionBody.GetPointVelocity(sectionBody.transform.position);
+        // Get the velocity and calculate airflow direction
+        Vector3 velocityAtPoint = planeRb.GetPointVelocity(sectionBody.transform.position);
         float speed = velocityAtPoint.magnitude;
-        Vector3 airflow = velocityAtPoint.normalized;
+        Vector3 airflow = -velocityAtPoint.normalized;  // Airflow is opposite to velocity
 
-        Vector3 chordline = sectionBody.transform.forward;
-        
-        // Calculate angle of attack
-        float angleOfAttack = Vector3.Dot(GetAeroAxis(flipChordlineAxis? -chordlineAxis : chordlineAxis, sectionBody.transform), airflow);
+        // Chordline: Use the local forward direction (nose direction of the plane)
+        Vector3 chordline = sectionBody.transform.forward;  // Forward direction of the section
 
-        float airDensity = AeroPhysics.GetAirDensity(altitude);
-        float windAreaPerSection = AeroPhysics.FindWingAreaPerSection();
+        // Debug lines to visualize airflow and chordline
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+
+        // Calculate the angle of attack
+        float angleOfAttack = Vector3.Angle(chordline, airflow);
+
+        // Lift force: Using sine of angle of attack for more accurate lift calculation
+        float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * Mathf.Pow(speed, 2) * AeroPhysics.FindWingAreaPerSection(3.4f, 1.8f, 1.5f, 1) * Mathf.Sin(angleOfAttack * Mathf.Deg2Rad);
+
+        // The lift direction is perpendicular to both the chordline and the airflow
+        Vector3 liftDirection = Vector3.Cross(airflow, chordline).normalized;
+        Quaternion rotation = Quaternion.AngleAxis(-90, sectionBody.transform.up);
+        liftDirection = rotation * liftDirection; 
         
-        // Calculate lift force
-        float liftForce = liftCoefficient * 0.5f * airDensity * speed * speed * windAreaPerSection * Mathf.Clamp(angleOfAttack, -1f, 1f);
-        Vector3 liftDirection = Vector3.Cross(airflow, GetAeroAxis(Vector3.up, sectionBody.transform)).normalized;
-        
+        // Debug: Draw the lift direction
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
+
         // Apply lift at the wing section position
         planeRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position, ForceMode.Force);
 
-        // Calculate and apply drag force
-        float dragForce = planeRb.linearDamping * 0.5f * airDensity * speed * speed * windAreaPerSection;
-        Vector3 dragDirection = -airflow;
-        planeRb.AddForceAtPosition(dragDirection * dragForce, sectionBody.transform.position, ForceMode.Force);
+        // Apply drag force (drag is opposite to the airflow direction)
+        float dragForce = planeRb.linearDamping * 0.5f * AeroPhysics.GetAirDensity(altitude) * Mathf.Pow(speed, 2) * AeroPhysics.FindWingAreaPerSection(3.4f, 1.8f, 1.5f, 1);
+        planeRb.AddForceAtPosition(airflow * dragForce, sectionBody.transform.position, ForceMode.Force);
     }
+
+
+
+
 
     private Vector3 GetPropellerForwardAxis()
     {
