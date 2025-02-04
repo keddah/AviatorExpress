@@ -122,6 +122,16 @@ public class PlaneController : MonoBehaviour
     [SerializeField]
     private bool flipChordlineAxis = true;
     
+    private float aileronSpan = .6f;
+    private float flapSpan = .6f;
+    private float elevatorSpan = 3.8f;
+    private float rudderSpan = 1.8f;
+    
+    private float rudderChord = .4f;
+    private float elevatorChord = .7f;
+    private float aileronChord = .3f;
+    private float flapChord = .3f;
+    
     [SerializeField] 
     private float wingspan = 14;
     
@@ -210,22 +220,23 @@ public class PlaneController : MonoBehaviour
         
         SpinPropeller();
         ThrottleControl();
-    }
-
-    private void FixedUpdate()
-    {
-        Thrust(true);
         YawControl();
         RollControl();
         PitchControl();
         
         // For braking/taking off
         FlapControl();
+    }
 
-        foreach (Rigidbody wingSection in wingRbs)
-        {
-            ApplyAerodynamicForces(wingSection);
-        }
+    private void FixedUpdate()
+    {
+        Thrust(true);
+
+        // Forces for the wings
+        foreach (Rigidbody wingSection in wingRbs) ApplyAerodynamicForces(wingSection);
+        
+        // Forces for the wing sections
+        foreach (Rigidbody part in aeroParts) ApplyWingSurfaceForces(part);
     }
 
     private void ThrottleControl()
@@ -281,7 +292,7 @@ public class PlaneController : MonoBehaviour
             return;
         }
         
-            foreach (HingeJoint joint in aileronHinges) joint.useSpring = false;
+        foreach (HingeJoint joint in aileronHinges) joint.useSpring = false;
         
         // Assign left and right ailerons
         Rigidbody leftAileron = aileronRbs[0];
@@ -356,33 +367,67 @@ public class PlaneController : MonoBehaviour
         
         float wingArea = AeroPhysics.FindWingAreaPerSection(3.5f, 1.8f, 1.5f, 1);
         
-        float lifeForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
+        float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
         
-        sectionBody.AddForce(lifeForce * liftDirection);
+        sectionBody.AddForce(liftForce * liftDirection);
         print(planeRb.linearVelocity);
     }
 
-    void WingSurfaceForces(Rigidbody sectionBody)
+    void ApplyWingSurfaceForces(Rigidbody sectionBody)
     {
-        Vector3 velocity = planeRb.GetPointVelocity(sectionBody.transform.position);
+        Vector3 velocity = sectionBody.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
+        print(speed);
         
         Vector3 airflow = -velocity.normalized;
-        Vector3 chordline = sectionBody.transform.forward;
+        Vector3 chordline = -sectionBody.transform.up;
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.Dot(chordline, airflow);
-        // float wingArea = AeroPhysics.FindWingSectionArea(3.5f, 1.8f, 1.5f, 1);
 
-        float lifeForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
+        float chordLength = 0;
+        float sectionSpan = 0;
+        
+        GetSectionDimensions(sectionBody.tag, ref sectionSpan, ref chordLength);
+
+        float wingArea = AeroPhysics.FindWingSectionArea(sectionSpan, chordLength);
+
+        float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.green);
+        
+        sectionBody.AddForce(liftForce * liftDirection * 10);
     }
 
-
+    private void GetSectionDimensions(string section, ref float span, ref float chordLength)
+    {
+        switch (section)
+        {
+            case "Aileron":
+                chordLength = aileronChord;
+                span = aileronSpan;
+                break;
+            
+            case "Flap":
+                chordLength = flapChord;
+                span = flapSpan;
+                break;
+            
+            case "Rudder":
+                chordLength = rudderChord;
+                span = rudderSpan;
+                break;
+            
+            case "Elevator":
+                chordLength = elevatorChord;
+                span = elevatorSpan;
+                break;
+        }
+    }
 
 
     private Vector3 GetPropellerForwardAxis()
