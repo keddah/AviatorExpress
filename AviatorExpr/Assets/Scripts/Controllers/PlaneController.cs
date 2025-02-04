@@ -353,18 +353,34 @@ public class PlaneController : MonoBehaviour
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.Dot(chordline, airflow);
-        print(angleOfAttack);
         
         float wingArea = AeroPhysics.FindWingAreaPerSection(3.5f, 1.8f, 1.5f, 1);
         
         float lifeForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
-        Vector3 liftDirection = Vector3.Cross(chordline, -Vector3.forward);
+        Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
         
         sectionBody.AddForce(lifeForce * liftDirection);
+        print(planeRb.linearVelocity);
     }
 
+    void WingSurfaceForces(Rigidbody sectionBody)
+    {
+        Vector3 velocity = planeRb.GetPointVelocity(sectionBody.transform.position);
+        float speed = velocity.magnitude;
+        
+        Vector3 airflow = -velocity.normalized;
+        Vector3 chordline = sectionBody.transform.forward;
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+
+        float angleOfAttack = Vector3.Dot(chordline, airflow);
+        // float wingArea = AeroPhysics.FindWingSectionArea(3.5f, 1.8f, 1.5f, 1);
+
+        float lifeForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * (float) Math.Pow(speed, 2) * wingArea * Mathf.Clamp(angleOfAttack, -1f, 1f);
+        Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
+    }
 
 
 
