@@ -31,6 +31,8 @@ public class PlaneController : MonoBehaviour
     private Rigidbody propellerRb;
     private Rigidbody rudderRb;
     private Rigidbody elevatorRb;
+
+    private List<Rigidbody> wingRbs = new();
     
     // left, right
     private List<Rigidbody> aileronRbs = new();
@@ -138,6 +140,15 @@ public class PlaneController : MonoBehaviour
         propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
         
         planeRb.centerOfMass = centerMass.transform.localPosition;
+
+        foreach (GameObject wingSection in leftWing)
+        {
+            wingRbs.Add(wingSection.GetComponent<Rigidbody>());
+        }
+        foreach (GameObject wingSection in rightWing)
+        {
+            wingRbs.Add(wingSection.GetComponent<Rigidbody>());
+        }
         
         // Add flaps to its rigidbody list and aero parts list
         foreach (GameObject flap in flaps)
@@ -215,9 +226,9 @@ public class PlaneController : MonoBehaviour
         // For braking/taking off
         FlapControl();
 
-        foreach (Rigidbody wingSection in aeroParts)
+        foreach (Rigidbody wingSection in wingRbs)
         {
-            ApplyAerodynamicForces(wingSection.transform);
+            ApplyAerodynamicForces(wingSection);
         }
     }
 
@@ -349,29 +360,31 @@ public class PlaneController : MonoBehaviour
         planeRb.AddForceAtPosition((invert ? -GetPropellerForwardAxis() : GetPropellerForwardAxis()) * (float)(mainThrust * propellerPowerScaling), propellerRb.transform.position);
     }
     
-    void ApplyAerodynamicForces(Transform section)
+    void ApplyAerodynamicForces(Rigidbody sectionBody)
     {
-        Vector3 velocityAtPoint = planeRb.GetPointVelocity(section.position);
+        Vector3 velocityAtPoint = sectionBody.GetPointVelocity(sectionBody.transform.position);
         float speed = velocityAtPoint.magnitude;
         Vector3 airflow = velocityAtPoint.normalized;
 
+        Vector3 chordline = sectionBody.transform.forward;
+        
         // Calculate angle of attack
-        float angleOfAttack = Vector3.Dot(GetAeroAxis(flipChordlineAxis? -chordlineAxis : chordlineAxis, section), airflow);
+        float angleOfAttack = Vector3.Dot(GetAeroAxis(flipChordlineAxis? -chordlineAxis : chordlineAxis, sectionBody.transform), airflow);
 
         float airDensity = AeroPhysics.GetAirDensity(altitude);
         float windAreaPerSection = AeroPhysics.FindWingAreaPerSection();
         
         // Calculate lift force
         float liftForce = liftCoefficient * 0.5f * airDensity * speed * speed * windAreaPerSection * Mathf.Clamp(angleOfAttack, -1f, 1f);
-        Vector3 liftDirection = Vector3.Cross(airflow, GetAeroAxis(Vector3.up, section)).normalized;
+        Vector3 liftDirection = Vector3.Cross(airflow, GetAeroAxis(Vector3.up, sectionBody.transform)).normalized;
         
         // Apply lift at the wing section position
-        planeRb.AddForceAtPosition(liftDirection * liftForce, section.position, ForceMode.Force);
+        planeRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position, ForceMode.Force);
 
         // Calculate and apply drag force
         float dragForce = planeRb.linearDamping * 0.5f * airDensity * speed * speed * windAreaPerSection;
         Vector3 dragDirection = -airflow;
-        planeRb.AddForceAtPosition(dragDirection * dragForce, section.position, ForceMode.Force);
+        planeRb.AddForceAtPosition(dragDirection * dragForce, sectionBody.transform.position, ForceMode.Force);
     }
 
     private Vector3 GetPropellerForwardAxis()
