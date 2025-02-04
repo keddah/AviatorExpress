@@ -14,6 +14,9 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private GameObject elevator;
 
     // left, right
+    [SerializeField] private GameObject[] leftWing;
+    [SerializeField] private GameObject[] rightWing;
+    
     [SerializeField] private GameObject[] flaps;
     [SerializeField] private GameObject[] ailerons;
 
@@ -294,10 +297,10 @@ public class PlaneController : MonoBehaviour
     
     private void PitchControl()
     {
-        Vector2 input = inputManager.moveInput;
+        float input = inputManager.moveInput.y;
         
         // Reset to neutral position when there's no input
-        if (input == Vector2.zero)
+        if (input == 0)
         {
             elevatorRb.angularVelocity = Vector3.zero;
             elevatorRb.transform.localRotation = 
@@ -305,7 +308,7 @@ public class PlaneController : MonoBehaviour
             return;
         }
         
-        elevatorRb.AddRelativeTorque(Vector3.right * (elevatorPower * (invertPitch ? -input.y : input.y)));
+        elevatorRb.AddRelativeTorque(Vector3.right * (elevatorPower * (invertPitch ? -input : input)));
     }
     
     private void SpinPropeller()
