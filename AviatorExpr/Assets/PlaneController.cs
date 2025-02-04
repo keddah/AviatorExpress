@@ -125,7 +125,7 @@ public class PlaneController : MonoBehaviour
     private float wingspan = 14;
     
     [SerializeField]
-    float liftCoefficient = .5f;
+    float liftCoefficient = .005f;
     
     private void Awake()
     {
@@ -363,10 +363,10 @@ public class PlaneController : MonoBehaviour
 
         // Debug: Visualize the airflow and chordline vectors
         Debug.DrawRay(wing.position, airflow * 10f, Color.red, 0.1f); // Airflow vector (opposite of velocity)
-        Debug.DrawRay(wing.position, chordline * 10f, Color.green, 0.1f); // Chordline vector
+        Debug.DrawRay(wing.position, chordline * 100f, Color.green, 0.1f); // Chordline vector
 
         // Calculate the angle of attack
-        float angleOfAttack = Vector3.Angle(chordline, airflow);
+        float angleOfAttack = Vector3.SignedAngle(chordline, airflow, Vector3.up);  // Using 'up' as the axis for signed angle
         print("Angle of Attack: " + angleOfAttack);  // Check if the angle changes
 
         float airDensity = AeroPhysics.GetAirDensity(altitude);
@@ -377,7 +377,7 @@ public class PlaneController : MonoBehaviour
         Vector3 liftDirection = Vector3.Cross(airflow, chordline).normalized;
     
         // Apply lift at the wing section position
-        planeRb.AddForceAtPosition(liftDirection * liftForce, wing.position);
+        planeRb.AddForceAtPosition(liftDirection * (liftForce * .01f), wing.position);
 
         // Calculate and apply drag force
         float stallFactor = Mathf.Clamp01(Mathf.Abs(angleOfAttack) / 15f);
@@ -400,7 +400,7 @@ public class PlaneController : MonoBehaviour
         Debug.DrawRay(section.position, chordline * 10f, Color.green, 0.1f); // Chordline vector
 
         // Calculate the angle of attack
-        float angleOfAttack = Vector3.Angle(chordline, airflow);
+        float angleOfAttack = Vector3.SignedAngle(chordline, airflow, Vector3.up);  // Using 'up' as the axis for signed angle
         print("Angle of Attack: " + angleOfAttack);  // Check if the angle changes
 
         float airDensity = AeroPhysics.GetAirDensity(altitude);
@@ -411,7 +411,7 @@ public class PlaneController : MonoBehaviour
         Vector3 liftDirection = Vector3.Cross(airflow, chordline).normalized;
     
         // Apply lift at the wing section position
-        planeRb.AddForceAtPosition(liftDirection * liftForce, section.position);
+        planeRb.AddForceAtPosition(liftDirection * (liftForce * .001f), section.position);
 
         // Calculate and apply drag force
         float stallFactor = Mathf.Clamp01(Mathf.Abs(angleOfAttack) / 15f);
@@ -473,6 +473,7 @@ public class PlaneController : MonoBehaviour
                 break;
         }
 
+        print(area);
         return area;
     }
     
