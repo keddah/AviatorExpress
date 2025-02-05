@@ -25,23 +25,12 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private GameObject centerMass;
 
     private Rigidbody planeRb;
-
-    private List<Rigidbody> aeroParts = new();
-
     private Rigidbody propellerRb;
-    private Rigidbody rudderRb;
-    private Rigidbody elevatorRb;
-
-    private HingeJoint rudderHinge;
-    private HingeJoint elevatorHinge;
-    private List<HingeJoint> flapHinges = new();
-    private List<HingeJoint> aileronHinges = new();
-    
     private List<Rigidbody> wingRbs = new();
+    private List<GameObject> aeroParts = new();
+
     
     // left, right
-    private List<Rigidbody> aileronRbs = new();
-    private List<Rigidbody> flapRbs = new();
     
     [SerializeField] 
     private float propellerRadius = 1;
@@ -131,6 +120,9 @@ public class PlaneController : MonoBehaviour
     private float elevatorChord = .7f;
     private float aileronChord = .3f;
     private float flapChord = .3f;
+
+    private Quaternion[] aileronDefaultRots = new Quaternion[2];
+    private Quaternion[] flapDefaultRots = new Quaternion[2];
     
     [SerializeField] 
     private float wingspan = 14;
@@ -143,9 +135,6 @@ public class PlaneController : MonoBehaviour
         inputManager = GetComponent<InputController>();
         
         planeRb = plane.GetComponent<Rigidbody>();
-        
-        rudderRb = rudder.GetComponent<Rigidbody>();
-        elevatorRb = elevator.GetComponent<Rigidbody>();
         
         propellerRb = propeller.GetComponent<Rigidbody>();
         propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
@@ -161,51 +150,25 @@ public class PlaneController : MonoBehaviour
             wingRbs.Add(wingSection.GetComponent<Rigidbody>());
         }
         
-        // Add flaps to its rigidbody list and aero parts list
-        JointLimits flapLimits = new JointLimits { min = minFlapAngle, max = maxFlapAngle };
-        for(var i = 0; i < flaps.Length; i++)
+        // Add all the wing sections list
+        for (var i = 0; i < flaps.Length; i++)
         {
-            aeroParts.Add(flaps[i].GetComponent<Rigidbody>());
-            flapRbs.Add(flaps[i].GetComponent<Rigidbody>());
-            flapHinges.Add(flaps[i].GetComponent<HingeJoint>());
-        
-            // Limit how much the flaps are allowed to rotate
-            flapHinges[i].useLimits = true;
-            flapHinges[i].limits = flapLimits;
-            flapHinges[i].spring = new JointSpring { spring = flapToNeutralForce * 1000, damper = 250 };
+            aeroParts.Add(flaps[i]);
+            flapDefaultRots[i] = flaps[i].transform.localRotation;
         }
-        
-        // Add ailerons to its rigidbody list and aero parts list
-        JointLimits aileronLimits = new JointLimits { min = -maxAileronAngle, max = maxAileronAngle };
-        for(var i = 0; i < ailerons.Length; i++)
+        for (var i = 0; i < ailerons.Length; i++)
         {
-            aeroParts.Add(ailerons[i].GetComponent<Rigidbody>());
-            aileronRbs.Add(ailerons[i].GetComponent<Rigidbody>());
-            aileronHinges.Add(ailerons[i].GetComponent<HingeJoint>());
-            
-            // Limit how much the ailerons are allowed to rotate
-            aileronHinges[i].useLimits = true;
-            aileronHinges[i].limits = aileronLimits;
-            aileronHinges[i].spring = new JointSpring { spring = aileronToNeutralForce * 1000, damper = 250 };
+            aeroParts.Add(ailerons[i]);
+            aileronDefaultRots[i] = ailerons[i].transform.localRotation;
         }
-        aeroParts.Add(rudder.GetComponent<Rigidbody>());
-        aeroParts.Add(elevator.GetComponent<Rigidbody>());
+        aeroParts.Add(rudder);
+        aeroParts.Add(elevator);
 
-        elevatorHinge = elevator.GetComponent<HingeJoint>();
-        rudderHinge = rudder.GetComponent<HingeJoint>();
-        
-        // Limit how much the elevator is allowed to rotate
-        JointLimits elevatorHingeLimits = new JointLimits { min = -maxElevatorAngle, max = maxElevatorAngle };
-        elevatorHinge.useLimits = true;
-        elevatorHinge.limits = elevatorHingeLimits;
-        elevatorHinge.spring = new JointSpring { spring = elevatorToNeutralForce * 1000, damper = 250 };
-        
-        // Limit how much the rudder is allowed to rotate
-        JointLimits rudderHingeLimits = new JointLimits { min = -maxRudderAngle, max = maxRudderAngle };
-        rudderHinge.useLimits = true;
-        rudderHinge.limits = rudderHingeLimits;
-        rudderHinge.spring = new JointSpring { spring = rudderToNeutralForce * 1000, damper = 250 };
-        
+        // Clamp rudder angle
+        HingeJoint rudderJoint = rudder.GetComponent<HingeJoint>();
+        JointLimits rudderLimits = new JointLimits { max = maxRudderAngle, min = -maxRudderAngle };
+        rudderJoint.limits = rudderLimits;
+        rudderJoint.useLimits = true;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -234,7 +197,7 @@ public class PlaneController : MonoBehaviour
         Thrust(true);
 
         // Forces for the wing sections
-        foreach (Rigidbody part in aeroParts) ApplyWingSurfaceForces(part);
+        foreach (GameObject part in aeroParts) ApplyWingSurfaceForces(part);
         
         // Forces for the wings
         foreach (Rigidbody wingSection in wingRbs) ApplyAerodynamicForces(wingSection);
@@ -251,19 +214,19 @@ public class PlaneController : MonoBehaviour
         // Reset to neutral position when there's no input
         if (!inputManager.throttleDownPressed && !inputManager.brakePressed && !inputManager.takeOffPressed)
         {
-            foreach (HingeJoint hinge in flapHinges) hinge.useSpring = true;
+            for(var i = 0; i < flaps.Length; i++)
+            {
+                flaps[i].transform.localRotation = Quaternion.Lerp(flaps[i].transform.localRotation, flapDefaultRots[i], Time.deltaTime * flapToNeutralForce);
+            }
             return;
         }
         
-        // Turn off spring
-        foreach (HingeJoint hinge in flapHinges) hinge.useSpring = false;
-        
         bool brake = inputManager.throttleDownPressed || inputManager.brakePressed;
-        foreach (Rigidbody flap in flapRbs)
+        foreach (GameObject flap in flaps)
         {
             // brake makes the flaps tip upwards
             // Otherwise it tips downwards to assist with takeoffs
-            flap.AddRelativeTorque(Vector3.right * (brake ? flapPower : -flapPower));
+            flap.transform.localRotation = Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler((brake ? maxFlapAngle - 90 : minFlapAngle - 90), 0, 0), Time.deltaTime * flapPower);
         }
     }
     
@@ -272,35 +235,36 @@ public class PlaneController : MonoBehaviour
         // Reset to normal position
         if (!inputManager.leftPressed && !inputManager.rightPressed)
         {
-            rudderHinge.useSpring = true;
+            rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, Quaternion.identity, Time.deltaTime * rudderToNeutralForce);
             return;
         }
 
-        // Turn off spring
-        rudderHinge.useSpring = false;
-        
         bool left = inputManager.leftPressed;
-        rudderRb.AddRelativeTorque(Vector3.forward * (rudderPower * (left? -1 : 1)));
+        rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, 0, (left ? -maxRudderAngle : maxRudderAngle)), Time.deltaTime * rudderPower);
     }
 
     private void RollControl()
     {
         float input = inputManager.moveInput.x;
-        
-        // Reset to neutral position when there's no input
-        foreach (HingeJoint joint in aileronHinges)
-        {
-            joint.useSpring = input == 0;
-            print(joint.useSpring);
-        }
-        
-        // Assign left and right ailerons
-        Rigidbody leftAileron = aileronRbs[0];
-        Rigidbody rightAileron = aileronRbs[1];
 
-        // Add opposing torque
-        leftAileron.AddRelativeTorque(Vector3.right * (aileronPower * input));
-        rightAileron.AddRelativeTorque(Vector3.right * (aileronPower * -input));
+        if (input == 0)
+        {
+            for(var i = 0; i < ailerons.Length; i++)
+            {
+                ailerons[i].transform.localRotation = Quaternion.Lerp(ailerons[i].transform.localRotation, aileronDefaultRots[i], Time.deltaTime * aileronToNeutralForce);
+            }
+            return;
+        }
+
+        GameObject leftAileron = ailerons[0];
+        GameObject rightAileron = ailerons[1];
+        
+        float targetAngle = maxAileronAngle * input;
+        Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(targetAngle, Vector3.right);
+        Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
+
+        leftAileron.transform.localRotation = Quaternion.Lerp(leftAileron.transform.localRotation, leftTargetRotation, Time.deltaTime * aileronPower);
+        rightAileron.transform.localRotation = Quaternion.Lerp(rightAileron.transform.localRotation, rightTargetRotation, Time.deltaTime * aileronPower);
     }
     
     private void PitchControl()
@@ -310,13 +274,12 @@ public class PlaneController : MonoBehaviour
         // Reset to neutral position when there's no input
         if (input == 0)
         {
-            elevatorHinge.useSpring = true;
+            elevator.transform.localRotation = Quaternion.Lerp(elevator.transform.localRotation, Quaternion.identity, Time.deltaTime * elevatorToNeutralForce);
             return;
         }
-        
-        elevatorHinge.useSpring = false;
-        
-        elevatorRb.AddRelativeTorque(Vector3.right * (elevatorPower * (invertPitch ? -input : input)));
+
+        float targetAngle = maxElevatorAngle * (invertPitch? -input : input);
+        elevator.transform.localRotation = Quaternion.Lerp(elevator.transform.localRotation, Quaternion.Euler(targetAngle, 0, 0), Time.deltaTime * elevatorPower);
     }
     
     private void SpinPropeller()
@@ -372,7 +335,7 @@ public class PlaneController : MonoBehaviour
         sectionBody.AddForce(liftForce * liftDirection);
     }
 
-    void ApplyWingSurfaceForces(Rigidbody sectionBody)
+    void ApplyWingSurfaceForces(GameObject sectionBody)
     {
         Vector3 velocity = planeRb.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
@@ -397,7 +360,8 @@ public class PlaneController : MonoBehaviour
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
-        planeRb.AddForceAtPosition(liftDirection * (liftForce * 10), sectionBody.transform.position);
+        // sectionBody.AddForce(liftDirection * (liftForce * 10));
+        planeRb.AddForceAtPosition(liftDirection * (liftForce * .1f), sectionBody.transform.position);
     }
 
 
