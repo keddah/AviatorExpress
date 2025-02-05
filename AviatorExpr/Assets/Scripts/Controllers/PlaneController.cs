@@ -291,7 +291,7 @@ public class PlaneController : MonoBehaviour
         {
             propellerSpinRate -= propellerSpinRate * propellerSpinDecel;
             propellerSpinRate = Math.Max(0, propellerSpinRate);
-            propellerRb.AddTorque(propellerRb.transform.up * (propellerSpinRate));
+            propellerRb.AddRelativeTorque(-propellerSpinAxis * (propellerSpinRate));
             return;
         }
 
@@ -300,9 +300,11 @@ public class PlaneController : MonoBehaviour
         propellerSpinRate = Math.Min(propellerSpinRate * propellerSpinAccel, maxPropellerSpinRate);
         
         // Add torque... Clamp its angular velocity
-        propellerRb.AddTorque(propellerRb.transform.up * (propellerSpinRate));
+        propellerRb.AddRelativeTorque(propellerSpinAxis * (propellerSpinRate));
 
-        propellerRb.angularVelocity = Math.Min(propellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * GetPropellerForwardAxis();
+        Vector3 angularVelocity = propellerRb.angularVelocity;
+        angularVelocity.y = Math.Min(propellerRb.angularVelocity.y, maxPropellerSpinRate);
+        propellerRb.angularVelocity = angularVelocity;
     }
 
     private void Thrust(bool invert)

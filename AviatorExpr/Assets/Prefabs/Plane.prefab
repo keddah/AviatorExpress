@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 1114216178900048319}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.041124344, y: -2.0750005, z: -0.22}
+  m_LocalPosition: {x: -0.041124344, y: -0.972, z: -0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -318,7 +318,7 @@ Rigidbody:
   m_GameObject: {fileID: 2470760714834176628}
   serializedVersion: 4
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -745,7 +745,7 @@ Rigidbody:
   m_GameObject: {fileID: 2814182831680340760}
   serializedVersion: 4
   m_Mass: 50
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1687,7 +1687,7 @@ Rigidbody:
   m_GameObject: {fileID: 6485764722896106548}
   serializedVersion: 4
   m_Mass: 800
-  m_Drag: 0.02
+  m_Drag: 0.3
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1831,11 +1831,11 @@ MonoBehaviour:
   maxFlapAngle: 80
   minFlapAngle: -60
   maxRudderAngle: 30
-  maxElevatorAngle: 45
+  maxElevatorAngle: 30
   rudderPower: 5
-  aileronPower: 5
+  aileronPower: 1.2
   flapPower: 7.5
-  elevatorPower: 5
+  elevatorPower: 1.5
   rudderToNeutralForce: 6
   aileronToNeutralForce: 10
   flapToNeutralForce: 3
@@ -2064,7 +2064,7 @@ Rigidbody:
   m_GameObject: {fileID: 8084509745227965234}
   serializedVersion: 4
   m_Mass: 50
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2423,7 +2423,7 @@ Rigidbody:
   m_GameObject: {fileID: 8540197716735734188}
   serializedVersion: 4
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2519,8 +2519,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.3121675, y: 0.63588524, z: 0.63360196, w: -0.31104666}
-  m_LocalPosition: {x: 4.8968525, y: -3.7854683, z: 0.02226316}
+  m_LocalRotation: {x: -0.30451506, y: 0.6415948, z: 0.63600737, w: -0.30186313}
+  m_LocalPosition: {x: 4.827865, y: -3.9403043, z: 0.054508723}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2603,7 +2603,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -127.7055
+    Value: -129.2199
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2613,7 +2613,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -9.213791
+    Value: -8.130576
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
