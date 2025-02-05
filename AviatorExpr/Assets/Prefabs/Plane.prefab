@@ -1822,8 +1822,8 @@ MonoBehaviour:
   propeller: {fileID: 262194774470468340}
   centerMass: {fileID: 1114216178900048319}
   propellerRadius: 1
-  maxPropellerAccelSpinRate: 500
-  maxPropellerIdleSpinRate: 280
+  maxPropellerAccelSpinRate: 320
+  maxPropellerIdleSpinRate: 240
   propellerSpinAxis: {x: 0, y: 1, z: 0}
   propellerSpinAccel: 1.01
   propellerSpinDecel: 0.9

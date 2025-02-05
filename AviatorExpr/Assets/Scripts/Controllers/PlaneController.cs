@@ -260,8 +260,8 @@ public class PlaneController : MonoBehaviour
         GameObject rightAileron = ailerons[1];
         
         float targetAngle = maxAileronAngle * input;
-        Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(targetAngle, Vector3.right);
-        Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
+        Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
+        Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(targetAngle, Vector3.right);
 
         leftAileron.transform.localRotation = Quaternion.Lerp(leftAileron.transform.localRotation, leftTargetRotation, Time.deltaTime * aileronPower);
         rightAileron.transform.localRotation = Quaternion.Lerp(rightAileron.transform.localRotation, rightTargetRotation, Time.deltaTime * aileronPower);
@@ -356,12 +356,11 @@ public class PlaneController : MonoBehaviour
 
         float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
 
-        // ✅ Fix: Ensure the correct lift direction using right-hand rule
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
         // sectionBody.AddForce(liftDirection * (liftForce * 10));
-        planeRb.AddForceAtPosition(liftDirection * (liftForce * .1f), sectionBody.transform.position);
+        planeRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position);
     }
 
 
