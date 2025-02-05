@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 9065669534638098882}
   m_Layer: 0
   m_Name: LeftFlap
-  m_TagString: Untagged
+  m_TagString: Flap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -481,7 +481,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2635258008640296764}
   serializedVersion: 4
-  m_Mass: 0.0000001
+  m_Mass: 12
   m_Drag: 1
   m_AngularDrag: 0.6
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -498,7 +498,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!59 &9065669534638098882
 HingeJoint:
@@ -510,7 +510,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 909715879118162427}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.002, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -536,7 +536,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &2806959364865289056
@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 5376092757313196687}
   m_Layer: 0
   m_Name: Rudder
-  m_TagString: Untagged
+  m_TagString: Rudder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,7 +652,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!59 &5376092757313196687
 HingeJoint:
@@ -690,7 +690,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &2814182831680340760
@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 6749276219674708532}
   m_Layer: 0
   m_Name: RightAileron
-  m_TagString: Untagged
+  m_TagString: Aileron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1117,8 +1117,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4581248686392796806}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7044161, y: -0.061628446, z: -0.061628457, w: 0.704416}
-  m_LocalPosition: {x: 0.016465187, y: -0.016779244, z: -0.4893679}
+  m_LocalRotation: {x: -0.70441604, y: -0.06162845, z: -0.06162845, w: 0.70441604}
+  m_LocalPosition: {x: 0.016465187, y: -0.016779065, z: -0.4893678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1185,7 +1185,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4581248686392796806}
   serializedVersion: 4
-  m_Mass: 0.0000001
+  m_Mass: 12
   m_Drag: 1
   m_AngularDrag: 0.6
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1202,7 +1202,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!59 &6749276219674708532
 HingeJoint:
@@ -1240,7 +1240,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &5318588379607458667
@@ -1330,7 +1330,7 @@ GameObject:
   - component: {fileID: 4470098120857215972}
   m_Layer: 0
   m_Name: Elevator
-  m_TagString: Untagged
+  m_TagString: Elevator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1428,7 +1428,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 110
   m_CollisionDetection: 0
 --- !u!59 &4470098120857215972
 HingeJoint:
@@ -1466,7 +1466,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &6330636701743321703
@@ -1966,9 +1966,9 @@ MonoBehaviour:
   maxPropellerAccelSpinRate: 500
   maxPropellerIdleSpinRate: 280
   propellerSpinAxis: {x: 0, y: 1, z: 0}
-  propellerSpinAccel: 1.001
+  propellerSpinAccel: 1.01
   propellerSpinDecel: 0.9
-  maxAileronAngle: 75
+  maxAileronAngle: 60
   maxFlapAngle: 80
   minFlapAngle: -60
   maxRudderAngle: 20
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   flapPower: 100
   elevatorPower: 100
   rudderToNeutralForce: 3
-  aileronToNeutralForce: 3
+  aileronToNeutralForce: 10
   flapToNeutralForce: 3
   elevatorToNeutralForce: 3
   propellerPowerScaling: 0.1
@@ -2014,7 +2014,7 @@ GameObject:
   - component: {fileID: 4914959872460312147}
   m_Layer: 0
   m_Name: RightFlap
-  m_TagString: Untagged
+  m_TagString: Flap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2095,7 +2095,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7435204085788768851}
   serializedVersion: 4
-  m_Mass: 0.0000001
+  m_Mass: 12
   m_Drag: 1
   m_AngularDrag: 0.6
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2112,7 +2112,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!59 &4914959872460312147
 HingeJoint:
@@ -2124,7 +2124,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 7928336231816316514}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.002, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -2150,7 +2150,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &8084509745227965234
@@ -2420,7 +2420,7 @@ GameObject:
   - component: {fileID: 2179816026822356892}
   m_Layer: 0
   m_Name: LeftAileron
-  m_TagString: Untagged
+  m_TagString: Aileron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2433,8 +2433,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8416584648784777600}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7044161, y: 0.061628416, z: 0.061628394, w: 0.704416}
-  m_LocalPosition: {x: 0.01589632, y: -0.016779363, z: -0.48788714}
+  m_LocalRotation: {x: -0.70441604, y: 0.06162845, z: 0.06162845, w: 0.70441604}
+  m_LocalPosition: {x: 0.01589632, y: -0.016779304, z: -0.48788702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2501,7 +2501,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8416584648784777600}
   serializedVersion: 4
-  m_Mass: 0.0000001
+  m_Mass: 12
   m_Drag: 1
   m_AngularDrag: 0.6
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2518,7 +2518,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!59 &2179816026822356892
 HingeJoint:
@@ -2556,7 +2556,7 @@ HingeJoint:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!1 &8540197716735734188
@@ -2754,8 +2754,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.47631472, y: -0.52708906, z: -0.522159, w: 0.4718595}
-  m_LocalPosition: {x: 6.204548, y: -0.62953836, z: 0.058607414}
+  m_LocalRotation: {x: 0.4763194, y: -0.52700937, z: -0.52216315, w: 0.4719393}
+  m_LocalPosition: {x: 6.2035203, y: -0.62843, z: 0.057604175}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2838,7 +2838,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -95.79364
+    Value: -95.784454
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2848,7 +2848,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -7.9972324
+    Value: -8.029785
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
