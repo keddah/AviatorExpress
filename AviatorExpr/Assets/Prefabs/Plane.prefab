@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 1484193193799787068}
   - component: {fileID: 5614229904261191791}
   - component: {fileID: 2988379923845679216}
+  - component: {fileID: 190122472247678315}
   m_Layer: 0
   m_Name: Rudder
   m_TagString: Rudder
@@ -464,8 +465,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2806959364865289056}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.041124333, y: 3.5327148, z: 0.59618187}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.041124333, y: 3.5327163, z: 0.59618217}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -590,6 +591,33 @@ HingeJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1773428102 &190122472247678315
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806959364865289056}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: -0.041124333, y: 3.5327148, z: 0.59618187}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: -0.05346163, y: 4.5925303, z: 0.77503675}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 0
+  m_AffectRotationY: 0
+  m_AffectRotationZ: 0
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 5857423946504941198}
+    weight: 1
 --- !u!1 &2814182831680340760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2238,8 +2266,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6774135, y: -0.5467912, z: -0.30906427, w: 0.3828964}
-  m_LocalPosition: {x: 6.1102433, y: 1.3189397, z: 3.7629304}
+  m_LocalRotation: {x: 0.70921046, y: -0.067766756, z: -0.066748165, w: 0.6985506}
+  m_LocalPosition: {x: 1.1875653, y: 6.158536, z: 0.09474461}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2322,7 +2350,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -77.81918
+    Value: -10.9145155
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2332,7 +2360,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 42.561047
+    Value: -6.860098
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
