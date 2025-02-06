@@ -14,8 +14,7 @@ public class PlaneController : MonoBehaviour
     [SerializeField] private GameObject elevator;
 
     // left, right
-    [SerializeField] private GameObject[] leftWing;
-    [SerializeField] private GameObject[] rightWing;
+    [SerializeField] private GameObject[] wings;
     
     [SerializeField] private GameObject[] flaps;
     [SerializeField] private GameObject[] ailerons;
@@ -26,7 +25,6 @@ public class PlaneController : MonoBehaviour
 
     private Rigidbody planeRb;
     private Rigidbody propellerRb;
-    private List<Rigidbody> wingRbs = new();
     private List<GameObject> aeroParts = new();
 
     
@@ -141,15 +139,6 @@ public class PlaneController : MonoBehaviour
         
         planeRb.centerOfMass = centerMass.transform.localPosition;
 
-        foreach (GameObject wingSection in leftWing)
-        {
-            wingRbs.Add(wingSection.GetComponent<Rigidbody>());
-        }
-        foreach (GameObject wingSection in rightWing)
-        {
-            wingRbs.Add(wingSection.GetComponent<Rigidbody>());
-        }
-        
         // Add all the wing sections list
         for (var i = 0; i < flaps.Length; i++)
         {
@@ -200,13 +189,14 @@ public class PlaneController : MonoBehaviour
         foreach (GameObject part in aeroParts) ApplyWingSurfaceForces(part);
         
         // Forces for the wings
-        foreach (Rigidbody wingSection in wingRbs) ApplyAerodynamicForces(wingSection);
+        foreach (GameObject wing in wings) ApplyAerodynamicForces(wing);
         
     }
 
     private void ThrottleControl()
     {
         maxPropellerSpinRate = inputManager.throttleUpPressed ? maxPropellerAccelSpinRate : maxPropellerIdleSpinRate;
+        propellerRb.maxAngularVelocity = maxPropellerSpinRate + 5;
     }
 
     private void FlapControl()
@@ -240,7 +230,7 @@ public class PlaneController : MonoBehaviour
         }
 
         bool left = inputManager.leftPressed;
-        rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, 0, (left ? -maxRudderAngle : maxRudderAngle)), Time.deltaTime * rudderPower);
+        rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, 0, (left ? maxRudderAngle : -maxRudderAngle)), Time.deltaTime * rudderPower);
     }
 
     private void RollControl()
@@ -315,7 +305,7 @@ public class PlaneController : MonoBehaviour
         planeRb.AddForceAtPosition((invert ? -GetPropellerForwardAxis() : GetPropellerForwardAxis()) * (float)(mainThrust * propellerPowerScaling), propellerRb.transform.position);
     }
     
-    void ApplyAerodynamicForces(Rigidbody sectionBody)
+    void ApplyAerodynamicForces(GameObject sectionBody)
     {
         Vector3 velocity = planeRb.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
@@ -334,7 +324,7 @@ public class PlaneController : MonoBehaviour
         
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
         
-        sectionBody.AddForce(liftForce * liftDirection);
+        planeRb.AddForceAtPosition(liftForce * liftDirection, sectionBody.transform.position);
     }
 
     void ApplyWingSurfaceForces(GameObject sectionBody)
@@ -348,7 +338,6 @@ public class PlaneController : MonoBehaviour
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.magenta);
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.yellow);
 
-        // ✅ Fix: Use SignedAngle for correct angle of attack
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
 
         float chordLength = 0;
@@ -362,7 +351,7 @@ public class PlaneController : MonoBehaviour
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
         // sectionBody.AddForce(liftDirection * (liftForce * 10));
-        planeRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position);
+        planeRb.AddForceAtPosition(liftDirection * (liftForce), sectionBody.transform.position);
     }
 
 

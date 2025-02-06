@@ -230,8 +230,6 @@ GameObject:
   - component: {fileID: 2620699899501565240}
   - component: {fileID: 8131055199475550051}
   - component: {fileID: 2008647119145270904}
-  - component: {fileID: 7928336231816316514}
-  - component: {fileID: 7071641902526916096}
   - component: {fileID: 3027386165537793956}
   m_Layer: 0
   m_Name: InnerRightWing
@@ -309,60 +307,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &7928336231816316514
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2470760714834176628}
-  serializedVersion: 4
-  m_Mass: 100
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1773428102 &7071641902526916096
-ParentConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2470760714834176628}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: 1.7746872, y: -1.3366997, z: 0.6465239}
-  m_RotationAtRest: {x: 89.980225, y: 0, z: 0}
-  m_TranslationOffsets:
-  - {x: 2.3070931, y: -1.73771, z: 0.8404812}
-  m_RotationOffsets:
-  - {x: 89.97203, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 5857423946504941198}
-    weight: 1
 --- !u!64 &3027386165537793956
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -657,8 +601,6 @@ GameObject:
   - component: {fileID: 3806365341970407925}
   - component: {fileID: 6581723367801438309}
   - component: {fileID: 8469154678418682589}
-  - component: {fileID: 4007614396267167692}
-  - component: {fileID: 1387332169074866261}
   - component: {fileID: 6916586906881608503}
   m_Layer: 0
   m_Name: OuterLeftWing
@@ -736,60 +678,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &4007614396267167692
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2814182831680340760}
-  serializedVersion: 4
-  m_Mass: 50
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1773428102 &1387332169074866261
-ParentConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2814182831680340760}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: -4.1736407, y: -1.340197, z: 0.6463816}
-  m_RotationAtRest: {x: 89.980225, y: 0, z: 0}
-  m_TranslationOffsets:
-  - {x: -5.4257326, y: -1.7422565, z: 0.8402963}
-  m_RotationOffsets:
-  - {x: 89.97203, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
 --- !u!64 &6916586906881608503
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1339,8 +1227,6 @@ GameObject:
   - component: {fileID: 4660449656260314958}
   - component: {fileID: 1730608209008046134}
   - component: {fileID: 8235592005213887684}
-  - component: {fileID: 295931183375443819}
-  - component: {fileID: 3732139058791008184}
   - component: {fileID: 7678102819508687192}
   m_Layer: 0
   m_Name: Stabilizer
@@ -1418,60 +1304,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &295931183375443819
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6330636701743321703}
-  serializedVersion: 4
-  m_Mass: 200
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1773428102 &3732139058791008184
-ParentConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6330636701743321703}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: -0.041124463, y: 3.0278854, z: -0.17333794}
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffsets:
-  - {x: -0.0534618, y: 3.9362519, z: -0.22533922}
-  m_RotationOffsets:
-  - {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 5857423946504941198}
-    weight: 1
 --- !u!64 &7678102819508687192
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1807,12 +1639,11 @@ MonoBehaviour:
   plane: {fileID: 6485764722896106548}
   rudder: {fileID: 2806959364865289056}
   elevator: {fileID: 5542938659860268600}
-  leftWing:
+  wings:
   - {fileID: 2814182831680340760}
   - {fileID: 8540197716735734188}
-  rightWing:
-  - {fileID: 8084509745227965234}
   - {fileID: 2470760714834176628}
+  - {fileID: 8084509745227965234}
   flaps:
   - {fileID: 2635258008640296764}
   - {fileID: 7435204085788768851}
@@ -1822,29 +1653,29 @@ MonoBehaviour:
   propeller: {fileID: 262194774470468340}
   centerMass: {fileID: 1114216178900048319}
   propellerRadius: 1
-  maxPropellerAccelSpinRate: 320
-  maxPropellerIdleSpinRate: 240
+  maxPropellerAccelSpinRate: 360
+  maxPropellerIdleSpinRate: 195
   propellerSpinAxis: {x: 0, y: 1, z: 0}
   propellerSpinAccel: 1.01
   propellerSpinDecel: 0.9
   maxAileronAngle: 60
   maxFlapAngle: 80
   minFlapAngle: -60
-  maxRudderAngle: 30
+  maxRudderAngle: 60
   maxElevatorAngle: 45
   rudderPower: 5
   aileronPower: 1.2
   flapPower: 7.5
   elevatorPower: 1.5
   rudderToNeutralForce: 6
-  aileronToNeutralForce: 10
+  aileronToNeutralForce: 6
   flapToNeutralForce: 3
   elevatorToNeutralForce: 3
   propellerPowerScaling: 0.1
   chordlineAxis: {x: 0, y: 1, z: 0}
   flipChordlineAxis: 1
   wingspan: 14
-  liftCoefficient: 1.2
+  liftCoefficient: 1.8
 --- !u!114 &6626265020268962062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1976,8 +1807,6 @@ GameObject:
   - component: {fileID: 1642164438206384042}
   - component: {fileID: 6450317212537109539}
   - component: {fileID: 417505150034079650}
-  - component: {fileID: 666755495113691080}
-  - component: {fileID: 2722994392822551651}
   - component: {fileID: 6761802927677916433}
   m_Layer: 0
   m_Name: OuterRightWing
@@ -2055,60 +1884,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &666755495113691080
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8084509745227965234}
-  serializedVersion: 4
-  m_Mass: 50
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1773428102 &2722994392822551651
-ParentConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8084509745227965234}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: 4.170776, y: -1.3332016, z: 0.64676106}
-  m_RotationAtRest: {x: 89.980225, y: 0, z: 0}
-  m_TranslationOffsets:
-  - {x: 5.4220085, y: -1.7331625, z: 0.8407896}
-  m_RotationOffsets:
-  - {x: 89.97203, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 5857423946504941198}
-    weight: 1
 --- !u!64 &6761802927677916433
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2335,8 +2110,6 @@ GameObject:
   - component: {fileID: 7198525793649615774}
   - component: {fileID: 1692168216249855816}
   - component: {fileID: 5777576250392147997}
-  - component: {fileID: 909715879118162427}
-  - component: {fileID: 6917183326105330756}
   - component: {fileID: 200461954537089440}
   m_Layer: 0
   m_Name: InnerLeftWing
@@ -2414,60 +2187,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &909715879118162427
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8540197716735734188}
-  serializedVersion: 4
-  m_Mass: 100
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!1773428102 &6917183326105330756
-ParentConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8540197716735734188}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: -1.7832863, y: -1.3401972, z: 0.6463816}
-  m_RotationAtRest: {x: 90, y: 0, z: 0}
-  m_TranslationOffsets:
-  - {x: -2.318272, y: -1.7422568, z: 0.8402963}
-  m_RotationOffsets:
-  - {x: 89.97203, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_AffectRotationX: 1
-  m_AffectRotationY: 1
-  m_AffectRotationZ: 1
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 5857423946504941198}
-    weight: 1
 --- !u!64 &200461954537089440
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2519,8 +2238,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.30451506, y: 0.6415948, z: 0.63600737, w: -0.30186313}
-  m_LocalPosition: {x: 4.827865, y: -3.9403043, z: 0.054508723}
+  m_LocalRotation: {x: 0.6774135, y: -0.5467912, z: -0.30906427, w: 0.3828964}
+  m_LocalPosition: {x: 6.1102433, y: 1.3189397, z: 3.7629304}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2603,7 +2322,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -129.2199
+    Value: -77.81918
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2613,7 +2332,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -8.130576
+    Value: 42.561047
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
