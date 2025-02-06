@@ -47,7 +47,9 @@ public class HelicopterController : MonoBehaviour
     private float spinDeceleration = 1.2f;
     
     [SerializeField, Tooltip("The torque to be multiplied per frame.")] 
-    private float spinAcceleration = 1.02f;
+    private float tailSpinAcceleration = 1.2f;
+    [SerializeField, Tooltip("The torque to be multiplied per frame.")] 
+    private float mainSpinAcceleration = 1.02f;
     
     private float currentMainSpinRate = 0;
     private float currentTailSpinRate = 0;
@@ -78,6 +80,9 @@ public class HelicopterController : MonoBehaviour
     [Header("Gyro Control")]
     [SerializeField]
     private float gyroPower = 200;
+    
+    [SerializeField, Tooltip("Multiplier to be applied to the roll gyro control.")]
+    private float rollDamping = .4f;
     
     [SerializeField]
     private float gyroAssistStrength = .2f;
@@ -152,9 +157,12 @@ public class HelicopterController : MonoBehaviour
     private void GyroControl()
     {
         Vector2 input = inputManager.moveInput;
-
         Vector3 velocityToAdd = new();
-        velocityToAdd.x = input.x * gyroPower;
+        
+        // Roll
+        velocityToAdd.y = input.x * gyroPower * rollDamping;
+        
+        // Pitch
         velocityToAdd.z = -input.y * gyroPower;
         heliBody.AddRelativeTorque(velocityToAdd);
         
@@ -215,8 +223,8 @@ public class HelicopterController : MonoBehaviour
 
         // Accelerate the blades.
         // Clamp the max spin speed
-        currentMainSpinRate = Math.Min(currentMainSpinRate * spinAcceleration, maxMainSpinRate);
-        currentTailSpinRate = Math.Min(currentTailSpinRate * spinAcceleration, maxTailSpinRate);
+        currentMainSpinRate = Math.Min(currentMainSpinRate * mainSpinAcceleration, maxMainSpinRate);
+        currentTailSpinRate = Math.Min(currentTailSpinRate * tailSpinAcceleration, maxTailSpinRate);
         
         // Add torque... Clamp its angular velocity
         mainBladeRb.AddRelativeTorque(mainSpinAxis * (currentMainSpinRate));
