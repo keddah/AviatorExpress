@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b20f1faef7f304c974337ce5ac8437, type: 3}
+  m_Name: Plane
+  m_EditorClassIdentifier: 
+  aviationType: 1
+  mainPropellerRadius: 1
+  maxMainPropellerAccelSpinRate: 360
+  maxMainPropellerIdleSpinRate: 195
+  maxMainPropellerDecelSpinRate: 170
+  mainPropellerSpinAccel: 1.01
+  mainPropellerSpinDecel: 1.0005
+  propellerPowerScaling: 0.1
+  showTailPropeller: 1
+  tailPropellerRadius: 0.4
+  tailPropellerSpinAccel: 1.2
+  tailPropellerSpinDecel: 1.2
+  showGyro: 1
+  gyroPower: 2000
+  gyroAssistStrength: 0.8
+  stabilisationStrength: 1000
+  rollDamping: 0.4
+  liftCoefficient: 1.8
+  wingspan: 14
+  showWingSectionAngles: 1
+  maxAileronAngle: 75
+  maxElevatorAngle: 45
+  maxFlapAngle: 80
+  minFlapAngle: -60
+  maxRudderAngle: 60
+  showWingSectionSpeeds: 1
+  aileronSpeed: 1.2
+  elevatorSpeed: 1.35
+  flapSpeed: 7.5
+  rudderSpeed: 5
+  showWingSectionNeutralSpeeds: 0
+  aileronToNeutralSpeed: 6
+  elevatorToNeutralSpeed: 3
+  flapToNeutralSpeed: 3
+  rudderToNeutralSpeed: 6
+  showWingSpans: 0
+  aileronSpan: 0.6
+  elevatorSpan: 3.8
+  flapSpan: 0.6
+  rudderSpan: 1.8
+  showWingChords: 0
+  rudderChord: 0.4
+  elevatorChord: 0.7
+  aileronChord: 0.3
+  flapChord: 0.3

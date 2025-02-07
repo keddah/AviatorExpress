@@ -17,9 +17,6 @@ public class HelicopterController : MonoBehaviour
     [SerializeField] private float mainBladeRadius = 22.5f;
     [SerializeField] private float tailBladeRadius = 5f;
     
-    [FormerlySerializedAs("maxAccelerationSpinRate")]
-    [FormerlySerializedAs("maxSpinRate")]
-    [FormerlySerializedAs("spinRate")]
     [Space]
     
     [Header("Spin Rate")]
@@ -43,7 +40,6 @@ public class HelicopterController : MonoBehaviour
     private float maxTailSpinRate;
     private bool turningLeft;
     
-    [SerializeField, Tooltip("The torque to multiplied per frame.")] 
     private float spinDeceleration = 1.2f;
     
     [SerializeField, Tooltip("The torque to be multiplied per frame.")] 

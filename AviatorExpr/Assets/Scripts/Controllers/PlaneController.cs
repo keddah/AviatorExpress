@@ -104,7 +104,7 @@ public class PlaneController : MonoBehaviour
     private float elevatorToNeutralForce = 10;
     
     [SerializeField]
-    private float propellerPowerScaling = 1f;    
+    private float propellerPowerScaling = .1f;    
     private float altitude;
 
     [SerializeField, Tooltip("The forward axis for the plane parts (rudder, ailerons, etc...")] 
