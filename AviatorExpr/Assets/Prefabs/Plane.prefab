@@ -1683,10 +1683,11 @@ MonoBehaviour:
   propellerRadius: 1
   maxPropellerAccelSpinRate: 360
   maxPropellerIdleSpinRate: 195
+  maxPropellerDecelSpinRate: 170
   propellerSpinAxis: {x: 0, y: 1, z: 0}
   propellerSpinAccel: 1.01
   propellerSpinDecel: 0.9
-  maxAileronAngle: 60
+  maxAileronAngle: 75
   maxFlapAngle: 80
   minFlapAngle: -60
   maxRudderAngle: 60
@@ -1694,7 +1695,7 @@ MonoBehaviour:
   rudderPower: 5
   aileronPower: 1.2
   flapPower: 7.5
-  elevatorPower: 1.5
+  elevatorPower: 1.35
   rudderToNeutralForce: 6
   aileronToNeutralForce: 6
   flapToNeutralForce: 3
@@ -2266,8 +2267,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70921046, y: -0.067766756, z: -0.066748165, w: 0.6985506}
-  m_LocalPosition: {x: 1.1875653, y: 6.158536, z: 0.09474461}
+  m_LocalRotation: {x: 0.313952, y: 0.637366, z: 0.6312748, w: 0.3109516}
+  m_LocalPosition: {x: -4.945349, y: -3.80189, z: 0.05990175}
   m_LocalScale: {x: 0.76923066, y: 0.7692307, z: 0.7692309}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2350,7 +2351,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -10.9145155
+    Value: 127.55238
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2360,7 +2361,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -6.860098
+    Value: -7.9553094
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0

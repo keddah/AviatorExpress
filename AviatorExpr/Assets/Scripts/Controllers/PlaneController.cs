@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -43,6 +44,9 @@ public class PlaneController : MonoBehaviour
     
     [SerializeField] 
     private float maxPropellerIdleSpinRate = 210;
+    
+    [SerializeField] 
+    private float maxPropellerDecelSpinRate = 170;
     
     private float propellerSpinRate;
 
@@ -135,7 +139,7 @@ public class PlaneController : MonoBehaviour
         planeRb = plane.GetComponent<Rigidbody>();
         
         propellerRb = propeller.GetComponent<Rigidbody>();
-        propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 50;
+        propellerRb.maxAngularVelocity = maxPropellerAccelSpinRate + 5;
         
         planeRb.centerOfMass = centerMass.transform.localPosition;
 
@@ -179,7 +183,6 @@ public class PlaneController : MonoBehaviour
         RollControl();
         PitchControl();
         
-        // For braking/taking off
         FlapControl();
         
         SpinPropeller();
@@ -195,14 +198,16 @@ public class PlaneController : MonoBehaviour
 
     private void ThrottleControl()
     {
-        maxPropellerSpinRate = inputManager.throttleUpPressed ? maxPropellerAccelSpinRate : maxPropellerIdleSpinRate;
-        propellerRb.maxAngularVelocity = maxPropellerSpinRate + 5;
+        if (inputManager.throttleDownPressed) maxPropellerSpinRate = maxPropellerDecelSpinRate;
+        else if (inputManager.throttleUpPressed) maxPropellerSpinRate = maxPropellerAccelSpinRate;
+        else maxPropellerSpinRate = maxPropellerIdleSpinRate;
+        propellerRb.maxAngularVelocity = math.lerp(propellerRb.maxAngularVelocity, maxPropellerSpinRate + 5, Time.deltaTime * propellerSpinDecel);
     }
 
     private void FlapControl()
     {
         // Reset to neutral position when there's no input
-        if (!inputManager.throttleDownPressed && !inputManager.brakePressed && !inputManager.takeOffPressed)
+        if (!inputManager.brakePressed && !inputManager.takeOffPressed)
         {
             for(var i = 0; i < flaps.Length; i++)
             {
@@ -211,12 +216,13 @@ public class PlaneController : MonoBehaviour
             return;
         }
         
-        bool brake = inputManager.throttleDownPressed || inputManager.brakePressed;
+        // Either pull the flap up or down
+        bool up = inputManager.brakePressed;
         foreach (GameObject flap in flaps)
         {
             // brake makes the flaps tip upwards
             // Otherwise it tips downwards to assist with takeoffs
-            flap.transform.localRotation = Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler((brake ? maxFlapAngle - 90 : minFlapAngle - 90), 0, 0), Time.deltaTime * flapPower);
+            flap.transform.localRotation = Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler((up ? maxFlapAngle - 90 : minFlapAngle - 90), 0, 0), Time.deltaTime * flapPower);
         }
     }
     
@@ -312,8 +318,8 @@ public class PlaneController : MonoBehaviour
         
         Vector3 airflow = -velocity.normalized;
         Vector3 chordline = sectionBody.transform.forward;
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
     
@@ -322,7 +328,7 @@ public class PlaneController : MonoBehaviour
         float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
         
         planeRb.AddForceAtPosition(liftForce * liftDirection, sectionBody.transform.position);
     }
@@ -335,8 +341,8 @@ public class PlaneController : MonoBehaviour
         Vector3 airflow = -velocity.normalized;  
         Vector3 chordline = -sectionBody.transform.up;  
 
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.magenta);
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.yellow);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.magenta);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.yellow);
 
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
 
@@ -348,7 +354,7 @@ public class PlaneController : MonoBehaviour
         float liftForce = liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
 
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
         // sectionBody.AddForce(liftDirection * (liftForce * 10));
         planeRb.AddForceAtPosition(liftDirection * (liftForce), sectionBody.transform.position);
