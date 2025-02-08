@@ -180,9 +180,6 @@ public class HelicopterController : MonoBehaviour
         if (inputManager.throttleUpPressed) maxMainSpinRate = maxMainAccelSpinRate;
         else if (inputManager.throttleDownPressed) maxMainSpinRate = maxMainDecelSpinRate;
         else maxMainSpinRate = maxMainHoverSpinRate;
-        
-        // print("max: " + maxSpinRate);
-        // print("current: " + mainBladeSpeed);
     }
     
     private void Lift()

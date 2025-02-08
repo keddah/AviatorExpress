@@ -42,6 +42,9 @@ public class EditorScript : Editor
                     aviator.tailPropellerSpinAccel = EditorGUILayout.FloatField("Tail Propeller Acceleration", aviator.tailPropellerSpinAccel);
                     aviator.tailPropellerSpinDecel = EditorGUILayout.FloatField("Tail Propeller Deceleration", aviator.tailPropellerSpinDecel);
                     EditorGUILayout.Space();
+                    
+                    aviator.maxTailPropellerAccelSpinRate = EditorGUILayout.FloatField("Max Tail Propeller Acceleration Spin Rate", aviator.maxTailPropellerAccelSpinRate);
+                    aviator.maxTailPropellerIdleSpinRate = EditorGUILayout.FloatField("Max Tail Propeller Idle Spin Rate", aviator.maxTailPropellerIdleSpinRate);
                     EditorGUI.indentLevel--;
                 }
                 

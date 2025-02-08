@@ -32,6 +32,10 @@ public class AviatorStats : ScriptableObject
     public float tailPropellerSpinAccel = 1.02f;
     public float tailPropellerSpinDecel = .09f;
     
+    public float maxTailPropellerAccelSpinRate = 600;
+    public float maxTailPropellerIdleSpinRate = 30;
+    
+    
     // Gyro
     [HideInInspector] public bool showGyro = true;
     public float gyroPower = 2000;
