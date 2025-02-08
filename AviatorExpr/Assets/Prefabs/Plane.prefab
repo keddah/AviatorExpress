@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 1114216178900048319}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.041124344, y: -0.21999992, z: 2.04}
+  m_LocalPosition: {x: -0.041124344, y: -0.21999992, z: 1.855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 797229510421307479}
   m_Layer: 0
   m_Name: LeftFlap
-  m_TagString: Untagged
+  m_TagString: Flap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 9088041201234984368}
   m_Layer: 0
   m_Name: Rudder
-  m_TagString: Untagged
+  m_TagString: Rudder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -878,7 +878,7 @@ GameObject:
   - component: {fileID: 400312295422246149}
   m_Layer: 0
   m_Name: RightAileron
-  m_TagString: Untagged
+  m_TagString: Aileron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 1599349985029545148}
   m_Layer: 0
   m_Name: Elevator
-  m_TagString: Untagged
+  m_TagString: Elevator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1648,7 +1648,7 @@ GameObject:
   - component: {fileID: 5162570137695084359}
   m_Layer: 0
   m_Name: RightFlap
-  m_TagString: Untagged
+  m_TagString: Flap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1750,8 +1750,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9691481, z: -0, w: -0.2464792}
-  m_LocalPosition: {x: 2.9399981, y: 0, z: 5.40613}
+  m_LocalRotation: {x: -0, y: 0.91117054, z: -0, w: -0.41202942}
+  m_LocalPosition: {x: 4.6206656, y: 0, z: 4.064391}
   m_LocalScale: {x: 0.7692309, y: 0.7692308, z: 0.76923096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1834,7 +1834,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -151.46146
+    Value: -131.33524
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -2089,7 +2089,7 @@ GameObject:
   - component: {fileID: 4851306671216617819}
   m_Layer: 0
   m_Name: LeftAileron
-  m_TagString: Untagged
+  m_TagString: Aileron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

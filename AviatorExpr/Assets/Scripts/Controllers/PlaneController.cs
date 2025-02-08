@@ -103,7 +103,7 @@ public class Plane : AviatorController
 
         bool left = inputManager.leftPressed;
         rudder.transform.localRotation = 
-            Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, (left ? stats.maxRudderAngle : -stats.maxRudderAngle), 0), Time.deltaTime * stats.rudderSpeed);
+            Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, (left ? -stats.maxRudderAngle : stats.maxRudderAngle), 0), Time.deltaTime * stats.rudderSpeed);
     }
 
     protected override void RollControl()
@@ -123,8 +123,8 @@ public class Plane : AviatorController
         GameObject rightAileron = ailerons[1];
         
         float targetAngle = stats.maxAileronAngle * input;
-        Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
-        Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(targetAngle, Vector3.right);
+        Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(targetAngle, Vector3.right);
+        Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
 
         leftAileron.transform.localRotation = Quaternion.Lerp(leftAileron.transform.localRotation, leftTargetRotation, Time.deltaTime * stats.aileronSpeed);
         rightAileron.transform.localRotation = Quaternion.Lerp(rightAileron.transform.localRotation, rightTargetRotation, Time.deltaTime * stats.aileronSpeed);
@@ -141,7 +141,7 @@ public class Plane : AviatorController
             return;
         }
 
-        float targetAngle = stats.maxElevatorAngle * (invertPitch? -input : input);
+        float targetAngle = stats.maxElevatorAngle * (invertPitch? input : -input);
         elevator.transform.localRotation = Quaternion.Lerp(elevator.transform.localRotation, Quaternion.Euler(targetAngle, 0, 0), Time.deltaTime * stats.elevatorSpeed);
     }
 
@@ -183,6 +183,7 @@ public class Plane : AviatorController
         Vector3 airflow = -velocity.normalized;  
         Vector3 chordline = GetForwardAxis(wingSectionChordlineAxis, sectionBody.transform, true);  
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
+        if (sectionBody.CompareTag("Aileron")) angleOfAttack *= .5f;
 
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
@@ -193,12 +194,15 @@ public class Plane : AviatorController
 
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
+        if (sectionBody.CompareTag("Rudder")) liftDirection = chordline;
+
         Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
-        mainRb.AddForceAtPosition(liftDirection * (liftForce * stats.liftCoefficient), sectionBody.transform.position);
+        mainRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position);
     }
 
 
+    // ASSIGN THE PLANE SECTIONS...
     private void GetSectionDimensions(string section, ref float span, ref float chordLength)
     {
         switch (section)

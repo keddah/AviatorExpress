@@ -51,6 +51,7 @@ public class AviatorStats : ScriptableObject
     
     // Angles
     [HideInInspector] public bool showWingSectionAngles = true;
+    public float angleDampener = .75f;
     public float maxAileronAngle = 75;
     public float maxElevatorAngle = 45;
     public float maxFlapAngle = 80;

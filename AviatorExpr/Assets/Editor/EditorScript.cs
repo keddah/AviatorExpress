@@ -73,6 +73,9 @@ public class EditorScript : Editor
                 if (aviator.showWingSectionAngles)
                 {
                     EditorGUI.indentLevel++;
+                    aviator.angleDampener = EditorGUILayout.FloatField(new GUIContent("Angle Dampening", 
+                        "Multiplier to be applied to the angle of attack to make the angle of attack more/less of a factor for plane sections"), aviator.angleDampener);
+                    
                     aviator.maxAileronAngle = EditorGUILayout.FloatField("Max Aileron Angle", aviator.maxAileronAngle);
                     aviator.maxElevatorAngle = EditorGUILayout.FloatField("Max Elevator Angle", aviator.maxElevatorAngle);
                     aviator.maxFlapAngle = EditorGUILayout.FloatField("Max Flap Angle", aviator.maxFlapAngle);
