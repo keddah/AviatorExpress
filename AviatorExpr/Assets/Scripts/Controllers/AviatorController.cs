@@ -5,10 +5,9 @@ public class AviatorController : MonoBehaviour
 {
     [SerializeField] 
     protected AviatorStats stats;
-    
-    [Space]
-    
-    [SerializeField] 
+
+    [Space] 
+    [SerializeField]
     protected GameObject mainObject;
     
     [SerializeField] 
@@ -17,7 +16,7 @@ public class AviatorController : MonoBehaviour
     [SerializeField] 
     protected GameObject centerMass;
 
-    protected Rigidbody mainRb;
+    public Rigidbody mainRb { get; private set; }
     protected Rigidbody mainPropellerRb;
 
     
