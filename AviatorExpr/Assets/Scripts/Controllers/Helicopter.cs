@@ -25,17 +25,13 @@ public class Helicopter : AviatorController
     {
         base.Awake();
         
-        maxPropellerSpinRate = stats.maxMainPropellerIdleSpinRate;
-        
         tailBladeRb = tailBlade.GetComponent<Rigidbody>();
-        
-        mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
-        tailBladeRb.maxAngularVelocity = stats.maxTailPropellerAccelSpinRate + 5;
     }
 
     protected override void Start()
     {
         base.Start();
+        tailBladeRb.maxAngularVelocity = stats.maxTailPropellerAccelSpinRate + 5;
     }
 
     protected override void Update()

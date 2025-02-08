@@ -24,36 +24,38 @@ MonoBehaviour:
   tailPropellerRadius: 0.4
   tailPropellerSpinAccel: 1.2
   tailPropellerSpinDecel: 1.2
+  maxTailPropellerAccelSpinRate: 600
+  maxTailPropellerIdleSpinRate: 30
   showGyro: 1
   gyroPower: 2000
   gyroAssistStrength: 0.8
   stabilisationStrength: 1000
   rollDamping: 0.4
   liftCoefficient: 1.5
+  wingspan: 14
   showWingSectionAngles: 0
   maxAileronAngle: 170
+  maxElevatorAngle: 20
   maxFlapAngle: 80
   minFlapAngle: -60
   maxRudderAngle: 30
-  maxElevatorAngle: 20
   showWingSectionSpeeds: 0
-  rudderSpeed: 2
   aileronSpeed: 2
-  flapSpeed: 2
   elevatorSpeed: 2
+  flapSpeed: 2
+  rudderSpeed: 2
   showWingSectionNeutralSpeeds: 0
-  rudderToNeutralSpeed: 2
   aileronToNeutralSpeed: 2
-  flapToNeutralSpeed: 2
   elevatorToNeutralSpeed: 2
+  flapToNeutralSpeed: 2
+  rudderToNeutralSpeed: 2
   showWingSpans: 0
   aileronSpan: 0.6
-  flapSpan: 0.6
   elevatorSpan: 3.8
+  flapSpan: 0.6
   rudderSpan: 1.8
   showWingChords: 0
   rudderChord: 0.4
   elevatorChord: 0.7
   aileronChord: 0.3
   flapChord: 0.3
-  wingspan: 14

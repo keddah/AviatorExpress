@@ -60,7 +60,7 @@ public class AviatorController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
-        
+        mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
     }
 
     // Update is called once per frame
@@ -87,6 +87,8 @@ public class AviatorController : MonoBehaviour
         if (inputManager.throttleUpPressed) maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
         else if (inputManager.throttleDownPressed) maxPropellerSpinRate = stats.maxMainPropellerDecelSpinRate;
         else maxPropellerSpinRate = stats.maxMainPropellerIdleSpinRate;
+        
+        print(maxPropellerSpinRate);
     }
     
     protected virtual void SpinPropeller()
