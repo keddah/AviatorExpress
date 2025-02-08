@@ -1597,8 +1597,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4147224302920318909}
   - component: {fileID: 823791501693721922}
-  - component: {fileID: 3900012471936221662}
   - component: {fileID: 6626265020268962062}
+  - component: {fileID: 8431143656637356895}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1652,59 +1652,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3900012471936221662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7102717888511806912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09cfce23888db6b43a29e80d96908502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plane: {fileID: 6485764722896106548}
-  rudder: {fileID: 2806959364865289056}
-  elevator: {fileID: 5542938659860268600}
-  wings:
-  - {fileID: 2814182831680340760}
-  - {fileID: 8540197716735734188}
-  - {fileID: 2470760714834176628}
-  - {fileID: 8084509745227965234}
-  flaps:
-  - {fileID: 2635258008640296764}
-  - {fileID: 7435204085788768851}
-  ailerons:
-  - {fileID: 8416584648784777600}
-  - {fileID: 4581248686392796806}
-  propeller: {fileID: 262194774470468340}
-  centerMass: {fileID: 1114216178900048319}
-  propellerRadius: 1
-  maxPropellerAccelSpinRate: 360
-  maxPropellerIdleSpinRate: 195
-  maxPropellerDecelSpinRate: 170
-  propellerSpinAxis: {x: 0, y: 1, z: 0}
-  propellerSpinAccel: 1.01
-  propellerSpinDecel: 0.9
-  maxAileronAngle: 75
-  maxFlapAngle: 80
-  minFlapAngle: -60
-  maxRudderAngle: 60
-  maxElevatorAngle: 45
-  rudderPower: 5
-  aileronPower: 1.2
-  flapPower: 7.5
-  elevatorPower: 1.35
-  rudderToNeutralForce: 6
-  aileronToNeutralForce: 6
-  flapToNeutralForce: 3
-  elevatorToNeutralForce: 3
-  propellerPowerScaling: 0.1
-  chordlineAxis: {x: 0, y: 1, z: 0}
-  flipChordlineAxis: 1
-  wingspan: 14
-  liftCoefficient: 1.8
 --- !u!114 &6626265020268962062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,6 +1665,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonMapping: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!114 &8431143656637356895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102717888511806912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67482e263942fad4187f98cd391e274a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 1b270ea85d41ac749a0ff40732d5e759, type: 2}
+  mainObject: {fileID: 6485764722896106548}
+  mainPropeller: {fileID: 262194774470468340}
+  centerMass: {fileID: 1114216178900048319}
+  invertPitch: 1
+  mainPropellerSpinAxis: {x: 0, y: 1, z: 0}
+  rudder: {fileID: 2806959364865289056}
+  elevator: {fileID: 5542938659860268600}
+  wings:
+  - {fileID: 2814182831680340760}
+  - {fileID: 8540197716735734188}
+  - {fileID: 2470760714834176628}
+  - {fileID: 8084509745227965234}
+  flaps:
+  - {fileID: 2635258008640296764}
+  - {fileID: 7435204085788768851}
+  ailerons:
+  - {fileID: 8416584648784777600}
+  - {fileID: 4581248686392796806}
 --- !u!1 &7435204085788768851
 GameObject:
   m_ObjectHideFlags: 0
