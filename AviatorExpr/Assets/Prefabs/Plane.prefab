@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 1114216178900048319}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.041124344, y: -0.21999992, z: 1.855}
+  m_LocalPosition: {x: -0.041124344, y: -0.21999992, z: 1.65275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -400,7 +400,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3074630064094552127}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -545,10 +545,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.18
   m_SuspensionSpring:
-    spring: 3000
-    damper: 2000
+    spring: 8000
+    damper: 12000
     targetPosition: 1
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.26
   m_ForceAppPointDistance: 0.45
   m_Mass: 7.45
   m_WheelDampingRate: 0.25
@@ -850,7 +850,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3454081038042958163}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -995,10 +995,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.18
   m_SuspensionSpring:
-    spring: 3000
-    damper: 2000
+    spring: 8000
+    damper: 12000
     targetPosition: 1
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.26
   m_ForceAppPointDistance: 0.45
   m_Mass: 7.45
   m_WheelDampingRate: 0.25
@@ -1153,10 +1153,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.18
   m_SuspensionSpring:
-    spring: 3000
-    damper: 2000
+    spring: 8000
+    damper: 12000
     targetPosition: 1
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.26
   m_ForceAppPointDistance: 0.45
   m_Mass: 7.45
   m_WheelDampingRate: 0.25
@@ -1399,7 +1399,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5971967308648857215}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1509,7 +1509,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6861322600427018284}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1750,8 +1750,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.91117054, z: -0, w: -0.41202942}
-  m_LocalPosition: {x: 4.6206656, y: 0, z: 4.064391}
+  m_LocalRotation: {x: 0.11927851, y: -0.81822246, z: 0.18359685, w: 0.5315797}
+  m_LocalPosition: {x: 5.780609, y: 2.9897168, z: 2.5710769}
   m_LocalScale: {x: 0.7692309, y: 0.7692308, z: 0.76923096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1834,7 +1834,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: -131.33524
+    Value: -113.978355
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1844,7 +1844,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -10
+    Value: 31.947838
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -2061,7 +2061,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8706393492542646649}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2343,7 +2343,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9108038301056203751}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e50043ecd9dce2c4bb25b92383e99376, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

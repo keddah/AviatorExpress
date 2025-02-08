@@ -160,8 +160,8 @@ public class Plane : AviatorController
         
         Vector3 airflow = -velocity.normalized;
         Vector3 chordline = GetForwardAxis(wingChordlineAxis, sectionBody.transform, false);
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
     
@@ -170,7 +170,7 @@ public class Plane : AviatorController
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
         
         mainRb.AddForceAtPosition(liftForce * liftDirection, sectionBody.transform.position);
     }
@@ -185,8 +185,8 @@ public class Plane : AviatorController
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
         if (sectionBody.CompareTag("Aileron")) angleOfAttack *= .5f;
 
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float chordLength = 0, sectionSpan = 0;
         GetSectionDimensions(sectionBody.tag, ref sectionSpan, ref chordLength);
@@ -196,7 +196,7 @@ public class Plane : AviatorController
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         if (sectionBody.CompareTag("Rudder")) liftDirection = chordline;
 
-        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
+        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
         mainRb.AddForceAtPosition(liftDirection * liftForce, sectionBody.transform.position);
     }
