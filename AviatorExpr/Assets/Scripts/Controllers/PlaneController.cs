@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class Plane : AviatorController
 {
+    [Space] 
+    [SerializeField] 
+    private Vector3 wingSectionChordlineAxis = new (0,0,1);
+    
+    [SerializeField] 
+    private Vector3 wingChordlineAxis = new (0,1,0);
+    
+    [Space]
+    
     [Header("Plane Parts")]
     [SerializeField] private GameObject rudder;
 
@@ -15,13 +24,17 @@ public class Plane : AviatorController
     [SerializeField] private GameObject[] ailerons;
 
     private List<GameObject> aeroParts = new();
-    
+
+    private Quaternion rudderDefaultRot;
     private Quaternion[] aileronDefaultRots = new Quaternion[2];
     private Quaternion[] flapDefaultRots = new Quaternion[2];
+
     
     protected override void Awake()
     {
         base.Awake();
+
+        rudderDefaultRot = rudder.transform.localRotation;
         
         // Add all the wing sections list
         for (var i = 0; i < flaps.Length; i++)
@@ -75,7 +88,7 @@ public class Plane : AviatorController
             // brake makes the flaps tip upwards
             // Otherwise it tips downwards to assist with takeoffs
             flap.transform.localRotation = 
-                Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler((up ? stats.maxFlapAngle - 90 : stats.minFlapAngle - 90), 0, 0), Time.deltaTime * stats.flapSpeed);
+                Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler(up ? stats.minFlapAngle + 90 : stats.maxFlapAngle + 90, 0, 0), Time.deltaTime * stats.flapSpeed);
         }
     }
 
@@ -84,13 +97,13 @@ public class Plane : AviatorController
         // Reset to normal position
         if (!inputManager.leftPressed && !inputManager.rightPressed)
         {
-            rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, Quaternion.identity, Time.deltaTime * stats.rudderToNeutralSpeed);
+            rudder.transform.localRotation = Quaternion.Lerp(rudder.transform.localRotation, rudderDefaultRot, Time.deltaTime * stats.rudderToNeutralSpeed);
             return;
         }
 
         bool left = inputManager.leftPressed;
         rudder.transform.localRotation = 
-            Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, 0, (left ? stats.maxRudderAngle : -stats.maxRudderAngle)), Time.deltaTime * stats.rudderSpeed);
+            Quaternion.Lerp(rudder.transform.localRotation, Quaternion.Euler(0, (left ? stats.maxRudderAngle : -stats.maxRudderAngle), 0), Time.deltaTime * stats.rudderSpeed);
     }
 
     protected override void RollControl()
@@ -146,9 +159,9 @@ public class Plane : AviatorController
         float speed = velocity.magnitude;
         
         Vector3 airflow = -velocity.normalized;
-        Vector3 chordline = sectionBody.transform.forward;
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+        Vector3 chordline = GetForwardAxis(wingChordlineAxis, sectionBody.transform, false);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
     
@@ -157,7 +170,7 @@ public class Plane : AviatorController
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
         
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.cyan);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
         
         mainRb.AddForceAtPosition(liftForce * liftDirection, sectionBody.transform.position);
     }
@@ -168,25 +181,21 @@ public class Plane : AviatorController
         float speed = velocity.magnitude;
     
         Vector3 airflow = -velocity.normalized;  
-        Vector3 chordline = -sectionBody.transform.up;  
-
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.magenta);
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.yellow);
-
+        Vector3 chordline = GetForwardAxis(wingSectionChordlineAxis, sectionBody.transform, true);  
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
 
-        float chordLength = 0;
-        float sectionSpan = 0;
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
+
+        float chordLength = 0, sectionSpan = 0;
         GetSectionDimensions(sectionBody.tag, ref sectionSpan, ref chordLength);
         float wingArea = AeroPhysics.FindWingSectionArea(sectionSpan, chordLength);
 
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
-
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
-        // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
+        Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
     
-        // sectionBody.AddForce(liftDirection * (liftForce * 10));
-        mainRb.AddForceAtPosition(liftDirection * (liftForce), sectionBody.transform.position);
+        mainRb.AddForceAtPosition(liftDirection * (liftForce * stats.liftCoefficient), sectionBody.transform.position);
     }
 
 
@@ -215,13 +224,14 @@ public class Plane : AviatorController
                 break;
         }
     }
-    
-    private Vector3 GetPropellerForwardAxis(bool flip)
+
+    // Gets the forward axis depending on the target axis
+    private static Vector3 GetForwardAxis(Vector3 targetAxis, Transform obj, bool flip = false)
     {
         Vector3 localForward;
-        if (mainPropellerSpinAxis.x != 0) localForward = mainPropellerRb.transform.right;
-        else if (mainPropellerSpinAxis.y != 0) localForward = mainPropellerRb.transform.up;
-        else localForward = mainPropellerRb.transform.forward;
+        if (targetAxis.x != 0) localForward = obj.right;
+        else if (targetAxis.y != 0) localForward = obj.up;
+        else localForward = obj.forward;
 
         return flip? -localForward : localForward;
     }

@@ -26,6 +26,9 @@ public class Helicopter : AviatorController
         base.Awake();
         
         tailBladeRb = tailBlade.GetComponent<Rigidbody>();
+        
+        HingeJoint propellerHinge = tailBlade.GetComponent<HingeJoint>();
+        propellerHinge.axis = tailPropellerSpinAxis;
     }
 
     protected override void Start()

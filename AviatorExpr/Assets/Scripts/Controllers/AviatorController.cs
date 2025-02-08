@@ -55,6 +55,9 @@ public class AviatorController : MonoBehaviour
         mainPropellerRb = mainPropeller.GetComponent<Rigidbody>();
 
         mainRb.centerOfMass = centerMass.transform.localPosition;
+
+        HingeJoint propellerHinge = mainPropeller.GetComponent<HingeJoint>();
+        propellerHinge.axis = mainPropellerSpinAxis;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -82,13 +85,11 @@ public class AviatorController : MonoBehaviour
         YawControl();
     }
 
-    protected void ThrottleControl()
+    private void ThrottleControl()
     {
         if (inputManager.throttleUpPressed) maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
         else if (inputManager.throttleDownPressed) maxPropellerSpinRate = stats.maxMainPropellerDecelSpinRate;
         else maxPropellerSpinRate = stats.maxMainPropellerIdleSpinRate;
-        
-        print(maxPropellerSpinRate);
     }
     
     protected virtual void SpinPropeller()
@@ -100,8 +101,7 @@ public class AviatorController : MonoBehaviour
             mainPropellerSpinRate -= mainPropellerSpinRate * stats.mainPropellerSpinDecel;
             mainPropellerSpinRate = Math.Max(0, mainPropellerSpinRate);
 
-            // Tail blade
-            mainPropellerRb.AddRelativeTorque(mainPropellerSpinAxis * (mainPropellerSpinRate));
+            mainPropellerRb.AddRelativeTorque(mainPropellerSpinAxis * mainPropellerSpinRate);
             return;
         }
 
@@ -111,7 +111,7 @@ public class AviatorController : MonoBehaviour
         
         // Add torque... Clamp its angular velocity
         mainPropellerRb.AddRelativeTorque(mainPropellerSpinAxis * (mainPropellerSpinRate));
-        mainPropellerRb.angularVelocity = Math.Min(mainPropellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * mainPropellerRb.transform.up;
+        mainPropellerRb.angularVelocity = Math.Min(mainPropellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * GetPropellerForwardAxis(false);
     }
     
     protected virtual void OnStartEngine()
@@ -138,5 +138,15 @@ public class AviatorController : MonoBehaviour
     protected virtual void RollControl()
     {
         
+    }
+    
+    protected Vector3 GetPropellerForwardAxis(bool flip = false)
+    {
+        Vector3 localForward;
+        if (mainPropellerSpinAxis.x != 0) localForward = mainPropellerRb.transform.right;
+        else if (mainPropellerSpinAxis.y != 0) localForward = mainPropellerRb.transform.up;
+        else localForward = mainPropellerRb.transform.forward;
+
+        return flip? -localForward : localForward;
     }
 }

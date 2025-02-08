@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 94
+  controlID: 39
   draggingID: 0
 --- !u!114 &3
 MonoBehaviour:
@@ -71,12 +71,12 @@ MonoBehaviour:
     height: 933
   m_MinSize: {x: 276, y: 76}
   m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 12}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
   - {fileID: 12}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -301,8 +301,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1450
-    y: 24
+    x: 1449
+    y: 79
     width: 470
     height: 907
   m_SerializedDataModeController:
@@ -322,7 +322,7 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 110626
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -376,7 +376,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/ScriptableObjects/Objects
+    - Assets/Prefabs
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -386,16 +386,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/ScriptableObjects/Objects
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 63}
-    m_SelectedIDs: 0cc00000
-    m_LastClickedID: 49164
-    m_ExpandedIDs: 00000000eaab0000ecab0000eeab0000f0ab0000
+    m_SelectedIDs: 8ce20000
+    m_LastClickedID: 57996
+    m_ExpandedIDs: 00000000f0ab0000f2ab0000f4ab0000f6ab0000f8ab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -424,7 +424,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000eaab0000ecab0000eeab0000f0ab0000
+    m_ExpandedIDs: 00000000f0ab0000f2ab0000f4ab0000f6ab0000f8ab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -453,7 +453,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c623000088ab0000
+    m_ExpandedInstanceIDs: c623000088ab00002ae500005ede0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -503,8 +503,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1449
-    y: 79
+    x: 1450
+    y: 24
     width: 470
     height: 907
   m_SerializedDataModeController:
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 50426
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -572,7 +572,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 96c1ffff20fbffff
+      m_ExpandedIDs: b806feffc206feff4055ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1106,9 +1106,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 371.12238, y: 13.097336, z: 270.05945}
+    m_Target: {x: 352.03897, y: 2.6820014, z: 267.2264}
     speed: 2
-    m_Value: {x: 371.12238, y: 13.097336, z: 270.05945}
+    m_Value: {x: 352.03897, y: 2.6820014, z: 267.2264}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1154,20 +1154,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.064873934, y: -0.93225896, z: 0.21228494, w: 0.28613868}
+    m_Target: {x: -0.012242415, y: 0.07538264, z: -0.0013994535, w: -0.9972098}
     speed: 2
-    m_Value: {x: -0.06486564, y: 0.9321398, z: -0.21225782, w: -0.28610212}
+    m_Value: {x: -0.012242415, y: 0.07538265, z: -0.0013994536, w: -0.9972098}
   m_Size:
-    m_Target: 9.18428
+    m_Target: 9.2123165
     speed: 2
-    m_Value: 9.18428
+    m_Value: 9.2123165
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 2
-    m_SpeedNormalized: 1
+    m_Speed: 1.7001503
+    m_SpeedNormalized: 0.85000014
     m_SpeedMin: 0.001
     m_SpeedMax: 2
     m_EasingEnabled: 1
