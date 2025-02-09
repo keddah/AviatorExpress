@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fc7f07d694d59468e35e14d9558c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &5875067992888335541
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d73f7a684386efe4f872fb6cd47ef0f8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
