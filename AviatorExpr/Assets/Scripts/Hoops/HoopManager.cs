@@ -66,4 +66,6 @@ public class HoopManager : MonoBehaviour
         // Move the next hoop to a new location 
         nextHoop.Reposition(pos, rot);
     }
+
+    public HoopScript GetCurrentHoop() { return currentHoop; }
 }
