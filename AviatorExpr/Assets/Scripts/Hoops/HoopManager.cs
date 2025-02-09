@@ -3,7 +3,6 @@ using Random = UnityEngine.Random;
 
 public class HoopManager : MonoBehaviour
 {
-    [SerializeField, Tooltip("Assigned in the level")]
     private AviatorController player;
     private Rigidbody playerBody;
 
@@ -23,16 +22,11 @@ public class HoopManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player = FindAnyObjectByType<AviatorController>();
         playerBody = player.mainRb;
         currentHoop.onCollision += NewHoop;
         
         Init();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void Init()
