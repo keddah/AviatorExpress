@@ -55,8 +55,7 @@ public class HoopManager : MonoBehaviour
     {
         print("new hoop");
         // Move the current hoop to the next hoop 
-        currentHoop.transform.position = nextHoop.transform.position;
-        currentHoop.transform.rotation = nextHoop.transform.rotation;
+        currentHoop.Reposition(nextHoop.transform.position, nextHoop.transform.rotation);
 
         // A random location within a certain angle from the player.
         Vector3 pos = new();
