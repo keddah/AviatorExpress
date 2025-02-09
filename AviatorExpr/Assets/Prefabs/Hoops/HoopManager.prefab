@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9e491ef9a91c54a975694c818b79ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   currentHoop: {fileID: 3901515359503454707}
   nextHoop: {fileID: 446308597245886456}
-  maxSpawnDistance: 600
-  minSpawnDistance: 100
+  maxSpawnDistance: 700
+  minSpawnDistance: 200
+  maxAngle: 60
 --- !u!1001 &6352358440997902051
 PrefabInstance:
   m_ObjectHideFlags: 0

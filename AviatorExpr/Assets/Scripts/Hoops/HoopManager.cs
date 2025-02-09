@@ -18,6 +18,9 @@ public class HoopManager : MonoBehaviour
     private float maxSpawnDistance = 600;
     [SerializeField, Tooltip("The min spawn distance for new hoops.")]
     private float minSpawnDistance = 100;
+
+    [SerializeField] 
+    private float maxAngle = 60;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,8 +43,16 @@ public class HoopManager : MonoBehaviour
 
     void RandomTransform(ref Vector3 randPos, ref Quaternion randRot)
     {
-        Vector3 randDirection = Random.onUnitSphere;
-        randPos = playerBody.transform.position + randDirection * Random.Range(minSpawnDistance, maxSpawnDistance);
+        // Get a random angle in range
+        float randomYaw = Random.Range(-maxAngle, maxAngle);
+        float randomPitch = Random.Range(-maxAngle, maxAngle);
+        Quaternion rotationOffset = Quaternion.Euler(randomPitch, randomYaw, 0);
+
+        // Apply the rotation to get a direction
+        Vector3 randDirection = rotationOffset * -nextHoop.transform.forward;
+        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+
+        randPos = nextHoop.transform.position + randDirection * spawnDistance;
         randRot = playerBody.transform.rotation;
     }
     

@@ -64,6 +64,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6724230675186798714}
+  - {fileID: 5041267428999119813}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7601307485761673088
@@ -465,6 +466,7 @@ GameObject:
   - component: {fileID: 606641048271411396}
   - component: {fileID: 6076038811679735615}
   - component: {fileID: 3662603159527220685}
+  - component: {fileID: 589510293064842239}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -480,8 +482,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6393826, y: 0.61600643, z: -0.34718308, w: 0.30197665}
-  m_LocalPosition: {x: 2.1602194, y: 24.444124, z: 17.315836}
+  m_LocalRotation: {x: -0.4357105, y: -0.4357105, z: -0.5569169, w: 0.5569169}
+  m_LocalPosition: {x: -0.0000034679072, y: -28.236164, z: -7.000017}
   m_LocalScale: {x: 3.6363633, y: 3.6363637, z: 3.6363637}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -508,8 +510,8 @@ MonoBehaviour:
   m_LegacyPriority: 0
   Target:
     TrackingTarget: {fileID: 6724230675186798714}
-    LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
+    LookAtTarget: {fileID: 5041267428999119813}
+    CustomLookAtTarget: 1
   Lens:
     FieldOfView: 95
     OrthographicSize: 5
@@ -529,7 +531,7 @@ MonoBehaviour:
       Curvature: {x: 2, y: 11}
       BarrelClipping: 0.25
       Anamorphism: 0
-  BlendHint: 8
+  BlendHint: 3
 --- !u!114 &7602141217033313707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,8 +546,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 0.2, y: 0.2, z: 0.2}
+    BindingMode: 5
+    PositionDamping: {x: 0.6, y: 2, z: 0.6}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -564,24 +566,24 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 1
   HorizontalAxis:
-    Value: 125.313156
-    Center: 0
+    Value: 0
+    Center: 39.310764
     Range: {x: -180, y: 180}
     Wrap: 1
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 3
+      Time: 0.8
     Restrictions: 0
   VerticalAxis:
-    Value: 1.9800928
+    Value: -10
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 3
+      Time: 0.8
     Restrictions: 0
   RadialAxis:
     Value: 1
@@ -590,8 +592,8 @@ MonoBehaviour:
     Wrap: 0
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 3
+      Time: 0.8
     Restrictions: 0
 --- !u!114 &606641048271411396
 MonoBehaviour:
@@ -616,11 +618,11 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.5}
+  Damping: {x: 0.6, y: 0.6}
   Lookahead:
     Enabled: 0
     Time: 0
-    Smoothing: 0
+    Smoothing: 16.6
     IgnoreY: 0
 --- !u!114 &6076038811679735615
 MonoBehaviour:
@@ -634,10 +636,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Modifiers: []
+  Modifiers:
+  - rid: 3459445328215801918
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3459445328215801918
+      type: {class: CinemachineFreeLookModifier/PositionDampingModifier, ns: Unity.Cinemachine, asm: Unity.Cinemachine}
+      data:
+        Damping:
+          Top: {x: 2, y: 2, z: 2}
+          Bottom: {x: 2, y: 2, z: 2}
 --- !u!114 &3662603159527220685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,6 +705,27 @@ MonoBehaviour:
         DecelTime: 0
   PlayerIndex: -1
   AutoEnableInputs: 1
+--- !u!114 &589510293064842239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082199862772109580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FramingMode: 2
+  FramingSize: 0.8
+  CenterOffset: {x: 0, y: 0}
+  Damping: 4.2
+  SizeAdjustment: 2
+  LateralAdjustment: 0
+  FovRange: {x: 1, y: 100}
+  DollyRange: {x: -100, y: 100}
+  OrthoSizeRange: {x: 1, y: 1000}
 --- !u!1 &7566114758524279232
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +880,58 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &7694343604237647570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5041267428999119813}
+  - component: {fileID: 561770434212722110}
+  m_Layer: 0
+  m_Name: Target Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5041267428999119813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694343604237647570}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071067}
+  m_LocalPosition: {x: -1.2844993, y: 1.3849481, z: -0.19693995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 557731377030159678}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &561770434212722110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7694343604237647570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PositionMode: 0
+  RotationMode: 1
+  UpdateMethod: 2
+  Targets:
+  - Object: {fileID: 6724230675186798714}
+    Weight: 1
+    Radius: 1
+  m_LegacyTargets: []
 --- !u!1 &8467621949563217581
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +944,7 @@ GameObject:
   - component: {fileID: 5138579009959068008}
   - component: {fileID: 2434153562973187557}
   - component: {fileID: 691636147111372665}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1195,7 +1277,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!64 &7338275839702040308
 MeshCollider:
   m_ObjectHideFlags: 0

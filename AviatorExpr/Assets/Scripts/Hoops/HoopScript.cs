@@ -9,12 +9,6 @@ public class HoopScript : MonoBehaviour
     private Rigidbody player;
     [SerializeField] private float lookSpeed = 1;
     
-    public HoopScript(Transform spawnTransform)
-    {
-        transform.position = spawnTransform.position;
-        transform.rotation = spawnTransform.rotation;
-    }
-    
     public event OnCollided onCollision;
     public delegate void OnCollided();
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   mainPropellerRadius: 5.6
   maxMainPropellerAccelSpinRate: 160
   maxMainPropellerIdleSpinRate: 139
-  maxMainPropellerDecelSpinRate: 128
+  maxMainPropellerDecelSpinRate: 100
   mainPropellerSpinAccel: 1.02
   mainPropellerSpinDecel: 1.2
   propellerPowerScaling: 0.01
@@ -34,6 +34,7 @@ MonoBehaviour:
   liftCoefficient: 1.5
   wingspan: 14
   showWingSectionAngles: 0
+  angleDampener: 0.75
   maxAileronAngle: 170
   maxElevatorAngle: 20
   maxFlapAngle: 80

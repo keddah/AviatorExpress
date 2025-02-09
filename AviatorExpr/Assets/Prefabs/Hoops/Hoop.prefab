@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7735218315962950451}
   - component: {fileID: 6780599240372087067}
   - component: {fileID: 5875067992888335541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fc7f07d694d59468e35e14d9558c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSpeed: 1
+  lookSpeed: 0.5
 --- !u!65 &5875067992888335541
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d73f7a684386efe4f872fb6cd47ef0f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2548e41b667c99345965a4752caa4f53, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

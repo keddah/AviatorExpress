@@ -1,4 +1,6 @@
 using System;
+using Unity.Cinemachine;
+using Unity.Cinemachine.TargetTracking;
 using UnityEngine;
 
 public class AviatorController : MonoBehaviour
@@ -40,9 +42,14 @@ public class AviatorController : MonoBehaviour
     ///////////// Controls
     protected InputController inputManager;
 
+    
+    ///////////// Camera
+    private bool lookingAtHoop;
+    private CinemachineCamera cam;
+    CinemachineTargetGroup.Target hoopGroupTarget;
+
 
     protected bool engineOn;
-
     protected float altitude;
 
 
@@ -57,12 +64,26 @@ public class AviatorController : MonoBehaviour
 
         HingeJoint propellerHinge = mainPropeller.GetComponent<HingeJoint>();
         propellerHinge.axis = mainPropellerSpinAxis;
+
+        cam = GetComponentInChildren<CinemachineCamera>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
         mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
+
+        // Get the average orbit radius of the default camera.
+        Cinemachine3OrbitRig.Settings orbitSettings = cam.GetComponent<CinemachineOrbitalFollow>().Orbits;
+        float groupRadius = (orbitSettings.Top.Radius + orbitSettings.Center.Radius + orbitSettings.Bottom.Radius) / 3;
+        
+        // Setting this up for when the camera is toggled
+        hoopGroupTarget = new CinemachineTargetGroup.Target { Object = FindAnyObjectByType<HoopManager>().GetCurrentHoop().transform, Radius = groupRadius };
+        
+        
+        // Setting the group radius as the average orbit radius of the default camera.
+        CinemachineTargetGroup targetGroup = GetComponentInChildren<CinemachineTargetGroup>();
+        targetGroup.Targets[0].Radius = groupRadius;
     }
 
     // Update is called once per frame
@@ -147,5 +168,18 @@ public class AviatorController : MonoBehaviour
         else localForward = mainPropellerRb.transform.forward;
 
         return flip? -localForward : localForward;
+    }
+
+    public void OnToggleCamera()
+    {
+        lookingAtHoop = !lookingAtHoop;
+
+        CinemachineTargetGroup targetGroup = GetComponentInChildren<CinemachineTargetGroup>();
+        if (lookingAtHoop) targetGroup.Targets.Add(hoopGroupTarget);
+        else targetGroup.Targets.Remove(hoopGroupTarget);
+        
+        cam.Target.TrackingTarget = mainRb.transform;
+        CinemachineInputAxisController camInputs = cam.GetComponent<CinemachineInputAxisController>();
+        camInputs.enabled = !lookingAtHoop;
     }
 }
