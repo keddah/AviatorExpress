@@ -35,13 +35,12 @@ public class HoopManager : MonoBehaviour
     void Init()
     {
         Vector3 pos = new();
-        Quaternion rot = new();
         
-        RandomTransform(ref pos, ref rot);
-        currentHoop.Reposition(pos, rot);
+        RandomPos(ref pos);
+        currentHoop.Reposition(pos);
     }
 
-    void RandomTransform(ref Vector3 randPos, ref Quaternion randRot)
+    void RandomPos(ref Vector3 randPos)
     {
         // Get a random angle in range
         float randomYaw = Random.Range(-maxAngle, maxAngle);
@@ -53,22 +52,22 @@ public class HoopManager : MonoBehaviour
         float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
 
         randPos = nextHoop.transform.position + randDirection * spawnDistance;
-        randRot = playerBody.transform.rotation;
     }
     
     void NewHoop()
     {
         print("new hoop");
         // Move the current hoop to the next hoop 
-        currentHoop.Reposition(nextHoop.transform.position, nextHoop.transform.rotation);
+        currentHoop.Reposition(nextHoop.transform.position);
 
         // A random location within a certain angle from the player.
         Vector3 pos = new();
-        Quaternion rot = new();
-        RandomTransform(ref pos, ref rot);
+        RandomPos(ref pos);
         
         // Move the next hoop to a new location 
-        nextHoop.Reposition(pos, rot);
+        nextHoop.transform.position = pos;
+        
+        player.ThroughHoop();
     }
 
     public HoopScript GetCurrentHoop() { return currentHoop; }

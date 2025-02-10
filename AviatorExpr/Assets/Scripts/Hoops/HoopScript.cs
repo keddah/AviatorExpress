@@ -35,10 +35,9 @@ public class HoopScript : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, Time.deltaTime * lookSpeed);
     }
 
-    public void Reposition(Vector3 pos, Quaternion rot)
+    public void Reposition(Vector3 pos)
     {
         transform.position = pos;
-        transform.rotation = rot;
         collided = false;
     }
 }

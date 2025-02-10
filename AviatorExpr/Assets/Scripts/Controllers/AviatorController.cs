@@ -53,6 +53,8 @@ public class AviatorController : MonoBehaviour
     protected float altitude;
 
 
+    private ScoreManager scoreManager = new();
+    
     protected virtual void Awake()
     {
         inputManager = GetComponent<InputController>();
@@ -89,6 +91,8 @@ public class AviatorController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        scoreManager.Update();
+        
         mainPropellerSpeed = mainPropellerRb.angularVelocity.magnitude;
         altitude = mainRb.transform.position.y;
         
@@ -182,4 +186,7 @@ public class AviatorController : MonoBehaviour
         CinemachineInputAxisController camInputs = cam.GetComponent<CinemachineInputAxisController>();
         camInputs.enabled = !lookingAtHoop;
     }
+
+    // Called by hoop manager whenever the player goes through a hoop
+    public void ThroughHoop() { scoreManager.ThroughHoop(); }
 }
