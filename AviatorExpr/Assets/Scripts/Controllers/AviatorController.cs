@@ -189,4 +189,6 @@ public class AviatorController : MonoBehaviour
 
     // Called by hoop manager whenever the player goes through a hoop
     public void ThroughHoop() { scoreManager.ThroughHoop(); }
+
+    public ScoreManager GetScoreManager() { return scoreManager; }
 }

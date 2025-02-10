@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ScoreManager
 {
+    public event OnScoreAdded onScoreAdded;
+    public delegate void OnScoreAdded(int newScore);
+    
     public ScoreManager() {}
     
     public int score { get; private set; }
@@ -40,6 +43,8 @@ public class ScoreManager
         
         score += (int)(scoreIncrements * scoreMultiplier);
         sinceLastHoop = 0;
+        
+        onScoreAdded?.Invoke(score);
         Debug.Log($"Score: {score}");
     }
 
