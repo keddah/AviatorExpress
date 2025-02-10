@@ -43,6 +43,10 @@ public class AviatorController : MonoBehaviour
     protected InputController inputManager;
 
     
+    ///////////// Audio
+    private AudioManager sfxManager;
+    
+    
     ///////////// Camera
     private bool lookingAtHoop;
     private CinemachineCamera cam;
@@ -58,6 +62,7 @@ public class AviatorController : MonoBehaviour
     protected virtual void Awake()
     {
         inputManager = GetComponent<InputController>();
+        sfxManager = GetComponent<AudioManager>();
 
         mainRb = mainObject.GetComponent<Rigidbody>();
         mainPropellerRb = mainPropeller.GetComponent<Rigidbody>();
@@ -141,6 +146,8 @@ public class AviatorController : MonoBehaviour
     protected virtual void OnStartEngine()
     {
         engineOn = !engineOn;
+        
+        sfxManager.PlaySound(engineOn ? AudioManager.ESounds.StartEngine : AudioManager.ESounds.OffEngine);
         if (engineOn && mainPropellerSpinRate < 1) mainPropellerSpinRate += 1f;
     }
     

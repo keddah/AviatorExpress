@@ -66,7 +66,7 @@ public class HoopManager : MonoBehaviour
     void NewHoop()
     {
         // Move the vfx to in front of player
-        hoopVfx.transform.position = playerBody.transform.position + playerBody.linearVelocity * 2;
+        hoopVfx.transform.position = playerBody.transform.position + playerBody.linearVelocity * 1.5f;
         hoopVfx.Play();
         
         // Move the current hoop to the next hoop 
