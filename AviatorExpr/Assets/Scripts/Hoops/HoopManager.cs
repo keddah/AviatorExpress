@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class HoopManager : MonoBehaviour
 {
     private AviatorController player;
     private Rigidbody playerBody;
-
-    private int hoopsMade;
+    
+    private VisualEffect hoopVfx;
     
     [SerializeField]
     private HoopScript currentHoop;
@@ -21,14 +23,20 @@ public class HoopManager : MonoBehaviour
 
     [SerializeField] 
     private float maxAngle = 60;
-    
+
+    private void Awake()
+    {
+        hoopVfx = GetComponentInChildren<VisualEffect>();
+        hoopVfx.Stop();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = FindAnyObjectByType<AviatorController>();
-        playerBody = player.mainRb;
-        currentHoop.onCollision += NewHoop;
+        playerBody = player.GetComponentInChildren<Rigidbody>();
         
+        currentHoop.onCollision += NewHoop;
         Init();
     }
 
@@ -38,6 +46,7 @@ public class HoopManager : MonoBehaviour
         
         RandomPos(ref pos);
         currentHoop.Reposition(pos);
+        hoopVfx.transform.position = currentHoop.transform.position;
     }
 
     void RandomPos(ref Vector3 randPos)
@@ -56,7 +65,10 @@ public class HoopManager : MonoBehaviour
     
     void NewHoop()
     {
-        print("new hoop");
+        // Move the vfx to in front of player
+        hoopVfx.transform.position = playerBody.transform.position + playerBody.linearVelocity * 2;
+        hoopVfx.Play();
+        
         // Move the current hoop to the next hoop 
         currentHoop.Reposition(nextHoop.transform.position);
 
