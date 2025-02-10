@@ -29,7 +29,12 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeTxt.text = $"Time: {scoreManager.time}";
+        float time = scoreManager.time;
+        int totalSeconds = Mathf.FloorToInt(time);
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+    
+        timeTxt.text = $"Time: {minutes:D2}:{seconds:D2}";
     }
 
     void UpdateScore(int newScore) { scoreTxt.text = $"Score: {newScore}"; }
