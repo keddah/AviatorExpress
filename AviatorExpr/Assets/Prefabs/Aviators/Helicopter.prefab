@@ -286,6 +286,8 @@ MonoBehaviour:
   mainObject: {fileID: 8769099003871162418}
   mainPropeller: {fileID: 7566114758524279232}
   centerMass: {fileID: 1168461157210645567}
+  bodyForwardAxis: {x: 0, y: 1, z: 0}
+  bodyUpAxis: {x: 1, y: 0, z: 0}
   invertPitch: 0
   mainPropellerSpinAxis: {x: 0, y: 1, z: 0}
   copterUpAxis: {x: 1, y: 0, z: 0}
@@ -597,8 +599,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5999901, y: 0.5999466, z: -0.37425134, w: 0.3741816}
-  m_LocalPosition: {x: 0.003384678, y: 26.130985, z: 12.798146}
+  m_LocalRotation: {x: 0.5537805, y: 0.23656976, z: -0.6663593, w: 0.43968984}
+  m_LocalPosition: {x: 18.181826, y: 27.519985, z: -9.430365}
   m_LocalScale: {x: 3.6363633, y: 3.6363637, z: 3.6363637}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -691,7 +693,7 @@ MonoBehaviour:
       Time: 0.8
     Restrictions: 0
   VerticalAxis:
-    Value: -9.974217
+    Value: 45
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0

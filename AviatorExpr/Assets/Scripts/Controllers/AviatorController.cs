@@ -21,6 +21,12 @@ public class AviatorController : MonoBehaviour
     public Rigidbody mainRb { get; private set; }
     protected Rigidbody mainPropellerRb;
 
+    [Space] 
+    [SerializeField]
+    private Vector3 bodyForwardAxis = new(0,0,1);
+    [SerializeField]
+    private Vector3 bodyUpAxis = new(0,1,0);
+    
     
     ///////////// Main Propeller
     [SerializeField]
@@ -181,6 +187,26 @@ public class AviatorController : MonoBehaviour
         return flip? -localForward : localForward;
     }
 
+    public Vector3 GetForwardAxis(bool flip = false)
+    {
+        Vector3 direction;
+        if (bodyForwardAxis.x != 0) direction = mainRb.transform.right;
+        else if (bodyForwardAxis.y != 0) direction = mainRb.transform.up;
+        else direction = mainRb.transform.forward;
+        
+        return flip? -direction : direction;
+    }
+    
+    public Vector3 GetUpAxis(bool flip = false)
+    {
+        Vector3 direction;
+        if (bodyUpAxis.x != 0) direction = mainRb.transform.right;
+        else if (bodyUpAxis.y != 0) direction = mainRb.transform.up;
+        else direction = mainRb.transform.forward;
+        
+        return flip? -direction : direction;
+    }
+    
     public void OnToggleCamera()
     {
         lookingAtHoop = !lookingAtHoop;

@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Helicopter : AviatorController
 {
-    [SerializeField] 
-    private Vector3 copterUpAxis;
-
     [Header("Tail Propeller")]
     [SerializeField] 
     private Vector3 tailPropellerSpinAxis;
@@ -105,12 +102,7 @@ public class Helicopter : AviatorController
 
     private void Stabiliser()
     {
-        Vector3 localUp = new();
-        if (copterUpAxis == Vector3.right) localUp = mainRb.transform.right;
-        else if (copterUpAxis == Vector3.up) localUp = mainRb.transform.up;
-        else if (copterUpAxis == Vector3.forward) localUp = mainRb.transform.forward;
-        
-        Vector3 correctionVector = Vector3.Cross(localUp,Vector3.up);
+        Vector3 correctionVector = Vector3.Cross(GetUpAxis(),Vector3.up);
         mainRb.AddTorque(correctionVector * stats.stabilisationStrength);
     }
     

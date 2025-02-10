@@ -216,9 +216,9 @@ AudioSource:
   m_GameObject: {fileID: 810965439541635263}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4378951348323041529, guid: ae80938b21191bc44946d2834fc696bf, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 9519f92e3ed05324faec2034bfb0fdbc, type: 3}
+  m_Resource: {fileID: 8300000, guid: 9519f92e3ed05324faec2034bfb0fdbc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -345,9 +345,9 @@ AudioSource:
   m_GameObject: {fileID: 1114216178900048319}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4378951348323041529, guid: ae80938b21191bc44946d2834fc696bf, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 62b7b6038720af54e94b7419e9622ffd, type: 3}
+  m_Resource: {fileID: 8300000, guid: 62b7b6038720af54e94b7419e9622ffd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2717,6 +2717,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4147224302920318909}
     m_Modifications:
+    - target: {fileID: 3991898109242510800, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991898109242510800, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991898109242510800, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

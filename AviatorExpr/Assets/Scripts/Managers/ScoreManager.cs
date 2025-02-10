@@ -4,7 +4,7 @@ using UnityEngine;
 public class ScoreManager
 {
     public event OnScoreAdded onScoreAdded;
-    public delegate void OnScoreAdded(int newScore);
+    public delegate void OnScoreAdded(int newScore, int addedScore);
     
     public ScoreManager() {}
     
@@ -42,10 +42,9 @@ public class ScoreManager
         if(score == 0) StartTimer();
         
         score += (int)(scoreIncrements * scoreMultiplier);
+        onScoreAdded?.Invoke(score, (int)(scoreIncrements * scoreMultiplier));
         sinceLastHoop = 0;
         
-        onScoreAdded?.Invoke(score);
-        Debug.Log($"Score: {score}");
     }
 
     private void CalculateScoreMultiplier()
