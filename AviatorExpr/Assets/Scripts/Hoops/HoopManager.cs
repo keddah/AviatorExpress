@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
@@ -15,6 +16,12 @@ public class HoopManager : MonoBehaviour
     [SerializeField]
     private HoopScript nextHoop;
 
+    private Vector3 previousHoopPos;
+    private Quaternion previousHoopRot;
+
+    // How many hoops the player has gone through
+    private int collidedHoops;
+    
     [Space]
     [SerializeField, Tooltip("The max spawn distance for new hoops.")]
     private float maxSpawnDistance = 600;
@@ -35,6 +42,7 @@ public class HoopManager : MonoBehaviour
     {
         player = FindAnyObjectByType<AviatorController>();
         playerBody = player.GetComponentInChildren<Rigidbody>();
+        player.onRespawn += Respawn;
         
         currentHoop.onCollision += NewHoop;
         Init();
@@ -68,6 +76,9 @@ public class HoopManager : MonoBehaviour
         // Move the vfx to in front of player
         hoopVfx.transform.position = playerBody.transform.position + playerBody.linearVelocity * 1.5f;
         hoopVfx.Play();
+
+        previousHoopPos = currentHoop.transform.position;
+        previousHoopRot = playerBody.transform.rotation;
         
         // Move the current hoop to the next hoop 
         currentHoop.Reposition(nextHoop.transform.position);
@@ -80,7 +91,35 @@ public class HoopManager : MonoBehaviour
         nextHoop.transform.position = pos;
         
         player.ThroughHoop();
+        collidedHoops++;
     }
 
     public HoopScript GetCurrentHoop() { return currentHoop; }
+    
+    void Respawn()
+    {
+        if(collidedHoops == 0) return;
+        
+        playerBody.Sleep();
+        playerBody.linearVelocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
+
+        playerBody.Move(previousHoopPos, previousHoopRot);
+
+        playerBody.WakeUp();
+        StartCoroutine(RemoveVelocity());
+    }
+
+    IEnumerator RemoveVelocity(float delay = .1f)
+    {
+        float timer = 0;
+        while (timer < delay)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        
+        playerBody.linearVelocity = Vector3.zero;
+        playerBody.angularVelocity = Vector3.zero;
+    }
 }

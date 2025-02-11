@@ -1,10 +1,13 @@
 using System;
 using Unity.Cinemachine;
-using Unity.Cinemachine.TargetTracking;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AviatorController : MonoBehaviour
 {
+    public event OnRespawnAtHoop onRespawn;
+    public delegate void OnRespawnAtHoop();
+    
     [SerializeField] 
     protected AviatorStats stats;
 
@@ -23,7 +26,7 @@ public class AviatorController : MonoBehaviour
 
     [Space] 
     [SerializeField]
-    private Vector3 bodyForwardAxis = new(0,0,1);
+    public Vector3 bodyForwardAxis = new(0,0,1);
     [SerializeField]
     private Vector3 bodyUpAxis = new(0,1,0);
     
@@ -47,7 +50,8 @@ public class AviatorController : MonoBehaviour
     
     ///////////// Controls
     protected InputController inputManager;
-
+    private bool respawning = false;
+    
     
     ///////////// Audio
     private AudioManager sfxManager;
@@ -102,6 +106,7 @@ public class AviatorController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        IsRespawning();
         scoreManager.Update();
         
         mainPropellerSpeed = mainPropellerRb.angularVelocity.magnitude;
@@ -187,6 +192,8 @@ public class AviatorController : MonoBehaviour
         return flip? -localForward : localForward;
     }
 
+    public Vector3 GetWorldUpAxis() { return bodyUpAxis; }
+    
     public Vector3 GetForwardAxis(bool flip = false)
     {
         Vector3 direction;
@@ -206,8 +213,19 @@ public class AviatorController : MonoBehaviour
         
         return flip? -direction : direction;
     }
+
+    private void IsRespawning()
+    {
+        respawning = inputManager.respawnPressed;
+        if(respawning) print("Respawning...");
+    }
     
-    public void OnToggleCamera()
+    void OnRespawn()
+    {
+        onRespawn?.Invoke();
+    }
+    
+    void OnToggleCamera()
     {
         lookingAtHoop = !lookingAtHoop;
 
