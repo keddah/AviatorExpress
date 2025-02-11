@@ -15,6 +15,9 @@ public class AudioManager : MonoBehaviour
     
     [SerializeField] 
     private Rigidbody propellerRb;
+    
+    [SerializeField] 
+    private Rigidbody playerRb;
 
     [Header("Audio Clips")] 
     [SerializeField]
@@ -31,6 +34,9 @@ public class AudioManager : MonoBehaviour
     
     [Header("Sound Players")]
     [SerializeField] 
+    private AudioSource ambiencePlayer;
+    
+    [SerializeField] 
     private AudioSource enginePlayer;
     
     [SerializeField] 
@@ -43,6 +49,9 @@ public class AudioManager : MonoBehaviour
     private float propellerLerpSpeed = .6f;
     [SerializeField]
     private float engineLerpSpeed = .6f;
+    
+    [SerializeField]
+    private float ambienceSpeed = 3;
     
     [SerializeField] 
     private AudioSource uiPlayer;
@@ -71,21 +80,30 @@ public class AudioManager : MonoBehaviour
         enginePlayer.spread = 120;
         enginePlayer.spatialize = true;
         enginePlayer.spatialBlend = 1;
-
+        
+        ambiencePlayer.playOnAwake = false;
+        ambiencePlayer.loop = true;
+        ambiencePlayer.dopplerLevel = 5;
+        ambiencePlayer.spread = 120;
+        ambiencePlayer.spatialize = true;
+        ambiencePlayer.spatialBlend = 1;
+        ambiencePlayer.volume = .7f;
+        
         propellerDefaultVol = propellerPlayer.volume;
         engineDefaultVol = enginePlayer.volume;
     }
 
     private void Start()
     {
-        throw new NotImplementedException();
+        ambiencePlayer.Play();
     }
 
     private void Update()
     {
-        if (!engineOn) return;
-        
+        UpdateAmbience();
         UpdatePropeller();
+        
+        if (!engineOn) return;
         UpdateEngine();
     }
 
@@ -121,6 +139,15 @@ public class AudioManager : MonoBehaviour
 
         float bladeSpeed = propellerRb.angularVelocity.magnitude;
         propellerPlayer.pitch = Mathf.Lerp(.95f, maxPropellerPitch, (bladeSpeed / (engineOn ? propellerRb.maxAngularVelocity : 1)) * propellerLerpSpeed);
+    }
+
+    void UpdateAmbience()
+    {
+        float speed = playerRb.linearVelocity.magnitude;
+        float maxSpeed = 320;
+        float percentage = speed / maxSpeed;
+        print(percentage);
+        ambiencePlayer.volume = Mathf.Lerp(ambiencePlayer.volume, percentage * .8f, Time.deltaTime * ambienceSpeed);
     }
     
     void UpdateEngine()
