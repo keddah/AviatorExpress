@@ -239,7 +239,11 @@ public class AviatorController : MonoBehaviour
     }
 
     // Called by hoop manager whenever the player goes through a hoop
-    public void ThroughHoop() { scoreManager.ThroughHoop(); }
+    public void ThroughHoop()
+    {
+        scoreManager.ThroughHoop();
+        sfxManager.PlaySound(AudioManager.ESounds.ThroughHoop);
+    }
 
     public ScoreManager GetScoreManager() { return scoreManager; }
 }

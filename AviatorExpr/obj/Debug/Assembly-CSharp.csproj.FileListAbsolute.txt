@@ -482,3 +482,9 @@ C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\obj\Debug\Assembly-CS
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\obj\Debug\Assembly.44154EF1.Up2Date
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\obj\Debug\Assembly-CSharp.dll
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.2D.Sprite.Editor.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Editor.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Runtime.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Runtime.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Editor.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.2D.Sprite.Editor.pdb

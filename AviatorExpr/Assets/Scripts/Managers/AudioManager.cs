@@ -10,26 +10,52 @@ public class AudioManager : MonoBehaviour
         OffEngine,
         Engine,
         Propeller,
+        ThroughHoop
     }
     
     [SerializeField] 
     private Rigidbody propellerRb;
 
+    [Header("Audio Clips")] 
+    [SerializeField]
+    private AudioClip startUpClip;
+    
+    [SerializeField]
+    private AudioClip shutdownClip;
+    
+    [SerializeField]
+    private AudioClip propellerClip;
+    
+    [SerializeField]
+    private AudioClip engineClip;
+    
     [Header("Sound Players")]
     [SerializeField] 
     private AudioSource enginePlayer;
     
     [SerializeField] 
     private AudioSource propellerPlayer;
+
+    [SerializeField] 
+    private float maxPropellerPitch = 1.75f;
     
+    [SerializeField]
+    private float propellerLerpSpeed = .6f;
+    [SerializeField]
+    private float engineLerpSpeed = .6f;
+    
+    [SerializeField] 
     private AudioSource uiPlayer;
 
+    private float propellerDefaultVol;
+    private float engineDefaultVol;
+    
 
     private bool engineOn;
+    private bool startingUp;
 
     private void Awake()
     {
-        uiPlayer = gameObject.AddComponent<AudioSource>();
         uiPlayer.spatialize = false;
 
         propellerPlayer.playOnAwake = false;
@@ -45,6 +71,9 @@ public class AudioManager : MonoBehaviour
         enginePlayer.spread = 120;
         enginePlayer.spatialize = true;
         enginePlayer.spatialBlend = 1;
+
+        propellerDefaultVol = propellerPlayer.volume;
+        engineDefaultVol = enginePlayer.volume;
     }
 
     private void Start()
@@ -79,6 +108,10 @@ public class AudioManager : MonoBehaviour
             case ESounds.Propeller:
                 UpdatePropeller();
                 break;
+            
+            case ESounds.ThroughHoop:
+                PlayThroughHoop();
+                break;
         }
     }
 
@@ -87,22 +120,43 @@ public class AudioManager : MonoBehaviour
         if(!engineOn) return;
 
         float bladeSpeed = propellerRb.angularVelocity.magnitude;
-        propellerPlayer.pitch = Mathf.Lerp(.95f, 2.5f, bladeSpeed / propellerRb.maxAngularVelocity);
-        float bladePassingFreq = (bladeSpeed / 60) * 3;
-        propellerPlayer.pitch *= 1 + bladePassingFreq / 100;
+        propellerPlayer.pitch = Mathf.Lerp(.95f, maxPropellerPitch, (bladeSpeed / (engineOn ? propellerRb.maxAngularVelocity : 1)) * propellerLerpSpeed);
     }
     
     void UpdateEngine()
     {
+        float bladeSpeed = propellerRb.angularVelocity.magnitude;
+        enginePlayer.pitch = Mathf.Lerp(1, 1.75f, (bladeSpeed / (engineOn ? propellerRb.maxAngularVelocity : 1)) * engineLerpSpeed);
     }
+    
+    private void PlayThroughHoop() { uiPlayer.Play(); }
     
     private void PlayStartEngine()
     {
+        if(startingUp) return;
+        
+        startingUp = true;
         engineOn = true;
-        StartCoroutine(FadeInSound(ESounds.Propeller, 1.5f));
-        StartCoroutine(FadeInSound(ESounds.Engine, .75f));
+        propellerPlayer.loop = false;
+        propellerPlayer.clip = startUpClip;
+        propellerPlayer.Play();
+        StartCoroutine(Delay(startUpClip.length, () =>
+        {
+            propellerPlayer.clip = propellerClip;
+            propellerPlayer.loop = true;
+            propellerPlayer.Play();
+            startingUp = false;
+        }));
+        FadeInSound(ESounds.Engine, startUpClip.length + 1.5f);
     }
 
+    
+    IEnumerator Delay(float delay, Action function)
+    {
+        yield return new WaitForSeconds(delay);
+        function?.Invoke();
+    }
+    
     IEnumerator FadeInSound(ESounds sound, float fadeDuration)
     {
         float startVolume = 0;
@@ -110,14 +164,17 @@ public class AudioManager : MonoBehaviour
         float timer = 0;
 
         AudioSource player;
+        
         switch (sound)
         {
             case ESounds.Propeller:
                 player = propellerPlayer;
+                targetVolume = propellerDefaultVol;
                 break;
             
             case ESounds.Engine:
                 player = enginePlayer;
+                targetVolume = engineDefaultVol;
                 break;
             default:
                 player = new AudioSource();
@@ -139,6 +196,11 @@ public class AudioManager : MonoBehaviour
     
     private void PlayOffEngine()
     {
+        if(startingUp) return;
+
+        propellerPlayer.clip = shutdownClip;
+        propellerPlayer.loop = false;
+        propellerPlayer.Play();
         engineOn = false;
     }
     

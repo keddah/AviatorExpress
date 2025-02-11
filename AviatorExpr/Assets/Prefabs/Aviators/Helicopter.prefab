@@ -305,8 +305,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   propellerRb: {fileID: 6713329142963633160}
+  startUpClip: {fileID: 8300000, guid: 1eb8dd85ccd05f0459f38b962c9fbc71, type: 3}
+  shutdownClip: {fileID: 8300000, guid: 922c6a8481309274990e89c074415df4, type: 3}
+  propellerClip: {fileID: 8300000, guid: 9519f92e3ed05324faec2034bfb0fdbc, type: 3}
+  engineClip: {fileID: 8300000, guid: 55206e0463d97124c836c4b2d8c10fe4, type: 3}
   enginePlayer: {fileID: 4398414517428134476}
   propellerPlayer: {fileID: 83824284940641159}
+  maxPropellerPitch: 4
+  propellerLerpSpeed: 0.1
+  engineLerpSpeed: 0.3
+  uiPlayer: {fileID: 3936400304554740934}
 --- !u!1 &3787783684018754288
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,8 +606,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.3664014, y: -0.3664014, z: -0.60477275, w: 0.60477275}
-  m_LocalPosition: {x: -0.0000034679072, y: -25.784971, z: -13.469091}
+  m_LocalRotation: {x: 0.50593513, y: 0.48401585, z: -0.51548874, w: 0.49399355}
+  m_LocalPosition: {x: 1.3035582, y: 29.997438, z: -0.5861118}
   m_LocalScale: {x: 3.6363633, y: 3.6363637, z: 3.6363637}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -692,7 +700,7 @@ MonoBehaviour:
       Time: 0.8
     Restrictions: 0
   VerticalAxis:
-    Value: -10
+    Value: -1.9792488
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -1574,6 +1582,11 @@ PrefabInstance:
 --- !u!4 &1571798731871394932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+  m_PrefabInstance: {fileID: 6400009647753318771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3936400304554740934 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7958284838091447733, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
   m_PrefabInstance: {fileID: 6400009647753318771}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8810849466857822269

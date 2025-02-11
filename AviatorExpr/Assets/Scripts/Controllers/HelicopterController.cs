@@ -38,6 +38,7 @@ public class Helicopter : AviatorController
     {
         // ThrottleControl() being run and altitude + main propeller spin speed being set
         base.Update();
+        altitude *= .75f;
         tailBladeSpeed = tailBladeRb.angularVelocity.magnitude;
 
         YawControl();
