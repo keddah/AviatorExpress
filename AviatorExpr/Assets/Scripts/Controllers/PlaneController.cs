@@ -159,7 +159,7 @@ public class Plane : AviatorController
         float speed = velocity.magnitude;
         
         Vector3 airflow = -velocity.normalized;
-        Vector3 chordline = GetForwardAxis(wingChordlineAxis, sectionBody.transform, false);
+        Vector3 chordline = GetLocalAxis(wingChordlineAxis, sectionBody.transform, false);
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
@@ -181,7 +181,7 @@ public class Plane : AviatorController
         float speed = velocity.magnitude;
     
         Vector3 airflow = -velocity.normalized;  
-        Vector3 chordline = GetForwardAxis(wingSectionChordlineAxis, sectionBody.transform, true);  
+        Vector3 chordline = GetLocalAxis(wingSectionChordlineAxis, sectionBody.transform, true);  
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
         if (sectionBody.CompareTag("Aileron")) angleOfAttack *= .5f;
 
@@ -230,7 +230,7 @@ public class Plane : AviatorController
     }
 
     // Gets the forward axis depending on the target axis
-    private static Vector3 GetForwardAxis(Vector3 targetAxis, Transform obj, bool flip = false)
+    private static Vector3 GetLocalAxis(Vector3 targetAxis, Transform obj, bool flip = false)
     {
         Vector3 localForward;
         if (targetAxis.x != 0) localForward = obj.right;

@@ -321,6 +321,7 @@ MonoBehaviour:
   timeTxt: {fileID: 7288539385934537660}
   scoreTxt: {fileID: 5675270274296692726}
   popupScoreTxt: {fileID: 169229683998658875}
+  popupFadeSpeed: 0.85
 --- !u!1 &6432005632112964048
 GameObject:
   m_ObjectHideFlags: 0

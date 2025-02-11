@@ -122,8 +122,8 @@ public class AviatorController : MonoBehaviour
 
     private void ThrottleControl()
     {
-        if (inputManager.throttleUpPressed) maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
-        else if (inputManager.throttleDownPressed) maxPropellerSpinRate = stats.maxMainPropellerDecelSpinRate;
+        if (inputManager.throttleUpValue > 0) maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate * inputManager.throttleUpValue;
+        else if (inputManager.throttleDownValue > 0) maxPropellerSpinRate = stats.maxMainPropellerDecelSpinRate;
         else maxPropellerSpinRate = stats.maxMainPropellerIdleSpinRate;
     }
     
@@ -156,7 +156,7 @@ public class AviatorController : MonoBehaviour
         sfxManager.PlaySound(engineOn ? AudioManager.ESounds.StartEngine : AudioManager.ESounds.OffEngine);
         if (engineOn && mainPropellerSpinRate < 1) mainPropellerSpinRate += 1f;
     }
-    
+
     protected virtual void Lift()
     {
         

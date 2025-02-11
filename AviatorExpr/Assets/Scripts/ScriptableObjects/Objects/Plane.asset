@@ -43,7 +43,7 @@ MonoBehaviour:
   showWingSectionSpeeds: 1
   aileronSpeed: 1.2
   elevatorSpeed: 1.35
-  flapSpeed: 7.5
+  flapSpeed: 4
   rudderSpeed: 1
   showWingSectionNeutralSpeeds: 1
   aileronToNeutralSpeed: 6

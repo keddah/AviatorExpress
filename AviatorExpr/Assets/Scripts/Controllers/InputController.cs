@@ -17,8 +17,8 @@ public class InputController : MonoBehaviour
     
     public Vector2 moveInput { get; private set; }
 
-    public bool throttleUpPressed { get; private set; }
-    public bool throttleDownPressed { get; private set; }
+    public float throttleUpValue { get; private set; }
+    public float throttleDownValue { get; private set; }
     
     public bool brakePressed { get; private set; }
     public bool takeOffPressed { get; private set; }
@@ -81,8 +81,8 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        throttleUpPressed = throttleUpAction.IsPressed();
-        throttleDownPressed = throttleDownAction.IsPressed();
+        throttleUpValue = throttleUpAction.ReadValue<float>();
+        throttleDownValue = throttleDownAction.ReadValue<float>();
         
         moveInput = moveAction.ReadValue<Vector2>();
         
