@@ -49,9 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHoop: {fileID: 3901515359503454707}
   nextHoop: {fileID: 446308597245886456}
-  maxSpawnDistance: 700
-  minSpawnDistance: 200
-  maxAngle: 60
+  maxSpawnDistance: 750
+  minSpawnDistance: 350
+  maxAngle: 50
 --- !u!1 &4016916417357131830
 GameObject:
   m_ObjectHideFlags: 0
