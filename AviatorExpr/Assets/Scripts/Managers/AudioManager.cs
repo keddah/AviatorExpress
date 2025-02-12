@@ -146,7 +146,6 @@ public class AudioManager : MonoBehaviour
         float speed = playerRb.linearVelocity.magnitude;
         float maxSpeed = 320;
         float percentage = speed / maxSpeed;
-        print(percentage);
         ambiencePlayer.volume = Mathf.Lerp(ambiencePlayer.volume, percentage * .8f, Time.deltaTime * ambienceSpeed);
     }
     

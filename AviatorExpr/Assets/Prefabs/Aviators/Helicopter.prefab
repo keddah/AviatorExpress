@@ -316,6 +316,7 @@ MonoBehaviour:
   maxPropellerPitch: 4
   propellerLerpSpeed: 0.1
   engineLerpSpeed: 0.3
+  ambienceSpeed: 3
   uiPlayer: {fileID: 3936400304554740934}
 --- !u!1 &3787783684018754288
 GameObject:
@@ -1674,6 +1675,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 7256444527488441440, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: playerBody
+      value: 
+      objectReference: {fileID: 5197235334874890643}
+    - target: {fileID: 7256444527488441440, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 6724230675186798714}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
