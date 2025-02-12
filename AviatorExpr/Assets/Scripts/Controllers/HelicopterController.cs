@@ -121,10 +121,10 @@ public class Helicopter : AviatorController
         Vector3 velocityToAdd = new();
         
         // Roll
-        velocityToAdd.y = input.x * stats.gyroPower * stats.rollDamping;
+        velocityToAdd.z = -input.x * stats.gyroPower * stats.rollDamping;
         
         // Pitch
-        velocityToAdd.z = -input.y * stats.gyroPower * (invertPitch? -1 : 1);
+        velocityToAdd.x = input.y * stats.gyroPower * (invertPitch? -1 : 1);
         mainRb.AddRelativeTorque(velocityToAdd);
         
         GyroAssist();

@@ -56,6 +56,6 @@ public class UIManager : MonoBehaviour
 
         Vector3 offset = playerRb.linearVelocity * 1.2f + player.GetUpAxis() * 10;
         popupScoreTxt.transform.position = playerRb.transform.position + offset;
-        popupScoreTxt.transform.rotation = Quaternion.LookRotation(player.GetForwardAxis(player.GetComponent<Helicopter>()));
+        popupScoreTxt.transform.rotation = Quaternion.LookRotation(player.GetForwardAxis());
     }
 }
