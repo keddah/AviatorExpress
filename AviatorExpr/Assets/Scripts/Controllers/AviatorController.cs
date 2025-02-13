@@ -75,6 +75,7 @@ public class AviatorController : MonoBehaviour
         sfxManager = GetComponent<AudioManager>();
 
         mainRb = mainObject.GetComponent<Rigidbody>();
+        mainRb.interpolation = RigidbodyInterpolation.Interpolate;
         mainPropellerRb = mainPropeller.GetComponent<Rigidbody>();
 
         mainRb.centerOfMass = centerMass.transform.localPosition;
