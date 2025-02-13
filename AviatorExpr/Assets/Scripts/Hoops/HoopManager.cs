@@ -19,9 +19,6 @@ public class HoopManager : MonoBehaviour
     private Vector3 previousHoopPos;
     private Quaternion previousHoopRot;
 
-    // How many hoops the player has gone through
-    private int collidedHoops;
-    
     [Space]
     [SerializeField, Tooltip("The max spawn distance for new hoops.")]
     private float maxSpawnDistance = 600;
@@ -42,14 +39,21 @@ public class HoopManager : MonoBehaviour
     {
         player = FindAnyObjectByType<AviatorController>();
         playerBody = player.GetComponentInChildren<Rigidbody>();
-        player.onRespawn += Respawn;
-        
+       
+        // Delegates
         currentHoop.onCollision += NewHoop;
-        Init();
+        player.onRespawn += Respawn;
+        player.onRaceStart += Init;
+        player.GetScoreManager().onEndRace += EndRace;
+        
+        currentHoop.Hide();
+        nextHoop.Hide();
     }
 
-    void Init()
+    void Init(ushort numHoops)
     {
+        ShowHoops();
+        
         Vector3 pos = new();
         
         RandomPos(ref pos);
@@ -90,16 +94,14 @@ public class HoopManager : MonoBehaviour
         // Move the next hoop to a new location 
         nextHoop.transform.position = pos;
         
-        player.ThroughHoop();
-        collidedHoops++;
+        if(player.ThroughHoop()) nextHoop.Hide();
+        else nextHoop.Show();
     }
 
     public HoopScript GetCurrentHoop() { return currentHoop; }
     
     void Respawn()
     {
-        if(collidedHoops == 0) return;
-        
         playerBody.Sleep();
         playerBody.linearVelocity = Vector3.zero;
         playerBody.angularVelocity = Vector3.zero;
@@ -121,5 +123,17 @@ public class HoopManager : MonoBehaviour
         
         playerBody.linearVelocity = Vector3.zero;
         playerBody.angularVelocity = Vector3.zero;
+    }
+
+    void EndRace()
+    {
+        HideHoops();
+    }
+    
+    void HideHoops() { nextHoop.Hide(); currentHoop.Hide(); }
+    void ShowHoops()
+    { 
+        currentHoop.Show();
+        nextHoop.Show();
     }
 }

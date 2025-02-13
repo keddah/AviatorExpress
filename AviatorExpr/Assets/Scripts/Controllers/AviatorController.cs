@@ -1,12 +1,14 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class AviatorController : MonoBehaviour
 {
     public event OnRespawnAtHoop onRespawn;
     public delegate void OnRespawnAtHoop();
+    
+    public event OnStartRace onRaceStart;
+    public delegate void OnStartRace(ushort numHoops);
     
     [SerializeField] 
     protected AviatorStats stats;
@@ -67,13 +69,18 @@ public class AviatorController : MonoBehaviour
     protected float altitude;
 
 
-    private ScoreManager scoreManager = new();
-    
+    [Space] 
+    [SerializeField] 
+    private ushort scoreTimeBonus = 25;
+    private ScoreManager scoreManager;
+
     protected virtual void Awake()
     {
+        scoreManager = new(scoreTimeBonus);
+        
         inputManager = GetComponent<InputController>();
         sfxManager = GetComponent<AudioManager>();
-
+    
         mainRb = mainObject.GetComponent<Rigidbody>();
         mainRb.interpolation = RigidbodyInterpolation.Interpolate;
         mainPropellerRb = mainPropeller.GetComponent<Rigidbody>();
@@ -89,6 +96,9 @@ public class AviatorController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
+        scoreManager.onEndRace += inputManager.UnlockMouse;
+        onRaceStart += inputManager.LockMouse;
+        
         mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
 
         // Get the average orbit radius of the default camera.
@@ -240,11 +250,18 @@ public class AviatorController : MonoBehaviour
     }
 
     // Called by hoop manager whenever the player goes through a hoop
-    public void ThroughHoop()
+    public bool ThroughHoop()
     {
-        scoreManager.ThroughHoop();
         sfxManager.PlaySound(AudioManager.ESounds.ThroughHoop);
+        return scoreManager.ThroughHoop();
     }
 
     public ScoreManager GetScoreManager() { return scoreManager; }
+
+
+    void OnFiveHoops() { onRaceStart?.Invoke(2); }
+    void OnTenHoops() { onRaceStart?.Invoke(10); }
+    void OnTwentyHoops() { onRaceStart?.Invoke(20); }
+    void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
+    
 }

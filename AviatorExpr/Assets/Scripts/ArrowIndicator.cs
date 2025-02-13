@@ -18,6 +18,10 @@ public class ArrowIndicator : MonoBehaviour
     void Start()
     {
         targetHoop = FindAnyObjectByType<HoopManager>().GetCurrentHoop();
+        player.onRaceStart += Show;
+        player.GetScoreManager().onEndRace += Hide;
+        
+        Hide();
     }
 
     void FixedUpdate()
@@ -25,4 +29,7 @@ public class ArrowIndicator : MonoBehaviour
         Quaternion lookRot = Quaternion.LookRotation(targetHoop.transform.position - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, Time.deltaTime * lookSpeed);
     }
+
+    void Show(ushort num) { gameObject.SetActive(true); }
+    void Hide() { gameObject.SetActive(false); }
 }

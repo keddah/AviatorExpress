@@ -103,6 +103,51 @@
                     "processors": "",
                     "interactions": "Hold(duration=2,pressPoint=0.2)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FiveHoops",
+                    "type": "Button",
+                    "id": "35235acc-6614-4b96-9d09-fbf7c0cc29f9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TenHoops",
+                    "type": "Button",
+                    "id": "c18a458b-59e9-454d-8f54-addef2a5efca",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TwentyHoops",
+                    "type": "Button",
+                    "id": "fe548b55-848a-486b-ad73-d8829a279ac5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UnlimitedHoops",
+                    "type": "Button",
+                    "id": "b5aa9b1e-ad99-4c7c-a10f-b0dd9ccb13c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "ce1d7968-8c86-470a-bf7c-77c31c203823",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -466,6 +511,72 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Respawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d1376ed-62a2-4be3-9569-bae93cc8c899",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FiveHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddedd3fb-0cd5-46cd-99eb-6de6e4818acf",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TenHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d482cba2-7e5e-4c5d-a2d6-2e0f78de3290",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TwentyHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a06739ad-ec02-494c-a171-1361c0d1af84",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnlimitedHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d16870ed-cc1e-4f40-920b-d590c4e31404",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6eca0c41-e98b-44e4-858e-6de7eba50046",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

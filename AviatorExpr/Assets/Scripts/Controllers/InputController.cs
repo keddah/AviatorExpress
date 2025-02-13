@@ -83,7 +83,7 @@ public class InputController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        LockMouse(0);
     }
 
     // Update is called once per frame
@@ -102,4 +102,7 @@ public class InputController : MonoBehaviour
 
         respawnPressed = respawnAction.inProgress;
     }
+    
+    public void LockMouse(ushort num) { Cursor.lockState = CursorLockMode.Locked; }
+    public void UnlockMouse() { Cursor.lockState = CursorLockMode.None; }
 }

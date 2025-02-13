@@ -1,14 +1,28 @@
-using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Texts")]
+    
     [SerializeField] 
     private TextMeshProUGUI timeTxt;
     
     [SerializeField] 
+    private GameObject timeBkg;
+    
+    [SerializeField] 
+    private GameObject scoreParent;
+    
+    [SerializeField] 
     private TextMeshProUGUI scoreTxt;
+
+    [SerializeField] 
+    private TextMeshProUGUI hoopTxt;
+    
+    [SerializeField] 
+    private RectTransform hoopBkg;
 
     [SerializeField] 
     private TextMeshProUGUI popupScoreTxt;
@@ -18,18 +32,34 @@ public class UIManager : MonoBehaviour
     private AviatorController player;
     private ScoreManager scoreManager;
 
+    [Space]
+    [SerializeField] 
+    private RectTransform rankBoardBkg;
+
+    private RankBoard rankBoard;
+    
     private void Awake()
     {
         player = GetComponentInParent<AviatorController>();
-        scoreManager = player.GetScoreManager();
-        scoreManager.onScoreAdded += UpdateScore;
-        popupScoreTxt.alpha = 0;
+        rankBoard = rankBoardBkg.GetComponentInParent<RankBoard>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        scoreManager = player.GetScoreManager();
+        scoreManager.onScoreAdded += UpdateScore;
+        scoreManager.onEndRace += EndRace;
+
+        player.onRaceStart += ShowHoops;
         
+        popupScoreTxt.alpha = 0;
+        HideHoops();
+        
+        // Hide time and score
+        scoreParent.SetActive(false);
+        timeBkg.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,8 +74,9 @@ public class UIManager : MonoBehaviour
         popupScoreTxt.alpha -= Time.deltaTime * popupFadeSpeed;
     }
 
-    void UpdateScore(int newScore, int addedScore)
+    void UpdateScore(uint newScore, uint addedScore)
     {
+        hoopTxt.text = $"{scoreManager.throughHoops} / {scoreManager.hoopTarget}";
         scoreTxt.text = newScore.ToString();
         popupScoreTxt.text = $"+{addedScore}";
 
@@ -57,5 +88,32 @@ public class UIManager : MonoBehaviour
         Vector3 offset = playerRb.linearVelocity * 1.2f + player.GetUpAxis() * 10;
         popupScoreTxt.transform.position = playerRb.transform.position + offset;
         popupScoreTxt.transform.rotation = Quaternion.LookRotation(player.GetForwardAxis());
+    }
+
+    private void ShowHoops(ushort numHoops)
+    {
+        // Show time and score
+        scoreParent.SetActive(true);
+        timeBkg.SetActive(true);
+        
+        scoreManager.SetHoopTarget(numHoops);
+        hoopBkg.gameObject.SetActive(true);
+        hoopTxt.text = $"0/{scoreManager.hoopTarget}";
+        
+        if(numHoops == 0) HideHoops();
+    }
+
+    private void HideHoops()
+    {
+        hoopBkg.gameObject.SetActive(false);
+    }
+
+    private void EndRace()
+    {
+        // Hide time and score
+        scoreParent.SetActive(false);
+        timeBkg.SetActive(false);
+        
+        rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.speedBonusTime, scoreManager.scorePerHoop, scoreManager.score);
     }
 }
