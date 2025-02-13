@@ -40,13 +40,13 @@ public class UIManager : MonoBehaviour
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
     
-        timeTxt.text = $"Time: {minutes:D2}:{seconds:D2}";
+        timeTxt.text = $"{minutes:D2}:{seconds:D2}";
         popupScoreTxt.alpha -= Time.deltaTime * popupFadeSpeed;
     }
 
     void UpdateScore(int newScore, int addedScore)
     {
-        scoreTxt.text = $"Score: {newScore}";
+        scoreTxt.text = newScore.ToString();
         popupScoreTxt.text = $"+{addedScore}";
 
         Rigidbody playerRb = player.GetComponentInChildren<Rigidbody>();
