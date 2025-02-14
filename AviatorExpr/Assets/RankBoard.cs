@@ -53,7 +53,7 @@ public class RankBoard : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void HideBoard()
+    public void HideBoard()
     {
         gameObject.SetActive(false);
     }
@@ -66,12 +66,12 @@ public class RankBoard : MonoBehaviour
         TextMeshProUGUI text = newStamp.AddComponent<TextMeshProUGUI>();
         
         newStamp.transform.parent = stampsBkg.transform;
-        rect.anchorMin = new(.5f, 1);
-        rect.anchorMax = new(.5f, 1);
-        rect.pivot = new (.5f, 1);
+        // rect.anchorMin = new(.5f, 1);
+        // rect.anchorMax = new(.5f, 1);
+        // rect.pivot = new (.5f, 1);
 
-        float spacing = 30;
-        rect.anchoredPosition = new(0, hoopIndex * -spacing);
+        // float spacing = 30;
+        // rect.anchoredPosition = new(0, hoopIndex * -spacing);
         
         text.font = timeStampFont;
         text.color = fontColour;

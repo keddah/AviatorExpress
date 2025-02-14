@@ -110,10 +110,11 @@ public class UIManager : MonoBehaviour
 
     private void EndRace()
     {
-        // Hide time and score
+        // Hide score
         scoreParent.SetActive(false);
-        timeBkg.SetActive(false);
         
         rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.speedBonusTime, scoreManager.scorePerHoop, scoreManager.score);
     }
+    
+    public void HideTime() { timeBkg.SetActive(false); }
 }

@@ -645,6 +645,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 881291469046031440, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000029746776
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598443666784176642, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598443666784176642, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598443666784176642, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2786948630089432295, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.4718793
@@ -704,6 +720,14 @@ PrefabInstance:
     - target: {fileID: 7102717888511806912, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
       propertyPath: m_Name
       value: Plane (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937975431627818648, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937975431627818648, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7995651629371510135, guid: b3fc2415e00f40746845bf2345e436d7, type: 3}
       propertyPath: m_LocalRotation.y
