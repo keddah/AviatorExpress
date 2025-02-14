@@ -97,7 +97,7 @@ public class AviatorController : MonoBehaviour
     protected virtual void Start()
     {
         scoreManager.onEndRace += inputManager.UnlockMouse;
-        onRaceStart += inputManager.LockMouse;
+        onRaceStart += LockMouse;
         
         mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
 
@@ -258,6 +258,7 @@ public class AviatorController : MonoBehaviour
 
     public ScoreManager GetScoreManager() { return scoreManager; }
 
+    public void LockMouse(ushort num) { inputManager.LockMouse(0); }
 
     void OnFiveHoops() { onRaceStart?.Invoke(5); }
     void OnTenHoops() { onRaceStart?.Invoke(10); }

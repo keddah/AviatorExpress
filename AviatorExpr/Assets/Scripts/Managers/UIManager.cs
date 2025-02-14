@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class UIManager : MonoBehaviour
 {
@@ -124,5 +123,6 @@ public class UIManager : MonoBehaviour
         rankBoard.HideBoard();
         HideHoops();
         timeBkg.SetActive(false);
+        player.LockMouse(0);
     }
 }

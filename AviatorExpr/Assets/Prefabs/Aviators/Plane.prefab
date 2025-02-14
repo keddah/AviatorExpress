@@ -2915,7 +2915,7 @@ PrefabInstance:
       objectReference: {fileID: 6461363698286126277}
     - target: {fileID: 8691306087456085205, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: avgTimePerHoop
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

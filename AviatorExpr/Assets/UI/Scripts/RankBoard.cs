@@ -61,6 +61,7 @@ public class RankBoard : MonoBehaviour
     public void HideBoard()
     {
         gameObject.SetActive(false);
+        ClearTimeStamps();
     }
     
     private void AddTimeStamp(ushort hoopIndex, float hoopTime)
@@ -87,6 +88,11 @@ public class RankBoard : MonoBehaviour
         text.text = hoop + $"{minutes:D2}:{seconds:D2}";
     }
 
+    private void ClearTimeStamps()
+    {
+        for (var i = 0; i < stampsBkg.transform.childCount; i++) Destroy(stampsBkg.transform.GetChild(i).gameObject);
+    }
+    
     private void CalculateRank(List<float> timeStamps, uint score)
     {
         float totalTime = 0;
