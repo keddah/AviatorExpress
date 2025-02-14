@@ -26,7 +26,10 @@ public class HoopManager : MonoBehaviour
     private float minSpawnDistance = 100;
 
     [SerializeField] 
-    private float maxAngle = 60;
+    private float maxYawAngle = 60;
+    
+    [SerializeField] 
+    private float maxPitchAngle = 45;
 
     private void Awake()
     {
@@ -54,27 +57,52 @@ public class HoopManager : MonoBehaviour
     {
         ShowHoops();
         
-        Vector3 pos = new();
+        nextHoop.transform.localPosition = new(0, 0, -35);
+        currentHoop.Reposition(transform.position);
         
+        Vector3 pos = new();
         RandomPos(ref pos);
-        currentHoop.Reposition(pos);
+        nextHoop.transform.position = pos;
+        
         hoopVfx.transform.position = currentHoop.transform.position;
     }
 
     void RandomPos(ref Vector3 randPos)
     {
-        // Get a random angle in range
-        float randomYaw = Random.Range(-maxAngle, maxAngle);
-        float randomPitch = Random.Range(-maxAngle, maxAngle);
-        Quaternion rotationOffset = Quaternion.Euler(randomPitch, randomYaw, 0);
+        var maxAttempts = 10; // Prevents infinite loops
+        bool positionValid = false;
 
-        // Apply the rotation to get a direction
-        Vector3 randDirection = rotationOffset * -nextHoop.transform.forward;
-        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+        for (var attempts = 0; attempts < maxAttempts; attempts++)
+        {
+            // Get a random angle in range
+            float randomYaw = Random.Range(-maxYawAngle, maxYawAngle);
+            float randomPitch = Random.Range(-maxPitchAngle, maxPitchAngle);
+            Quaternion rotationOffset = Quaternion.Euler(randomPitch, randomYaw, 0);
 
-        randPos = nextHoop.transform.position + randDirection * spawnDistance;
+            // Apply the rotation to get a direction
+            Vector3 randDirection = rotationOffset * -nextHoop.transform.forward;
+            float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+
+            // Compute potential position
+            Vector3 potentialPos = nextHoop.transform.position + randDirection * spawnDistance;
+
+            // Perform a raycast from nextHoop towards the potential position
+            if (Physics.Raycast(nextHoop.transform.position, randDirection, spawnDistance)) continue;
+            
+            randPos = potentialPos;
+            positionValid = true;
+            break; 
+        }
+
+        // Fallback if no valid position is found
+        if (positionValid) return;
+        
+        randPos = nextHoop.transform.position + nextHoop.transform.forward * maxSpawnDistance;
+        Debug.LogWarning("Failed to find a valid position, using max spawn distance.");
     }
-    
+
+
+
     void NewHoop()
     {
         // Move the vfx to in front of player
@@ -130,7 +158,7 @@ public class HoopManager : MonoBehaviour
         HideHoops();
     }
     
-    void HideHoops() { nextHoop.Hide(); currentHoop.Hide(); }
+    public void HideHoops() { nextHoop.Hide(); currentHoop.Hide(); }
     void ShowHoops()
     { 
         currentHoop.Show();

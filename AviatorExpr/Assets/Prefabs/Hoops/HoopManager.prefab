@@ -51,7 +51,8 @@ MonoBehaviour:
   nextHoop: {fileID: 446308597245886456}
   maxSpawnDistance: 750
   minSpawnDistance: 350
-  maxAngle: 50
+  maxYawAngle: 60
+  maxPitchAngle: 45
 --- !u!1 &4016916417357131830
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,11 +205,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735218315962950451, guid: e2d0ca8027a633140a7db65c3d3833ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7735218315962950451, guid: e2d0ca8027a633140a7db65c3d3833ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 7735218315962950451, guid: e2d0ca8027a633140a7db65c3d3833ae, type: 3}
       propertyPath: m_LocalRotation.w

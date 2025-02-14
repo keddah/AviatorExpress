@@ -52,7 +52,7 @@ public class AviatorController : MonoBehaviour
     
     ///////////// Controls
     protected InputController inputManager;
-    private bool respawning = false;
+    private bool respawning;
     
     
     ///////////// Audio

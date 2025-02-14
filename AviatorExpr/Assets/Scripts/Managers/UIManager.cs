@@ -108,6 +108,7 @@ public class UIManager : MonoBehaviour
     private void HideHoops()
     {
         hoopBkg.gameObject.SetActive(false);
+        FindAnyObjectByType<HoopManager>().HideHoops();
     }
 
     private void EndRace()
