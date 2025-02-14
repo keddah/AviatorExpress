@@ -45,17 +45,6 @@ public class ScoreManager
         }
     }
 
-    private void ResetTimer(bool resetHoops = true)
-    {
-        StopTimer();
-        time = 0;
-        sinceLastHoop = 0;
-
-        if (!resetHoops) return;
-        
-        timeStamps.Clear();
-        throughHoops = 0;
-    }
     public void StartTimer() { timerOn = true; }
     public void StopTimer() { timerOn = false; }
     
@@ -88,6 +77,18 @@ public class ScoreManager
 
     void EndRace()
     {
+        StopTimer();
         onEndRace?.Invoke();
+    }
+
+    public void Reset()
+    {
+        timerOn = false;
+        time = 0;
+        sinceLastHoop = 0;
+        timeStamps.Clear();
+        
+        throughHoops = 0;
+        score = 0;
     }
 }

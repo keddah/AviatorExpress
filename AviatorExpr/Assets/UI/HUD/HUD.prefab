@@ -1565,16 +1565,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 7122105517722412268}
     m_Modifications:
     - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4782307587312182212}
+    - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 4782307587312182212}
     - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideRankBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: HideTime
+      value: HideRankBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2177967963345343274, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName

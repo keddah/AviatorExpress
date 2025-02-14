@@ -92,6 +92,8 @@ public class UIManager : MonoBehaviour
 
     private void ShowHoops(ushort numHoops)
     {
+        scoreManager.Reset();
+        
         // Show time and score
         scoreParent.SetActive(true);
         timeBkg.SetActive(true);
@@ -112,9 +114,14 @@ public class UIManager : MonoBehaviour
     {
         // Hide score
         scoreParent.SetActive(false);
-        
-        rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.speedBonusTime, scoreManager.scorePerHoop, scoreManager.score);
+        rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
     }
     
-    public void HideTime() { timeBkg.SetActive(false); }
+
+    public void HideRankBoard()
+    {
+        rankBoard.HideBoard();
+        HideHoops();
+        timeBkg.SetActive(false);
+    }
 }
