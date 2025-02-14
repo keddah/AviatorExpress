@@ -25,8 +25,12 @@ public class RankBoard : MonoBehaviour
 
     [SerializeField] 
     private float charSpacing = 5;
+
+    [Header("Ranking")] 
+    [SerializeField]
+    private float percentLeeway = .7f;
     
-    [Header("Ranking")]
+    [Space]
     [SerializeField] 
     private float sRankPercent = .85f;
     [SerializeField] 
@@ -66,12 +70,6 @@ public class RankBoard : MonoBehaviour
         TextMeshProUGUI text = newStamp.AddComponent<TextMeshProUGUI>();
         
         newStamp.transform.parent = stampsBkg.transform;
-        // rect.anchorMin = new(.5f, 1);
-        // rect.anchorMax = new(.5f, 1);
-        // rect.pivot = new (.5f, 1);
-
-        // float spacing = 30;
-        // rect.anchoredPosition = new(0, hoopIndex * -spacing);
         
         text.font = timeStampFont;
         text.color = fontColour;
@@ -90,12 +88,15 @@ public class RankBoard : MonoBehaviour
 
     private void CalculateRank(List<float> timeStamps, ushort timeBonus, uint scorePerHoop, uint score)
     {
-        float totalTime = 0;
-        foreach (float time in timeStamps) totalTime += time;
+        // The maximum points is the base points from each hoop plus a percentage of the double points that can be earned with the speed bonus 
+        // maxPoints = 2(basePoints * numHoops) + 70% timeBonus 
+        var basePoints = scorePerHoop * timeStamps.Count;
         
-        // maxPoints = basePoints * numHoops + totalTime / numHoops * 75% timeBonus 
-        var maxPoints = (scorePerHoop * timeStamps.Count + totalTime / timeStamps.Count * .75f * timeBonus);
+        // -scorePerHoop since you can't get a bonus for the first hoop
+        var maxPoints = (basePoints * 2 + percentLeeway * timeBonus) - scorePerHoop;
+        print($"max points: {maxPoints}");
         var scorePercentage = score / maxPoints;
+        print($"percent: {scorePercentage}");
 
         string rank;
         if (scorePercentage >= sRankPercent) rank = "S";

@@ -491,6 +491,7 @@ MonoBehaviour:
   bodyUpAxis: {x: 0, y: 1, z: 0}
   invertPitch: 0
   mainPropellerSpinAxis: {x: 0, y: 1, z: 0}
+  scoreTimeBonus: 25
   tailPropellerSpinAxis: {x: 0, y: 0, z: 1}
   tailBlade: {fileID: 4739445356526340174}
 --- !u!114 &4464384266996209446
@@ -1635,6 +1636,10 @@ PrefabInstance:
       propertyPath: playerBody
       value: 
       objectReference: {fileID: 3314203983297987620}
+    - target: {fileID: 5512021728543517370, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1687,6 +1692,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1997867672220873704}
+    - target: {fileID: 8691306087456085205, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: percentLeeway
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

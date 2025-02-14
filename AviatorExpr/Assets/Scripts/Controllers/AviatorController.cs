@@ -259,7 +259,7 @@ public class AviatorController : MonoBehaviour
     public ScoreManager GetScoreManager() { return scoreManager; }
 
 
-    void OnFiveHoops() { onRaceStart?.Invoke(2); }
+    void OnFiveHoops() { onRaceStart?.Invoke(5); }
     void OnTenHoops() { onRaceStart?.Invoke(10); }
     void OnTwentyHoops() { onRaceStart?.Invoke(20); }
     void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
