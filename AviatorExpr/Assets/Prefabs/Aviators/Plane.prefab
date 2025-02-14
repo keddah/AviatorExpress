@@ -1972,6 +1972,7 @@ MonoBehaviour:
   bodyUpAxis: {x: 0, y: 1, z: 0}
   invertPitch: 1
   mainPropellerSpinAxis: {x: 0, y: 0, z: 1}
+  scoreTimeBonus: 25
   wingSectionChordlineAxis: {x: 0, y: 0, z: 1}
   wingChordlineAxis: {x: 0, y: 1, z: 0}
   rudder: {fileID: 3321108600066777387}
@@ -2844,6 +2845,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 4.05
       objectReference: {fileID: 0}
+    - target: {fileID: 5512021728543517370, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -2908,6 +2913,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 6461363698286126277}
+    - target: {fileID: 8691306087456085205, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: avgTimePerHoop
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

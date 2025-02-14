@@ -93,6 +93,7 @@ public class UIManager : MonoBehaviour
     private void ShowHoops(ushort numHoops)
     {
         scoreManager.Reset();
+        scoreTxt.text = "0"; 
         
         // Show time and score
         scoreParent.SetActive(true);
