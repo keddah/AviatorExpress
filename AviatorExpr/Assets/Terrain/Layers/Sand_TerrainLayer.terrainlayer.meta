@@ -11,5 +11,5 @@ AssetOrigin:
   productId: 145808
   packageName: Terrain Sample Asset Pack
   packageVersion: 2.0.1
-  assetPath: Assets/TerrainSampleAssets/TerrainLayers/Sand_TerrainLayer.terrainlayer
+  assetPath: Assets/Terrain/Layers/Sand_TerrainLayer.terrainlayer
   uploadId: 511657
