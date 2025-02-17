@@ -260,6 +260,20 @@ public class AviatorController : MonoBehaviour
 
     public void LockMouse(ushort num) { inputManager.LockMouse(0); }
 
+    void OnFlip()
+    {
+        bool canFlip = mainRb.linearVelocity.magnitude < 1;
+        if(!canFlip) return;
+
+        // Is the plane upside down
+        canFlip = Math.Abs(Vector3.Dot(mainRb.transform.up, Vector3.down)) > .65f;
+        print(Math.Abs(Vector3.Dot(mainRb.transform.up, Vector3.down)));
+        if(!canFlip) return;
+        
+        mainRb.AddForce(Vector3.up * mainRb.mass * 500);
+        mainRb.AddRelativeTorque(0,0,mainRb.mass * 75000);
+    }
+    
     void OnFiveHoops() { onRaceStart?.Invoke(5); }
     void OnTenHoops() { onRaceStart?.Invoke(10); }
     void OnTwentyHoops() { onRaceStart?.Invoke(20); }

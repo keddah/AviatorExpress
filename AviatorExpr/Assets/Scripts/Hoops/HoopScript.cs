@@ -30,6 +30,5 @@ public class HoopScript : MonoBehaviour
 
     public void Reposition(Vector3 pos) { transform.position = pos; }
 
-    public void Show() { gameObject.SetActive(true); }
-    public void Hide() { gameObject.SetActive(false); }
+    public void ShowHide(bool show) { gameObject.SetActive(show); }
 }

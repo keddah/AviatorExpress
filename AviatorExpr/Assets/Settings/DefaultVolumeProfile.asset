@@ -280,50 +280,6 @@ MonoBehaviour:
   SunScatteringIntensity:
     m_OverrideState: 1
     m_Value: 2
---- !u!114 &-4936740139018675671
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ddcec8a8eb2d684d833ac8f5d26aebd, type: 3}
-  m_Name: HDShadowSettings
-  m_EditorClassIdentifier: 
-  active: 1
-  interCascadeBorders: 1
-  maxShadowDistance:
-    m_OverrideState: 1
-    m_Value: 118914
-  directionalTransmissionMultiplier:
-    m_OverrideState: 1
-    m_Value: 1
-  cascadeShadowSplitCount:
-    m_OverrideState: 1
-    m_Value: 3
-  cascadeShadowSplit0:
-    m_OverrideState: 1
-    m_Value: 0.09669377
-  cascadeShadowSplit1:
-    m_OverrideState: 1
-    m_Value: 0.14043105
-  cascadeShadowSplit2:
-    m_OverrideState: 1
-    m_Value: 0.3
-  cascadeShadowBorder0:
-    m_OverrideState: 1
-    m_Value: 0.17926788
-  cascadeShadowBorder1:
-    m_OverrideState: 1
-    m_Value: 0
-  cascadeShadowBorder2:
-    m_OverrideState: 1
-    m_Value: 0.6886447
-  cascadeShadowBorder3:
-    m_OverrideState: 1
-    m_Value: 0
 --- !u!114 &-4583837070805223989
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -345,7 +301,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 1
-    m_Value: 13.25
+    m_Value: 12.5
   multiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -390,7 +346,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value:
       mode: 0
-      customValue: 414
+      customValue: 1000
       additiveValue: 0
       multiplyValue: 1
   sunInitialRotation:
@@ -525,7 +481,7 @@ MonoBehaviour:
       m_Value: 0
     altitude:
       m_OverrideState: 1
-      m_Value: 7000
+      m_Value: 6000
     rotation:
       m_OverrideState: 0
       m_Value: 0
@@ -549,7 +505,7 @@ MonoBehaviour:
       m_OverrideState: 1
       m_Value:
         mode: 0
-        customValue: 380.4
+        customValue: 12146.5
         additiveValue: 0
         multiplyValue: 1
     flowmap:
@@ -801,10 +757,32 @@ MonoBehaviour:
   - {fileID: -1410297666881709256}
   - {fileID: -4583837070805223989}
   - {fileID: 3244986200856065339}
-  - {fileID: -4936740139018675671}
   - {fileID: -2920996499250689959}
   - {fileID: 1632325436008711754}
   - {fileID: 2581394864299359983}
+  - {fileID: 167607986211199170}
+--- !u!114 &167607986211199170
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76fd08475e21554b8f284f723dd7cf8, type: 3}
+  m_Name: WaterRendering
+  m_EditorClassIdentifier: 
+  active: 1
+  enable:
+    m_OverrideState: 1
+    m_Value: 1
+  triangleSize:
+    m_OverrideState: 1
+    m_Value: 30
+  ambientProbeDimmer:
+    m_OverrideState: 1
+    m_Value: 0.5
 --- !u!114 &853819529557874667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1274,13 +1252,13 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   adaptationMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   adaptationSpeedDarkToLight:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 3
   adaptationSpeedLightToDark:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   weightTextureMask:
     m_OverrideState: 0
@@ -1324,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953beb541740ddc499d005ee80c9ff29, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   quality:
     m_OverrideState: 0
     m_Value: 1
@@ -1339,10 +1317,10 @@ MonoBehaviour:
     m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.38642952, g: 0.45641106, b: 0.48514998, a: 1}
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 5000
+    m_Value: 2000
   mipFogMaxMip:
     m_OverrideState: 0
     m_Value: 0.5
@@ -1357,25 +1335,25 @@ MonoBehaviour:
     m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 20000
+    m_Value: 8000
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 1000
+    m_Value: 341
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
   albedo:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.6544589, g: 0.70638025, b: 0.7264151, a: 1}
   globalLightProbeDimmer:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0.905
   depthExtent:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 64
   denoisingMode:
-    m_OverrideState: 0
-    m_Value: 2
+    m_OverrideState: 1
+    m_Value: 3
   anisotropy:
     m_OverrideState: 0
     m_Value: 0

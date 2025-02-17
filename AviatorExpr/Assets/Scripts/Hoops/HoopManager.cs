@@ -35,6 +35,9 @@ public class HoopManager : MonoBehaviour
     {
         hoopVfx = GetComponentInChildren<VisualEffect>();
         hoopVfx.Stop();
+        
+        currentHoop.ShowHide(false);
+        nextHoop.ShowHide(false);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -49,27 +52,27 @@ public class HoopManager : MonoBehaviour
         player.onRaceStart += Init;
         player.GetScoreManager().onEndRace += EndRace;
         
-        currentHoop.Hide();
-        nextHoop.Hide();
     }
 
     void Init(ushort numHoops)
     {
         ShowHoops();
         
-        nextHoop.transform.localPosition = new(0, 0, -35);
+        // Move the first hoop to where the parent is
         currentHoop.Reposition(transform.position);
+        
+        // move the inactive hoop directly behind the first hoop to get the correct direction.
+        nextHoop.transform.localPosition = new(0, 0, -35);
         
         Vector3 pos = new();
         RandomPos(ref pos);
         nextHoop.transform.position = pos;
-        
         hoopVfx.transform.position = currentHoop.transform.position;
     }
 
     void RandomPos(ref Vector3 randPos)
     {
-        var maxAttempts = 10; // Prevents infinite loops
+        var maxAttempts = 10;
         bool positionValid = false;
 
         for (var attempts = 0; attempts < maxAttempts; attempts++)
@@ -79,14 +82,11 @@ public class HoopManager : MonoBehaviour
             float randomPitch = Random.Range(-maxPitchAngle, maxPitchAngle);
             Quaternion rotationOffset = Quaternion.Euler(randomPitch, randomYaw, 0);
 
-            // Apply the rotation to get a direction
             Vector3 randDirection = rotationOffset * -nextHoop.transform.forward;
             float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-
-            // Compute potential position
             Vector3 potentialPos = nextHoop.transform.position + randDirection * spawnDistance;
 
-            // Perform a raycast from nextHoop towards the potential position
+            // Raycast from nextHoop towards the potential position
             if (Physics.Raycast(nextHoop.transform.position, randDirection, spawnDistance)) continue;
             
             randPos = potentialPos;
@@ -122,8 +122,8 @@ public class HoopManager : MonoBehaviour
         // Move the next hoop to a new location 
         nextHoop.transform.position = pos;
         
-        if(player.ThroughHoop()) nextHoop.Hide();
-        else nextHoop.Show();
+        // Hide the next hoop if it's the penultimate hoop
+        nextHoop.ShowHide(!player.ThroughHoop());
     }
 
     public HoopScript GetCurrentHoop() { return currentHoop; }
@@ -153,15 +153,7 @@ public class HoopManager : MonoBehaviour
         playerBody.angularVelocity = Vector3.zero;
     }
 
-    void EndRace()
-    {
-        HideHoops();
-    }
-    
-    public void HideHoops() { nextHoop.Hide(); currentHoop.Hide(); }
-    void ShowHoops()
-    { 
-        currentHoop.Show();
-        nextHoop.Show();
-    }
+    void EndRace() { HideHoops(); }
+    void HideHoops() { nextHoop.ShowHide(false); currentHoop.ShowHide(false); }
+    void ShowHoops() { currentHoop.ShowHide(true); nextHoop.ShowHide(true); }
 }

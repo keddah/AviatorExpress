@@ -54,7 +54,6 @@ public class UIManager : MonoBehaviour
         player.onRaceStart += ShowHoops;
         
         popupScoreTxt.alpha = 0;
-        HideHoops();
         
         // Hide time and score
         scoreParent.SetActive(false);
@@ -108,7 +107,6 @@ public class UIManager : MonoBehaviour
     private void HideHoops()
     {
         hoopBkg.gameObject.SetActive(false);
-        FindAnyObjectByType<HoopManager>().HideHoops();
     }
 
     private void EndRace()
@@ -116,13 +114,13 @@ public class UIManager : MonoBehaviour
         // Hide score
         scoreParent.SetActive(false);
         rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
+        HideHoops();
     }
     
 
     public void HideRankBoard()
     {
         rankBoard.HideBoard();
-        HideHoops();
         timeBkg.SetActive(false);
         player.LockMouse(0);
     }
