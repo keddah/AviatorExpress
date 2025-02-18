@@ -48,7 +48,7 @@ public class HoopManager : MonoBehaviour
        
         // Delegates
         currentHoop.onCollision += NewHoop;
-        player.onRespawn += Respawn;
+        player.onRetry += Retry;
         player.onRaceStart += Init;
         player.GetScoreManager().onEndRace += EndRace;
         
@@ -128,7 +128,7 @@ public class HoopManager : MonoBehaviour
 
     public HoopScript GetCurrentHoop() { return currentHoop; }
     
-    void Respawn()
+    void Retry()
     {
         playerBody.Sleep();
         playerBody.linearVelocity = Vector3.zero;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AviatorController : MonoBehaviour
 {
-    public event OnRespawnAtHoop onRespawn;
+    public event OnRespawnAtHoop onRetry;
     public delegate void OnRespawnAtHoop();
     
     public event OnStartRace onRaceStart;
@@ -231,9 +231,21 @@ public class AviatorController : MonoBehaviour
         if(respawning) print("Respawning...");
     }
     
+    // Used to go to the last hoop the player went through
     void OnRespawn()
     {
-        onRespawn?.Invoke();
+        onRetry?.Invoke();
+    }
+
+    // Used to go back to the spawn point of the aviator
+    public void Respawn()
+    {
+        mainRb.Sleep();
+        
+        // Since the prefab parent doesn't move
+        mainRb.Move(transform.position, transform.rotation);
+        
+        mainRb.WakeUp();
     }
     
     void OnToggleCamera()

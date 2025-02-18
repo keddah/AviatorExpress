@@ -3,10 +3,6 @@ using UnityEngine;
 
 static class AeroPhysics
 {
-    public static bool QuatApproximately(Quaternion a, Quaternion b)
-    {
-        return Mathf.Approximately(a.x, b.x) && Mathf.Approximately(a.y, b.y) && Mathf.Approximately(a.z, b.z);
-    }
     
     public static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
     
