@@ -1,11 +1,15 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AviatorController : MonoBehaviour
 {
     public event OnRespawnAtHoop onRetry;
     public delegate void OnRespawnAtHoop();
+    
+    public event OnGamePaused onGamePaused;
+    public delegate void OnGamePaused();
     
     public event OnStartRace onRaceStart;
     public delegate void OnStartRace(ushort numHoops);
@@ -247,6 +251,23 @@ public class AviatorController : MonoBehaviour
         
         mainRb.WakeUp();
     }
+
+    public void SetActive(bool active)
+    {
+        mainObject.SetActive(active);
+
+        sfxManager.enabled = active;
+        
+        GetComponent<PlayerInput>().enabled = active;
+        inputManager.enabled = active;
+        
+        GetComponentInChildren<UIManager>().enabled = active;
+        enabled = active;
+    }
+    
+    
+    
+    void OnPause() { onGamePaused?.Invoke(); }
     
     void OnToggleCamera()
     {
@@ -271,6 +292,7 @@ public class AviatorController : MonoBehaviour
     public ScoreManager GetScoreManager() { return scoreManager; }
 
     public void LockMouse(ushort num) { inputManager.LockMouse(0); }
+    public void UnlockMouse() { inputManager.UnlockMouse(); }
 
     void OnFlip()
     {

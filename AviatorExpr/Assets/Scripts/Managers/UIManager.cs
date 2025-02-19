@@ -4,7 +4,6 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [Header("Texts")]
-    
     [SerializeField] 
     private TextMeshProUGUI timeTxt;
     
@@ -31,16 +30,14 @@ public class UIManager : MonoBehaviour
     private AviatorController player;
     private ScoreManager scoreManager;
 
-    [Space]
-    [SerializeField] 
-    private RectTransform rankBoardBkg;
-
+    [SerializeField]
     private RankBoard rankBoard;
+    [SerializeField]
+    private PauseMenu pauseMenu;
     
     private void Awake()
     {
         player = GetComponentInParent<AviatorController>();
-        rankBoard = rankBoardBkg.GetComponentInParent<RankBoard>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,6 +49,7 @@ public class UIManager : MonoBehaviour
         scoreManager.onEndRace += EndRace;
 
         player.onRaceStart += ShowHoops;
+        player.onGamePaused += Pause;
         
         popupScoreTxt.alpha = 0;
         
@@ -123,5 +121,11 @@ public class UIManager : MonoBehaviour
         rankBoard.HideBoard();
         timeBkg.SetActive(false);
         player.LockMouse(0);
+    }
+    
+    void Pause()
+    {
+        bool isPaused = Time.timeScale == 0;
+        pauseMenu.ShowHide(!isPaused);
     }
 }

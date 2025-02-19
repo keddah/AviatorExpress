@@ -1923,7 +1923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_NotificationBehavior: 1
-  m_UIInputModule: {fileID: 0}
+  m_UIInputModule: {fileID: 2116692921057864549}
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2129,8 +2129,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.88166314, z: -0, w: 0.4718793}
-  m_LocalPosition: {x: -5.1204753, y: 0, z: 3.4132915}
+  m_LocalRotation: {x: -0, y: 0.31794643, z: -0, w: 0.9481087}
+  m_LocalPosition: {x: -3.7101266, y: 0, z: -4.9096627}
   m_LocalScale: {x: 0.7692309, y: 0.7692308, z: 0.76923096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2812,10 +2812,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4147224302920318909}
     m_Modifications:
+    - target: {fileID: 1011190304070920859, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8431143656637356895}
+    - target: {fileID: 1068277594664729016, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8431143656637356895}
     - target: {fileID: 2393093954970525875, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: playerBody
       value: 
       objectReference: {fileID: 8571930919554793912}
+    - target: {fileID: 3015119632099461113, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8431143656637356895}
+    - target: {fileID: 3468242116812695178, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3991898109242510800, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_LocalPosition.z
       value: 17.47
@@ -2900,6 +2916,10 @@ PrefabInstance:
       propertyPath: avgTimePerHoop
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 8725400467786856290, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2910,6 +2930,17 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 7958284838091447733, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
   m_PrefabInstance: {fileID: 7650665538588667378}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2116692921057864549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8596420862362158743, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+  m_PrefabInstance: {fileID: 7650665538588667378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2823158310064365813 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}

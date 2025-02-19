@@ -95,13 +95,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1608282715549259303}
         m_TargetAssemblyTypeName: AviatorSelect, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 6
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: plane
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!328 &8516599424816178010
@@ -136,7 +136,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -180,7 +180,6 @@ GameObject:
   - component: {fileID: 117322258755531313}
   - component: {fileID: 962590304431635766}
   - component: {fileID: 8080355579494557976}
-  - component: {fileID: 3239132005561857021}
   m_Layer: 0
   m_Name: HelicopterButton
   m_TagString: Untagged
@@ -263,13 +262,13 @@ MonoBehaviour:
       - m_Target: {fileID: 1608282715549259303}
         m_TargetAssemblyTypeName: AviatorSelect, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 6
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: heli
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &962590304431635766
@@ -331,33 +330,10 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
---- !u!223 &3239132005561857021
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2393503640501677758}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &3889356332203972389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,7 +1035,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!222 &1459767741321857102
 CanvasRenderer:
   m_ObjectHideFlags: 0

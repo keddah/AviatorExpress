@@ -488,3 +488,9 @@ C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assemb
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Runtime.pdb
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.VisualEffectGraph.Editor.pdb
 C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.2D.Sprite.Editor.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Editor.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Runtime.dll
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Config.Runtime.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Editor.pdb
+C:\Users\Deany\Documents\GitHub\AviatorExpress\AviatorExpr\Temp\Bin\Debug\Assembly-CSharp\Unity.RenderPipelines.HighDefinition.Runtime.pdb
