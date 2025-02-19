@@ -129,4 +129,12 @@ public class Helicopter : AviatorController
         
         GyroAssist();
     }
+
+    public override void Move(Vector3 pos, Quaternion rot)
+    {
+        base.Move(pos, rot);
+
+        currentTailSpinRate = stats.maxTailPropellerIdleSpinRate;
+        maxTailSpinRate = stats.maxTailPropellerIdleSpinRate;
+    }
 }

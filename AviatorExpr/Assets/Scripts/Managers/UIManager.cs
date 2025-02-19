@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -56,6 +57,15 @@ public class UIManager : MonoBehaviour
         // Hide time and score
         scoreParent.SetActive(false);
         timeBkg.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        scoreManager.onScoreAdded -= UpdateScore;
+        scoreManager.onEndRace -= EndRace;
+
+        player.onRaceStart -= ShowHoops;
+        player.onGamePaused -= Pause;
     }
 
     // Update is called once per frame

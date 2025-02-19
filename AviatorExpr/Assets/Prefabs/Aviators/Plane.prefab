@@ -1972,6 +1972,7 @@ MonoBehaviour:
   bodyUpAxis: {x: 0, y: 1, z: 0}
   invertPitch: 1
   mainPropellerSpinAxis: {x: 0, y: 0, z: 1}
+  uiManager: {fileID: 2914590559933009462}
   scoreTimeBonus: 25
   wingSectionChordlineAxis: {x: 0, y: 0, z: 1}
   wingChordlineAxis: {x: 0, y: 1, z: 0}
@@ -2946,3 +2947,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
   m_PrefabInstance: {fileID: 7650665538588667378}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2914590559933009462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4782307587312182212, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+  m_PrefabInstance: {fileID: 7650665538588667378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7583d461b19c1842ba9df3e654e6185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

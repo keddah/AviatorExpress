@@ -491,6 +491,7 @@ MonoBehaviour:
   bodyUpAxis: {x: 0, y: 1, z: 0}
   invertPitch: 0
   mainPropellerSpinAxis: {x: 0, y: 1, z: 0}
+  uiManager: {fileID: 1913833802565497527}
   scoreTimeBonus: 25
   tailPropellerSpinAxis: {x: 0, y: 0, z: 1}
   tailBlade: {fileID: 4739445356526340174}
@@ -1722,6 +1723,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
   m_PrefabInstance: {fileID: 6400009647753318771}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1913833802565497527 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4782307587312182212, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+  m_PrefabInstance: {fileID: 6400009647753318771}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7583d461b19c1842ba9df3e654e6185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3431173262425610212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8596420862362158743, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}

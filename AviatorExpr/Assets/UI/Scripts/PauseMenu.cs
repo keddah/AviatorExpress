@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,15 +9,16 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private AviatorSelect selector;
 
-    private void Awake()
-    {
-    }
-
     public void ToMainMenu()
     {
+        Time.timeScale = 1;
+
+        foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            SceneManager.sceneLoaded -= selector.ChangeAviator;
+        }
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         SceneManager.LoadSceneAsync("Lvl_MainMenu");
-        player.gameObject.SetActive(false);
     }
 
     public void AviatorSelect()

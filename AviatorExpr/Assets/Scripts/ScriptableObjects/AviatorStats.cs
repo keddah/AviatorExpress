@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "AviatorStats", menuName = "Scriptable Objects/AviatorStats")]
 public class AviatorStats : ScriptableObject
@@ -8,7 +7,8 @@ public class AviatorStats : ScriptableObject
     {
         Helicopter,
         Plane,
-        Blimp
+        Blimp,
+        None
     };
 
     public EAviatorType aviationType;

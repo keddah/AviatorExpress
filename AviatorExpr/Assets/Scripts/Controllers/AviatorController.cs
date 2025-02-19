@@ -69,9 +69,11 @@ public class AviatorController : MonoBehaviour
     CinemachineTargetGroup.Target hoopGroupTarget;
 
 
-    protected bool engineOn;
+    public bool engineOn { get; private set; }
     protected float altitude;
 
+    [SerializeField] 
+    private UIManager uiManager;
 
     [Space] 
     [SerializeField] 
@@ -95,6 +97,8 @@ public class AviatorController : MonoBehaviour
         propellerHinge.axis = mainPropellerSpinAxis;
 
         cam = GetComponentInChildren<CinemachineCamera>();
+        
+        SetActive(false);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -116,6 +120,12 @@ public class AviatorController : MonoBehaviour
         // Setting the group radius as the average orbit radius of the default camera.
         CinemachineTargetGroup targetGroup = GetComponentInChildren<CinemachineTargetGroup>();
         targetGroup.Targets[0].Radius = groupRadius;
+    }
+
+    private void OnDestroy()
+    {
+        scoreManager.onEndRace -= inputManager.UnlockMouse;
+        onRaceStart -= LockMouse;
     }
 
     // Update is called once per frame
@@ -236,22 +246,50 @@ public class AviatorController : MonoBehaviour
     }
     
     // Used to go to the last hoop the player went through
-    void OnRespawn()
-    {
-        onRetry?.Invoke();
-    }
+    void OnRespawn() { onRetry?.Invoke(); }
 
-    // Used to go back to the spawn point of the aviator
-    public void Respawn()
+    // Sets the position and rotation while keeping the propeller's state
+    virtual public void Move(Vector3 pos, Quaternion rot)
     {
+        engineOn = true;
+        maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
+        mainPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
+        
         mainRb.Sleep();
         
-        // Since the prefab parent doesn't move
-        mainRb.Move(transform.position, transform.rotation);
+        mainRb.transform.position = pos;
+        mainRb.transform.rotation = rot;
+        
+        mainRb.angularVelocity = Vector3.zero;
+        mainRb.linearVelocity = Vector3.zero;
         
         mainRb.WakeUp();
     }
+    
+    // Used to go back to the spawn point of the aviator
+    public void Respawn()
+    {
+        mainPropellerSpinRate = 0;
+        mainPropellerRb.angularVelocity = Vector3.zero; 
+        
+        mainRb.Sleep();
 
+        engineOn = false;
+        
+        mainRb.transform.localPosition = Vector3.zero;
+        mainRb.transform.localRotation = Quaternion.identity;
+        
+        mainRb.angularVelocity = Vector3.zero;
+        mainRb.linearVelocity = Vector3.zero;
+        
+        mainRb.WakeUp();
+        
+        OnPause();
+    }
+
+    public Vector3 GetPosition() { return mainRb.transform.position; }
+    public Quaternion GetRotation() { return mainRb.transform.rotation; }
+    
     public void SetActive(bool active)
     {
         mainObject.SetActive(active);
@@ -260,14 +298,14 @@ public class AviatorController : MonoBehaviour
         
         GetComponent<PlayerInput>().enabled = active;
         inputManager.enabled = active;
-        
-        GetComponentInChildren<UIManager>().enabled = active;
+
+        uiManager.gameObject.SetActive(active);
         enabled = active;
     }
     
     
     
-    void OnPause() { onGamePaused?.Invoke(); }
+    public void OnPause() { onGamePaused?.Invoke(); }
     
     void OnToggleCamera()
     {
