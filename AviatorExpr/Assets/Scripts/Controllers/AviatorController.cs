@@ -339,6 +339,12 @@ public class AviatorController : MonoBehaviour
         mainRb.AddForce(Vector3.up * mainRb.mass * 500);
         mainRb.AddRelativeTorque(0,0,mainRb.mass * 75000);
     }
+
+    void OnChangeAviator()
+    {
+        if(Time.timeScale != 0) OnPause();
+        uiManager.ShowAviatorSelect();
+    }
     
     void OnFiveHoops() { onRaceStart?.Invoke(5); }
     void OnTenHoops() { onRaceStart?.Invoke(10); }

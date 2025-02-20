@@ -157,6 +157,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeAviator",
+                    "type": "Button",
+                    "id": "7bf68676-5465-4e00-8f09-8ff6b9b07cf2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -630,6 +639,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Flip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93a22f31-221a-447d-8f87-c19fd565751f",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeAviator",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55c132d3-cedf-43e8-a701-9ff84d9bbec3",
+                    "path": "<Gamepad>/start",
+                    "interactions": "Hold(duration=0.8)",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ChangeAviator",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

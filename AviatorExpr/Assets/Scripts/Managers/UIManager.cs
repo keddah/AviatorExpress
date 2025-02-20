@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
         scoreManager.onEndRace += EndRace;
 
         player.onRaceStart += ShowHoops;
+        player.onRetry += EndRace;
         player.onGamePaused += Pause;
         
         popupScoreTxt.alpha = 0;
@@ -124,7 +125,6 @@ public class UIManager : MonoBehaviour
         HideHoops();
     }
     
-
     public void HideRankBoard()
     {
         rankBoard.HideBoard();
@@ -137,4 +137,6 @@ public class UIManager : MonoBehaviour
         bool isPaused = Time.timeScale == 0;
         pauseMenu.ShowHide(!isPaused);
     }
+
+    public void ShowAviatorSelect() { pauseMenu.AviatorSelect(); }
 }
