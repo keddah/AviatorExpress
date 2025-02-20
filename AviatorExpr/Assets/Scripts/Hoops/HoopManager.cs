@@ -54,14 +54,6 @@ public class HoopManager : MonoBehaviour
         
     }
 
-    private void OnDestroy()
-    {
-        currentHoop.onCollision -= NewHoop;
-        player.onRetry -= Retry;
-        player.onRaceStart -= Init;
-        player.GetScoreManager().onEndRace -= EndRace;
-    }
-
     void Init(ushort numHoops)
     {
         ShowHoops();
