@@ -122,12 +122,6 @@ public class AviatorController : MonoBehaviour
         targetGroup.Targets[0].Radius = groupRadius;
     }
 
-    private void OnDestroy()
-    {
-        scoreManager.onEndRace -= inputManager.UnlockMouse;
-        onRaceStart -= LockMouse;
-    }
-
     // Update is called once per frame
     protected virtual void Update()
     {
@@ -350,5 +344,4 @@ public class AviatorController : MonoBehaviour
     void OnTenHoops() { onRaceStart?.Invoke(10); }
     void OnTwentyHoops() { onRaceStart?.Invoke(20); }
     void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
-    
 }

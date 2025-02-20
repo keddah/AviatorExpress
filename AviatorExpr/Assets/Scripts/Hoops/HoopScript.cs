@@ -11,7 +11,10 @@ public class HoopScript : MonoBehaviour
 
     private void Start()
     {
-        player = FindAnyObjectByType<AviatorController>().GetComponentInChildren<Rigidbody>().gameObject;
+        foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            selector.onAviatorChange += NewPlayer;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,8 +25,21 @@ public class HoopScript : MonoBehaviour
         onCollision?.Invoke();
     }
 
+    void NewPlayer(AviatorController newPlayer)
+    {
+        if(!newPlayer) return;
+        
+        player = newPlayer.GetComponentInChildren<Rigidbody>().gameObject;
+    }
+    
     private void FixedUpdate()
     {
+        if (!player)
+        {
+            print("no player ~ hoop script");
+            return;
+        }
+        
         Quaternion lookRot = Quaternion.LookRotation(player.transform.position - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, Time.deltaTime * lookSpeed);
     }

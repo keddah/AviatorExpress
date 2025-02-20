@@ -4,8 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class AviatorSelect : MonoBehaviour
 {
-    [SerializeField]
+    public event OnChangedAviator onAviatorChange;
+    public delegate void OnChangedAviator(AviatorController newPlayer);
+    
     private AviatorController player;
+    private Rigidbody playerRb;
     private AviatorStats.EAviatorType selectedAviator;
     
     private void Awake()
@@ -16,6 +19,8 @@ public class AviatorSelect : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        player = GetComponentInParent<AviatorController>(true);
+        
         SceneManager.sceneLoaded += ChangeAviator;
     }
 
@@ -28,8 +33,9 @@ public class AviatorSelect : MonoBehaviour
         // Select the aviator.. the process should be different if in-game
         if (SceneManager.GetActiveScene().name == "Lvl_MainMenu")
         {
+            // Load into the main scene. Change aviator will be called once the seen is loaded (onSceneLoaded)
+            SceneManager.LoadSceneAsync("Scenes/main");
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-            SceneManager.LoadScene("Scenes/main");
             return;
         }
 
@@ -45,6 +51,7 @@ public class AviatorSelect : MonoBehaviour
             print("returned because main menu");
             return;
         }
+        
         // Deactivate 'this'
         if (player) player.SetActive(false);
         else print("player not found");
@@ -54,24 +61,25 @@ public class AviatorSelect : MonoBehaviour
         {
             // Deactivating all the aviator prefabs that isn't the chosen one.
             case AviatorStats.EAviatorType.Helicopter:
-                Helicopter heli = FindAnyObjectByType<Helicopter>();
+                Helicopter heli = FindAnyObjectByType<Helicopter>(FindObjectsInactive.Include);
                 if (!heli) break;
                 
                 if(player) heli.Move(player.GetPosition(), player.GetRotation());
                 heli.SetActive(true);
+                onAviatorChange?.Invoke(heli);
                 break;
                 
             case AviatorStats.EAviatorType.Plane:
-                Plane plane = FindAnyObjectByType<Plane>();
+                Plane plane = FindAnyObjectByType<Plane>(FindObjectsInactive.Include);
                 if (!plane) break;
                 
                 if(player) plane.Move(player.GetPosition(), player.GetRotation());
                 plane.SetActive(true);
+                onAviatorChange?.Invoke(plane);
                 break;
                 
             default:
                 throw new ArgumentOutOfRangeException(nameof(selectedAviator), selectedAviator, null);
         }
-        
     }
 }

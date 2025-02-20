@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
@@ -7,7 +8,7 @@ using Random = UnityEngine.Random;
 public class HoopManager : MonoBehaviour
 {
     private AviatorController player;
-    private Rigidbody playerBody;
+    private Rigidbody activePlayerBody;
     
     private VisualEffect hoopVfx;
     
@@ -38,20 +39,42 @@ public class HoopManager : MonoBehaviour
         
         currentHoop.ShowHide(false);
         nextHoop.ShowHide(false);
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = FindAnyObjectByType<AviatorController>();
-        playerBody = player.GetComponentInChildren<Rigidbody>();
-       
-        // Delegates
+        foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            selector.onAviatorChange += NewPlayer;
+        }
+
+        foreach (var aviator in FindObjectsByType<AviatorController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            NewPlayer(aviator);
+        }
+        
+        player = FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude);
         currentHoop.onCollision += NewHoop;
+    }
+
+    void NewPlayer(AviatorController newPlayer)
+    {
+        if (player)
+        {
+            player.onRetry -= Retry;
+            player.onRaceStart -= Init;
+            player.GetScoreManager().onEndRace -= EndRace;
+        }
+        
+        player = newPlayer;
+        activePlayerBody = player.GetComponentInChildren<Rigidbody>();
+        
+        // Reassign delegates if they haven't been assigned
         player.onRetry += Retry;
         player.onRaceStart += Init;
         player.GetScoreManager().onEndRace += EndRace;
-        
     }
 
     void Init(ushort numHoops)
@@ -101,16 +124,14 @@ public class HoopManager : MonoBehaviour
         Debug.LogWarning("Failed to find a valid position, using max spawn distance.");
     }
 
-
-
     void NewHoop()
     {
         // Move the vfx to in front of player
-        hoopVfx.transform.position = playerBody.transform.position + playerBody.linearVelocity * 1.5f;
+        hoopVfx.transform.position = activePlayerBody.transform.position + activePlayerBody.linearVelocity * 1.5f;
         hoopVfx.Play();
 
         previousHoopPos = currentHoop.transform.position;
-        previousHoopRot = playerBody.transform.rotation;
+        previousHoopRot = activePlayerBody.transform.rotation;
         
         // Move the current hoop to the next hoop 
         currentHoop.Reposition(nextHoop.transform.position);
@@ -121,7 +142,7 @@ public class HoopManager : MonoBehaviour
         
         // Move the next hoop to a new location 
         nextHoop.transform.position = pos;
-        
+
         // Hide the next hoop if it's the penultimate hoop
         nextHoop.ShowHide(!player.ThroughHoop());
     }
@@ -130,13 +151,13 @@ public class HoopManager : MonoBehaviour
     
     void Retry()
     {
-        playerBody.Sleep();
-        playerBody.linearVelocity = Vector3.zero;
-        playerBody.angularVelocity = Vector3.zero;
+        activePlayerBody.Sleep();
+        activePlayerBody.linearVelocity = Vector3.zero;
+        activePlayerBody.angularVelocity = Vector3.zero;
 
-        playerBody.Move(previousHoopPos, previousHoopRot);
+        activePlayerBody.Move(previousHoopPos, previousHoopRot);
 
-        playerBody.WakeUp();
+        activePlayerBody.WakeUp();
         StartCoroutine(RemoveVelocity());
     }
 
@@ -149,8 +170,8 @@ public class HoopManager : MonoBehaviour
             yield return null;
         }
         
-        playerBody.linearVelocity = Vector3.zero;
-        playerBody.angularVelocity = Vector3.zero;
+        activePlayerBody.linearVelocity = Vector3.zero;
+        activePlayerBody.angularVelocity = Vector3.zero;
     }
 
     void EndRace() { HideHoops(); }
