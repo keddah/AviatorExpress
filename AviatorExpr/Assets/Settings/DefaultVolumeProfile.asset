@@ -898,14 +898,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   quality:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   threshold:
     m_OverrideState: 1
     m_Value: 5.6
   intensity:
     m_OverrideState: 1
-    m_Value: 0.215
+    m_Value: 0.575
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -922,13 +922,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   m_Resolution:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 2
   m_HighQualityPrefiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   m_HighQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
 --- !u!114 &1666464333004379222
 MonoBehaviour:
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953beb541740ddc499d005ee80c9ff29, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   quality:
     m_OverrideState: 0
     m_Value: 1
@@ -1320,7 +1320,7 @@ MonoBehaviour:
     m_Value: {r: 0.38642952, g: 0.45641106, b: 0.48514998, a: 1}
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 2000
+    m_Value: 5000
   mipFogMaxMip:
     m_OverrideState: 0
     m_Value: 0.5
@@ -1338,7 +1338,7 @@ MonoBehaviour:
     m_Value: 8000
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 341
+    m_Value: 586.1
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1

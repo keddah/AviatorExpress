@@ -119,7 +119,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7443408763532001945}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3318951637351632578}
+        m_TargetAssemblyTypeName: ControlsMenu, Assembly-CSharp
+        m_MethodName: ShowHide
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4361336876340501995
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -207,7 +219,8 @@ GameObject:
   - component: {fileID: 5255661295253604240}
   - component: {fileID: 5273123311955562054}
   - component: {fileID: 1459767741321857102}
-  - component: {fileID: 3801821551120227620}
+  - component: {fileID: 4513143659993597769}
+  - component: {fileID: 3318951637351632578}
   m_Layer: 0
   m_Name: ControlsMenu
   m_TagString: Untagged
@@ -290,7 +303,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575411361489117274}
   m_CullTransparentMesh: 1
---- !u!114 &3801821551120227620
+--- !u!114 &4513143659993597769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,6 +312,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 8575411361489117274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87545ac650585154982536bf8ef1b4ca, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &3318951637351632578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8575411361489117274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7145821e111af4d8c4caa27b2bad9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,6 +12,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private AviatorSelect selector;
 
+    [Space]
+    [SerializeField]
+    private AudioMixer audioMixer;
+
+    private bool sfxMuted;
+    private bool musicMuted;
+    
     public void ToMainMenu()
     {
         Time.timeScale = 1;
@@ -40,5 +50,25 @@ public class PauseMenu : MonoBehaviour
     public void Respawn()
     {
         player.Respawn();
+    }
+
+    public void ToggleMuteMusic(RectTransform buttonIcon)
+    {
+        musicMuted = !musicMuted;
+        float volume = musicMuted ? -80f : 0f;
+        audioMixer.SetFloat("MusicVolume", volume);
+        
+        GameObject icon = buttonIcon.GetComponentInChildren<Image>().gameObject;
+        icon.SetActive(musicMuted);
+    }
+    
+    public void ToggleMuteSound(RectTransform buttonIcon)
+    {
+        sfxMuted = !sfxMuted;
+        float volume = sfxMuted ? -80f : 0f;
+        audioMixer.SetFloat("SFXVolume", volume);
+        
+        GameObject icon = buttonIcon.GetComponent<Image>().gameObject;
+        icon.SetActive(sfxMuted);
     }
 }
