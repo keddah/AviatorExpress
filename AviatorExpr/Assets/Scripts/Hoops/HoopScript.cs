@@ -13,7 +13,6 @@ public class HoopScript : MonoBehaviour
     {
         // To prevent it from being called from the same collision
         if(other.gameObject != player) return;
-        print(other.gameObject.name);
         onCollision?.Invoke();
     }
 

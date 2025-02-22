@@ -1,6 +1,7 @@
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class InputController : MonoBehaviour
 {
@@ -26,7 +27,14 @@ public class InputController : MonoBehaviour
     
     public bool leftPressed { get; private set; }
     public bool rightPressed { get; private set; }
+    
     public bool respawnPressed { get; private set; }
+    
+    private float respawnStartTime;
+    
+    public float currenetRespawnHoldTime { get; private set; }
+    public float respawnActionHoldTime { get; private set; }
+
     
     private void Awake()
     {
@@ -61,6 +69,13 @@ public class InputController : MonoBehaviour
         takeOffAction.Enable();
         
         respawnAction.Enable();
+        
+        // Get the hold time
+        respawnAction.started += ctx =>
+        {
+            if (ctx.interaction is not HoldInteraction hold) return;
+            respawnActionHoldTime = hold.duration;
+        };
     }
 
     private void OnDisable()
@@ -100,9 +115,28 @@ public class InputController : MonoBehaviour
         brakePressed = brakeAction.IsPressed();
         takeOffPressed = takeOffAction.IsPressed();
 
-        respawnPressed = respawnAction.inProgress;
+        CalculateRespawnTime();
     }
     
     public void LockMouse(ushort num) { Cursor.lockState = CursorLockMode.Locked; }
     public void UnlockMouse() { Cursor.lockState = CursorLockMode.None; }
+
+    void CalculateRespawnTime()
+    {
+        // If button is first pressed, store the start time
+        if (!respawnPressed && respawnAction.inProgress) respawnStartTime = Time.time;
+        respawnPressed = respawnAction.inProgress;
+
+        // Reset if button is released
+        if (!respawnPressed)
+        {
+            respawnStartTime = -1;
+            currenetRespawnHoldTime = 0; // Reset hold time
+            return;
+        }
+
+        // Calculate current hold time
+        currenetRespawnHoldTime = Time.time - respawnStartTime;
+    }
+
 }

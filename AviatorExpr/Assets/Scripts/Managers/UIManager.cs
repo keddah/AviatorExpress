@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -34,10 +35,18 @@ public class UIManager : MonoBehaviour
     private RankBoard rankBoard;
     [SerializeField]
     private PauseMenu pauseMenu;
+
+    [Space] 
+    [SerializeField] 
+    private TextMeshProUGUI respawnTxt;
+
+    private Slider respawnSlider;
     
     private void Awake()
     {
         player = GetComponentInParent<AviatorController>();
+
+        respawnSlider = respawnTxt.GetComponentInChildren<Slider>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -139,4 +148,23 @@ public class UIManager : MonoBehaviour
     }
 
     public void ShowAviatorSelect() { pauseMenu.AviatorSelect(); }
+
+    // Called from the player's Update()
+    public void ShowHideRespawning(float currentHoldTime, float buttonHoldTime)
+    {
+        if (currentHoldTime <= 0)
+        {
+            respawnTxt.gameObject.SetActive(false);
+            return;
+        }
+
+        // Unhide the text 
+        respawnTxt.gameObject.SetActive(true);
+        
+        // Set the slider percentage
+        respawnSlider.value = currentHoldTime / buttonHoldTime;
+        print($"current time: {currentHoldTime}");
+        print($"hold: {buttonHoldTime}");
+        print($"value: {respawnSlider.value}");
+    }
 }

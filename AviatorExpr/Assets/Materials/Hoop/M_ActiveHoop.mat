@@ -336,9 +336,9 @@ Material:
     - _UseShadowThreshold: 0
     - _UseUIAlphaClip: 0
     - _WorkflowMode: 0
-    - _ZTestDepthEqualForOpaque: 0
+    - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
-    - _ZTestTransparent: 0
+    - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0, g: 0.1981132, b: 0.015239488, a: 1}

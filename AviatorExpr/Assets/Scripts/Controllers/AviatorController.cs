@@ -56,7 +56,6 @@ public class AviatorController : MonoBehaviour
     
     ///////////// Controls
     protected InputController inputManager;
-    private bool respawning;
     
     
     ///////////// Audio
@@ -132,6 +131,10 @@ public class AviatorController : MonoBehaviour
         altitude = mainRb.transform.position.y;
         
         ThrottleControl();
+        
+        print($"current hold: {inputManager.currenetRespawnHoldTime}");
+        // print($"hold time: {inputManager.respawnActionHoldTime}");
+        uiManager.ShowHideRespawning(inputManager.currenetRespawnHoldTime, inputManager.respawnActionHoldTime);
     }
 
     protected virtual void FixedUpdate()
@@ -200,7 +203,7 @@ public class AviatorController : MonoBehaviour
     {
         
     }
-    
+
     protected Vector3 GetPropellerForwardAxis(bool flip = false)
     {
         Vector3 localForward;
@@ -235,8 +238,7 @@ public class AviatorController : MonoBehaviour
 
     private void IsRespawning()
     {
-        respawning = inputManager.respawnPressed;
-        if(respawning) print("Respawning...");
+        
     }
     
     // Used to go to the last hoop the player went through
@@ -351,4 +353,10 @@ public class AviatorController : MonoBehaviour
     void OnTenHoops() { onRaceStart?.Invoke(10); }
     void OnTwentyHoops() { onRaceStart?.Invoke(20); }
     void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
+
+    // public float GetRespawnTime()
+    // {
+    //     
+    //     return holdTime / inputManager.GetRespawnHoldTime();
+    // }
 }

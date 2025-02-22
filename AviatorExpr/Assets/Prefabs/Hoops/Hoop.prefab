@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7735218315962950451}
   - component: {fileID: 6780599240372087067}
   - component: {fileID: 5875067992888335541}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Hoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

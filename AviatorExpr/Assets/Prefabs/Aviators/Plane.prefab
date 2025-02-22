@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 2653360863096489488}
   - component: {fileID: 1152294449029276714}
   - component: {fileID: 5208679797813715145}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Propeller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 8662092898515062056}
   - component: {fileID: 1369804497168774195}
   - component: {fileID: 7454081560628459349}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightInnerWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 6031545372475165230}
   - component: {fileID: 9037276711607236758}
   - component: {fileID: 3916455850369615595}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterLeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1758,7 +1758,7 @@ GameObject:
   - component: {fileID: 8571930919554793912}
   - component: {fileID: 4703467877551752715}
   - component: {fileID: 4948465746568953661}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2365,8 +2365,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14318822, y: -0.8047148, z: 0.21568125, w: 0.53424054}
-  m_LocalPosition: {x: 5.850312, y: 3.6662126, z: 2.4641223}
+  m_LocalRotation: {x: 0.0896498, y: -0.82210064, z: 0.13503765, w: 0.54578227}
+  m_LocalPosition: {x: 9.879174, y: 3.6192813, z: 4.161069}
   m_LocalScale: {x: 0.7692309, y: 0.7692308, z: 0.76923096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2427,7 +2427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: 0, z: -5}
   TrackerSettings:
     BindingMode: 5
     PositionDamping: {x: 0.3, y: 0.6, z: 0.3}
@@ -2441,12 +2441,12 @@ MonoBehaviour:
       Radius: 8
       Height: 5
     Center:
-      Radius: 8
+      Radius: 10
       Height: 2
     Bottom:
       Radius: 8
       Height: -5
-    SplineCurvature: 0.5
+    SplineCurvature: 0.4
   RecenteringTarget: 1
   HorizontalAxis:
     Value: 0
@@ -2598,16 +2598,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraRadius: 0.2
+  CameraRadius: 0.45
   Decollision:
-    Enabled: 1
+    Enabled: 0
     ObstacleLayers:
       serializedVersion: 2
       m_Bits: 1
     UseFollowTarget:
       Enabled: 1
       YOffset: 0
-    Damping: 0.63
+    Damping: 2.5
     SmoothingTime: 0
   TerrainResolution:
     Enabled: 1
@@ -2615,7 +2615,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 1
     MaximumRaycast: 10
-    Damping: 0.58
+    Damping: 2.5
 --- !u!1 &8706393492542646649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,7 +2628,7 @@ GameObject:
   - component: {fileID: 5865517758235899496}
   - component: {fileID: 948542906985391593}
   - component: {fileID: 8822177594501371199}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightOuterWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2911,7 +2911,7 @@ GameObject:
   - component: {fileID: 2276967642017211651}
   - component: {fileID: 6398685959510209110}
   - component: {fileID: 2713190236028875085}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerLeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3194,7 +3194,7 @@ PrefabInstance:
     - target: {fileID: 8596420862362158743, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_ActionsAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8596420862362158743, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_CancelAction
       value: 
