@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Plane : AviatorController
 {
@@ -29,6 +30,17 @@ public class Plane : AviatorController
     private Quaternion[] aileronDefaultRots = new Quaternion[2];
     private Quaternion[] flapDefaultRots = new Quaternion[2];
 
+    [Header("Wing VFX")]
+    [SerializeField]
+    private VisualEffect[] wingFx;
+
+    [SerializeField]
+    private float fxActivationSpeed = 40;
+    
+    [SerializeField]
+    private float fxActivationTorque = .4f;
+
+    private bool[] wingFxPlaying = {false, false};
     
     protected override void Awake()
     {
@@ -55,6 +67,13 @@ public class Plane : AviatorController
         JointLimits rudderLimits = new JointLimits { max = stats.maxRudderAngle, min = -stats.maxRudderAngle };
         rudderJoint.limits = rudderLimits;
         rudderJoint.useLimits = true;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        
+        WingTrailActivation();
     }
 
     protected override void FixedUpdate()
@@ -238,5 +257,27 @@ public class Plane : AviatorController
         else localForward = obj.forward;
 
         return flip? -localForward : localForward;
+    }
+
+    private void WingTrailActivation()
+    {
+        float speed = mainRb.linearVelocity.magnitude;
+        float torque = mainRb.angularVelocity.magnitude;
+        bool on = speed >= fxActivationSpeed && torque >= fxActivationTorque;
+
+        // Without separating the playing bools, if one is supposed to be on/off they'll both be on/off
+        for(var i = 0; i < wingFx.Length; i++)
+        {
+            if (on && !wingFxPlaying[i]) 
+            {
+                wingFx[i].Play();
+                wingFxPlaying[i] = true;
+            }
+            else if (!on) 
+            {
+                wingFx[i].Stop();
+                wingFxPlaying[i] = false;
+            }
+        }
     }
 }
