@@ -381,7 +381,7 @@
                 {
                     "name": "",
                     "id": "4f4649ac-64a8-4a73-af11-b3faef356a4d",
-                    "path": "<Keyboard>/backspace",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -458,7 +458,7 @@
                 {
                     "name": "",
                     "id": "841678de-2948-4644-8862-b79dd38c177c",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -480,7 +480,7 @@
                 {
                     "name": "",
                     "id": "aaad5fe1-20cc-4f9f-aa60-e081cd1cefd7",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -538,7 +538,18 @@
                     "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "FiveHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2a813ad-0bb0-4ade-a9e8-e98eaca55b2f",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "FiveHoops",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -549,7 +560,18 @@
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TenHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7511107-b8df-4f32-b91a-1055afb5b16c",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "TenHoops",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -560,7 +582,18 @@
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TwentyHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6de3ab8b-56c8-47da-8402-7966622ded86",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "TwentyHoops",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -571,7 +604,18 @@
                     "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "UnlimitedHoops",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29644fc5-92a2-4e1b-8acd-d8420d7ee7ae",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "UnlimitedHoops",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -612,7 +656,7 @@
                 {
                     "name": "",
                     "id": "d07d112f-c4c6-4f87-afcf-bb2474a66fa2",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
