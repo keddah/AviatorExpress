@@ -101,9 +101,9 @@ public class RankBoard : MonoBehaviour
         // --timeStampsCount because the timer doesn't start until the first hoop is reached
         float expectedTime = (timeStamps.Count - 1) * avgTimePerHoop;
         float timePercent = expectedTime / Mathf.Max(totalTime, 1f); // Prevent division by zero
-        print($"Average total time: {(timeStamps.Count - 1) * avgTimePerHoop}");
-        print($"Total time: {totalTime}");
-        print($"Time percent: {timePercent}");
+        // print($"Average total time: {(timeStamps.Count - 1) * avgTimePerHoop}");
+        // print($"Total time: {totalTime}");
+        // print($"Time percent: {timePercent}");
         
         string rank;
         if (timePercent >= sRankPercent) rank = "S";

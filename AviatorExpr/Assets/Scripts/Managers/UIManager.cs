@@ -58,7 +58,6 @@ public class UIManager : MonoBehaviour
         scoreManager.onEndRace += EndRace;
 
         player.onRaceStart += ShowHoops;
-        player.onRetry += EndRace;
         player.onGamePaused += Pause;
         
         popupScoreTxt.alpha = 0;
@@ -163,8 +162,8 @@ public class UIManager : MonoBehaviour
         
         // Set the slider percentage
         respawnSlider.value = currentHoldTime / buttonHoldTime;
-        print($"current time: {currentHoldTime}");
-        print($"hold: {buttonHoldTime}");
-        print($"value: {respawnSlider.value}");
+        // print($"current time: {currentHoldTime}");
+        // print($"hold: {buttonHoldTime}");
+        // print($"value: {respawnSlider.value}");
     }
 }

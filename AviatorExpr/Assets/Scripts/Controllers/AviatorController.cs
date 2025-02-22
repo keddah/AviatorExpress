@@ -1,7 +1,6 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class AviatorController : MonoBehaviour
 {
@@ -124,7 +123,6 @@ public class AviatorController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        IsRespawning();
         scoreManager.Update();
         
         mainPropellerSpeed = mainPropellerRb.angularVelocity.magnitude;
@@ -132,7 +130,7 @@ public class AviatorController : MonoBehaviour
         
         ThrottleControl();
         
-        print($"current hold: {inputManager.currenetRespawnHoldTime}");
+        // print($"current hold: {inputManager.currenetRespawnHoldTime}");
         // print($"hold time: {inputManager.respawnActionHoldTime}");
         uiManager.ShowHideRespawning(inputManager.currenetRespawnHoldTime, inputManager.respawnActionHoldTime);
     }
@@ -236,16 +234,15 @@ public class AviatorController : MonoBehaviour
         return flip? -direction : direction;
     }
 
-    private void IsRespawning()
-    {
-        
-    }
-    
     // Used to go to the last hoop the player went through
-    void OnRespawn() { onRetry?.Invoke(); }
+    void OnRespawn()
+    {
+        if(scoreManager.score > 0) onRetry?.Invoke(); 
+        else Respawn(false);
+    }
 
     // Sets the position and rotation while keeping the propeller's state
-    virtual public void Move(Vector3 pos, Quaternion rot)
+    public virtual void Move(Vector3 pos, Quaternion rot)
     {
         engineOn = true;
         maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
@@ -263,7 +260,7 @@ public class AviatorController : MonoBehaviour
     }
     
     // Used to go back to the spawn point of the aviator
-    public void Respawn()
+    public void Respawn(bool pause = true)
     {
         mainPropellerSpinRate = 0;
         mainPropellerRb.angularVelocity = Vector3.zero; 
@@ -280,7 +277,8 @@ public class AviatorController : MonoBehaviour
         
         mainRb.WakeUp();
         
-        OnPause();
+        if(pause) OnPause();
+        scoreManager.EndRace();
     }
 
     public Vector3 GetPosition() { return mainRb.transform.position; }
@@ -331,16 +329,14 @@ public class AviatorController : MonoBehaviour
 
     void OnFlip()
     {
-        bool canFlip = mainRb.linearVelocity.magnitude < 1;
-        if(!canFlip) return;
+        bool isMovingSlowly = mainRb.linearVelocity.magnitude < 1;
+        bool isUpsideDown = Vector3.Dot(mainRb.transform.up, Vector3.down) > 0.65f;
+        // print($"dot: {Vector3.Dot(mainRb.transform.up, Vector3.down)}");
 
-        // Is the plane upside down
-        canFlip = Math.Abs(Vector3.Dot(mainRb.transform.up, Vector3.down)) > .65f;
-        print(Math.Abs(Vector3.Dot(mainRb.transform.up, Vector3.down)));
-        if(!canFlip) return;
+        if (!isMovingSlowly || !isUpsideDown) return;
         
-        mainRb.AddForce(Vector3.up * mainRb.mass * 500);
-        mainRb.AddRelativeTorque(0,0,mainRb.mass * 75000);
+        mainRb.AddForce(Vector3.up * mainRb.mass * 250);
+        mainRb.AddRelativeTorque(0,0,mainRb.mass * 100000);
     }
 
     void OnChangeAviator()
@@ -353,10 +349,4 @@ public class AviatorController : MonoBehaviour
     void OnTenHoops() { onRaceStart?.Invoke(10); }
     void OnTwentyHoops() { onRaceStart?.Invoke(20); }
     void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
-
-    // public float GetRespawnTime()
-    // {
-    //     
-    //     return holdTime / inputManager.GetRespawnHoldTime();
-    // }
 }

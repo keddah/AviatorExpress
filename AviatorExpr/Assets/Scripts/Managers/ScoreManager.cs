@@ -75,7 +75,7 @@ public class ScoreManager
 
     public void SetHoopTarget(ushort target) { hoopTarget = target; }
 
-    void EndRace()
+    public void EndRace()
     {
         StopTimer();
         onEndRace?.Invoke();
