@@ -286,15 +286,16 @@ public class AviatorController : MonoBehaviour
     
     public void SetActive(bool active)
     {
-        mainObject.SetActive(active);
-
-        sfxManager.enabled = active;
-        
-        GetComponent<PlayerInput>().enabled = active;
-        inputManager.enabled = active;
-
-        uiManager.gameObject.SetActive(active);
-        enabled = active;
+        gameObject.SetActive(active);
+        // mainObject.SetActive(active);
+        //
+        // sfxManager.enabled = active;
+        //
+        // GetComponent<PlayerInput>().enabled = active;
+        // inputManager.enabled = active;
+        //
+        // uiManager.gameObject.SetActive(active);
+        // enabled = active;
     }
     
     

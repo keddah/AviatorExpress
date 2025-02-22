@@ -2450,7 +2450,7 @@ MonoBehaviour:
   RecenteringTarget: 1
   HorizontalAxis:
     Value: 0
-    Center: 39.310764
+    Center: 39.31076
     Range: {x: -180, y: 180}
     Wrap: 1
     Recentering:
@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraRadius: 1
+  CameraRadius: 0.2
   Decollision:
     Enabled: 1
     ObstacleLayers:

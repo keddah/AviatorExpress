@@ -48,19 +48,23 @@ public class HoopManager : MonoBehaviour
         foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
             selector.onAviatorChange += NewPlayer;
+            currentHoop.BindDelegates(selector);
+            nextHoop.BindDelegates(selector);
         }
 
-        foreach (var aviator in FindObjectsByType<AviatorController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        {
-            NewPlayer(aviator);
-        }
+        // foreach (var aviator in FindObjectsByType<AviatorController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        // {
+        //     NewPlayer(aviator);
+        // }
         
-        player = FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude);
+        NewPlayer(FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude));
         currentHoop.onCollision += NewHoop;
     }
 
     void NewPlayer(AviatorController newPlayer)
     {
+        print("new player called ~ hoop manager");
+
         if (player)
         {
             player.onRetry -= Retry;

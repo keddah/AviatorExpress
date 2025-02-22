@@ -9,14 +9,6 @@ public class HoopScript : MonoBehaviour
     public event OnCollided onCollision;
     public delegate void OnCollided();
 
-    private void Start()
-    {
-        foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        {
-            selector.onAviatorChange += NewPlayer;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         // To prevent it from being called from the same collision
@@ -27,17 +19,24 @@ public class HoopScript : MonoBehaviour
 
     void NewPlayer(AviatorController newPlayer)
     {
+        print("new player called ~ hoop script");
         if(!newPlayer) return;
         
-        player = newPlayer.GetComponentInChildren<Rigidbody>().gameObject;
+        player = newPlayer.GetComponentInChildren<Rigidbody>(true).gameObject;
     }
     
     private void FixedUpdate()
     {
         if (!player)
         {
-            print("no player ~ hoop script");
-            return;
+            // For the first spawn, The player isn't found... (should only need to be run once per hoop)
+            print("getting player ~ hoop script");
+            player = FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude).GetComponentInChildren<Rigidbody>(true).gameObject;
+            if (!player)
+            {
+                print("no player ~ hoop script");
+                return;
+            }
         }
         
         Quaternion lookRot = Quaternion.LookRotation(player.transform.position - transform.position);
@@ -47,4 +46,11 @@ public class HoopScript : MonoBehaviour
     public void Reposition(Vector3 pos) { transform.position = pos; }
 
     public void ShowHide(bool show) { gameObject.SetActive(show); }
+    
+    // Called by the hoop manager since it doesn't work in start??
+    public void BindDelegates(AviatorSelect selector)
+    {
+        print("binding ~ hoop script");
+        selector.onAviatorChange += NewPlayer;
+    }
 }
