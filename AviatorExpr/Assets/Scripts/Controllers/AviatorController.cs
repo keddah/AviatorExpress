@@ -193,14 +193,6 @@ public class AviatorController : MonoBehaviour
         mainPropellerRb.angularVelocity = Math.Min(mainPropellerRb.angularVelocity.magnitude, maxPropellerSpinRate) * GetPropellerForwardAxis(false);
     }
     
-    protected virtual void OnStartEngine()
-    {
-        engineOn = !engineOn;
-        
-        sfxManager.PlaySound(engineOn ? AudioManager.ESounds.StartEngine : AudioManager.ESounds.OffEngine);
-        if (engineOn && mainPropellerSpinRate < 1) mainPropellerSpinRate += 1f;
-    }
-
     protected virtual void Lift()
     {
         
@@ -265,8 +257,6 @@ public class AviatorController : MonoBehaviour
         // End the race manually
         scoreManager.EndRace(true);
     }
-
-    public void SetActive(bool active) { gameObject.SetActive(active); }
     
     // Called by hoop manager whenever the player goes through a hoop
     public bool ThroughHoop()
@@ -274,7 +264,8 @@ public class AviatorController : MonoBehaviour
         sfxManager.PlaySound(AudioManager.ESounds.ThroughHoop);
         return scoreManager.ThroughHoop();
     }
-
+    
+    public void SetActive(bool active) { gameObject.SetActive(active); }
     public void LockMouse(ushort num) { inputManager.LockMouse(0); }
     public void UnlockMouse() { inputManager.UnlockMouse(false); }
     
@@ -329,6 +320,14 @@ public class AviatorController : MonoBehaviour
         else Respawn(false);
     }
     
+    protected virtual void OnStartEngine()
+    {
+        engineOn = !engineOn;
+        
+        sfxManager.PlaySound(engineOn ? AudioManager.ESounds.StartEngine : AudioManager.ESounds.OffEngine);
+        if (engineOn && mainPropellerSpinRate < 1) mainPropellerSpinRate += 1f;
+    }
+    
     void OnToggleCamera()
     {
         lookingAtHoop = !lookingAtHoop;
@@ -348,11 +347,11 @@ public class AviatorController : MonoBehaviour
     
     private void OnFlip()
     {
-        bool isMovingSlowly = mainRb.linearVelocity.magnitude < 1;
-        bool isUpsideDown = Vector3.Dot(mainRb.transform.up, Vector3.down) > 0.65f;
+        bool movingSlowly = mainRb.linearVelocity.magnitude < 1;
+        bool upsideDown = Vector3.Dot(mainRb.transform.up, Vector3.down) > 0.65f;
         // print($"dot: {Vector3.Dot(mainRb.transform.up, Vector3.down)}");
 
-        if (!isMovingSlowly || !isUpsideDown) return;
+        if (!movingSlowly || !upsideDown) return;
         
         mainRb.AddForce(Vector3.up * mainRb.mass * 250);
         mainRb.AddRelativeTorque(0,0,mainRb.mass * 100000);

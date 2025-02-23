@@ -238,7 +238,7 @@ public class Plane : AviatorController
 
         float chordLength = 0, sectionSpan = 0;
         GetSectionDimensions(sectionBody.tag, ref sectionSpan, ref chordLength);
-        float wingArea = AeroPhysics.FindWingSectionArea(sectionSpan, chordLength);
+        float wingArea = sectionSpan * chordLength;
 
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;

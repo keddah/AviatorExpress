@@ -61,16 +61,19 @@ public class ScoreManager
     {
         // Turn on the timer when the player goes through the first hoop
         if(score == 0) StartTimer();
+
+        uint addedScore = (uint)(scorePerHoop * scoreMultiplier);
+        score += addedScore;
         
-        score += (uint)(scorePerHoop * scoreMultiplier);
+        // Add the time since last hoop to its list then reset it
         timeStamps.Add(sinceLastHoop);
         sinceLastHoop = 0;
         throughHoops++;
-        onScoreAdded?.Invoke(score, (uint)(scorePerHoop * scoreMultiplier));
         
+        onScoreAdded?.Invoke(score, addedScore);
         if(hoopTarget == throughHoops) EndRace(false);
 
-        return throughHoops == hoopTarget - 1;
+        return throughHoops >= hoopTarget - 1;
     }
 
     private void CalculateScoreMultiplier()
@@ -98,5 +101,6 @@ public class ScoreManager
         
         throughHoops = 0;
         score = 0;
+        scoreMultiplier = 1;
     }
 }

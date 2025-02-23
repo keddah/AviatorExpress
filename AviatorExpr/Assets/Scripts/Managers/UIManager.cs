@@ -57,7 +57,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         player = GetComponentInParent<AviatorController>();
-
         respawnSlider = respawnTxt.GetComponentInChildren<Slider>();
     }
 
@@ -81,10 +80,9 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float time = scoreManager.time;
-        int totalSeconds = Mathf.FloorToInt(time);
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
+        var totalSeconds = Mathf.FloorToInt(scoreManager.time);
+        var minutes = totalSeconds / 60;
+        var seconds = totalSeconds % 60;
     
         timeTxt.text = $"{minutes:D2}:{seconds:D2}";
         popupScoreTxt.alpha -= Time.deltaTime * popupFadeSpeed;

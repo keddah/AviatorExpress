@@ -66,6 +66,7 @@ public class RankBoard : MonoBehaviour
         ClearTimeStamps();
     }
     
+    // Create the splits for the times it took the player to reach each hoop
     private void AddTimeStamp(ushort hoopIndex, float hoopTime)
     {
         var newStamp = new GameObject();
@@ -73,8 +74,10 @@ public class RankBoard : MonoBehaviour
         newStamp.AddComponent<CanvasRenderer>();
         TextMeshProUGUI text = newStamp.AddComponent<TextMeshProUGUI>();
         
+        // Set parent
         newStamp.transform.parent = stampsBkg.transform;
         
+        // Setup text
         text.font = timeStampFont;
         text.color = fontColour;
         text.characterSpacing = charSpacing;

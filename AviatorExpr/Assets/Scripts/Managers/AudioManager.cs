@@ -55,7 +55,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource uiPlayer;
     
     [Header("Pitch Control")]
-    
     [SerializeField] 
     private float maxPropellerPitch = 1.75f;
     

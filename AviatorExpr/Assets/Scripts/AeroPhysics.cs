@@ -47,6 +47,4 @@ static class AeroPhysics
         // Multiply by 2 since there are two wings
         return   totalWingArea / (wingSectionCount * 2);
     }
-    
-    public static float FindWingSectionArea(float wingSpan, float chordLength) { return wingSpan * chordLength; }
 }
