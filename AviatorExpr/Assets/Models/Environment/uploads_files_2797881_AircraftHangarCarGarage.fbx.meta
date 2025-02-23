@@ -3,7 +3,12 @@ guid: a05ee32ff8f83b14d8dc2c4c9bfdb315
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AirHangar
+    second: {fileID: 2100000, guid: ec264d774f689e641ae9cc9e9e5113cb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
