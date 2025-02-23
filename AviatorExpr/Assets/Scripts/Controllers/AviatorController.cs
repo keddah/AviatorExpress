@@ -55,10 +55,12 @@ public class AviatorController : MonoBehaviour
     [SerializeField] 
     protected Vector3 mainPropellerSpinAxis = new(0, 1, 0);
     
+    private float maxPropellerSpinRate;
+    
     // The current spin rate
-    protected float mainPropellerSpinRate;
-    protected float maxPropellerSpinRate;
+    private float mainPropellerSpinRate;
 
+    // The current propeller speed
     protected float mainPropellerSpeed;
 
     
@@ -76,15 +78,17 @@ public class AviatorController : MonoBehaviour
     CinemachineTargetGroup.Target hoopGroupTarget;
 
 
-    public bool engineOn { get; private set; }
+    protected bool engineOn { get; private set; }
     protected float altitude;
 
-    [SerializeField] 
-    private UIManager uiManager;
 
     [Space] 
+    private UIManager uiManager;
+    
     [SerializeField] 
     private ushort scoreTimeBonus = 25;
+    [Space]
+    
     private ScoreManager scoreManager;
 
     protected virtual void Awake()
@@ -97,12 +101,15 @@ public class AviatorController : MonoBehaviour
         mainRb = mainObject.GetComponent<Rigidbody>();
         mainRb.interpolation = RigidbodyInterpolation.Interpolate;
         mainPropellerRb = mainPropeller.GetComponent<Rigidbody>();
+        mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
 
         mainRb.centerOfMass = centerMass.transform.localPosition;
 
         HingeJoint propellerHinge = mainPropeller.GetComponent<HingeJoint>();
         propellerHinge.axis = mainPropellerSpinAxis;
 
+        uiManager = GetComponentInChildren<UIManager>(true);
+        
         cam = GetComponentInChildren<CinemachineCamera>();
         
         SetActive(false);
@@ -111,18 +118,16 @@ public class AviatorController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
+        // Show the mouse then the race ends
         scoreManager.onEndRace += inputManager.UnlockMouse;
-        onRaceStart += LockMouse;
         
-        mainPropellerRb.maxAngularVelocity = stats.maxMainPropellerAccelSpinRate + 5;
-
+        ///// Setup hoop camera
         // Get the average orbit radius of the default camera.
         Cinemachine3OrbitRig.Settings orbitSettings = cam.GetComponent<CinemachineOrbitalFollow>().Orbits;
         float groupRadius = (orbitSettings.Top.Radius + orbitSettings.Center.Radius + orbitSettings.Bottom.Radius) / 3;
         
         // Setting this up for when the camera is toggled
         hoopGroupTarget = new CinemachineTargetGroup.Target { Object = FindAnyObjectByType<HoopManager>().GetCurrentHoop().transform, Radius = groupRadius };
-        
         
         // Setting the group radius as the average orbit radius of the default camera.
         CinemachineTargetGroup targetGroup = GetComponentInChildren<CinemachineTargetGroup>();
@@ -135,7 +140,7 @@ public class AviatorController : MonoBehaviour
         scoreManager.Update();
         
         mainPropellerSpeed = mainPropellerRb.angularVelocity.magnitude;
-        altitude = mainRb.transform.position.y;
+        altitude = GetPosition().y;
         
         ThrottleControl();
         
@@ -156,8 +161,13 @@ public class AviatorController : MonoBehaviour
 
     private void ThrottleControl()
     {
+        // Accelerating
         if (inputManager.throttleUpValue > 0) maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate * inputManager.throttleUpValue;
+        
+        // Decelerating
         else if (inputManager.throttleDownValue > 0) maxPropellerSpinRate = stats.maxMainPropellerDecelSpinRate;
+        
+        // Idle
         else maxPropellerSpinRate = stats.maxMainPropellerIdleSpinRate;
     }
     
@@ -211,46 +221,7 @@ public class AviatorController : MonoBehaviour
         
     }
 
-    protected Vector3 GetPropellerForwardAxis(bool flip = false)
-    {
-        Vector3 localForward;
-        if (mainPropellerSpinAxis.x != 0) localForward = mainPropellerRb.transform.right;
-        else if (mainPropellerSpinAxis.y != 0) localForward = mainPropellerRb.transform.up;
-        else localForward = mainPropellerRb.transform.forward;
-
-        return flip? -localForward : localForward;
-    }
-
-    public Vector3 GetWorldUpAxis() { return bodyUpAxis; }
-    
-    public Vector3 GetForwardAxis(bool flip = false)
-    {
-        Vector3 direction;
-        if (bodyForwardAxis.x != 0) direction = mainRb.transform.right;
-        else if (bodyForwardAxis.y != 0) direction = mainRb.transform.up;
-        else direction = mainRb.transform.forward;
-        
-        return flip? -direction : direction;
-    }
-    
-    public Vector3 GetUpAxis(bool flip = false)
-    {
-        Vector3 direction;
-        if (bodyUpAxis.x != 0) direction = mainRb.transform.right;
-        else if (bodyUpAxis.y != 0) direction = mainRb.transform.up;
-        else direction = mainRb.transform.forward;
-        
-        return flip? -direction : direction;
-    }
-
-    // Used to go to the last hoop the player went through
-    void OnRespawn()
-    {
-        if(scoreManager.score > 0) onRetry?.Invoke(); 
-        else Respawn(false);
-    }
-
-    // Sets the position and rotation while keeping the propeller's state
+    // Sets the position and rotation whilst keeping the propellers on
     public virtual void Move(Vector3 pos, Quaternion rot)
     {
         engineOn = true;
@@ -278,38 +249,85 @@ public class AviatorController : MonoBehaviour
 
         engineOn = false;
         
+        // Go back to the parent's transform
         mainRb.transform.localPosition = Vector3.zero;
         mainRb.transform.localRotation = Quaternion.identity;
         
+        // Remove velocity
         mainRb.angularVelocity = Vector3.zero;
         mainRb.linearVelocity = Vector3.zero;
         
         mainRb.WakeUp();
         
+        // Since you can respawn from outside the pause menu
         if(pause) OnPause();
+        
+        // End the race manually
         scoreManager.EndRace(true);
     }
 
-    public Vector3 GetPosition() { return mainRb.transform.position; }
-    public Quaternion GetRotation() { return mainRb.transform.rotation; }
+    public void SetActive(bool active) { gameObject.SetActive(active); }
     
-    public void SetActive(bool active)
+    // Called by hoop manager whenever the player goes through a hoop
+    public bool ThroughHoop()
     {
-        gameObject.SetActive(active);
-        // mainObject.SetActive(active);
-        //
-        // sfxManager.enabled = active;
-        //
-        // GetComponent<PlayerInput>().enabled = active;
-        // inputManager.enabled = active;
-        //
-        // uiManager.gameObject.SetActive(active);
-        // enabled = active;
+        sfxManager.PlaySound(AudioManager.ESounds.ThroughHoop);
+        return scoreManager.ThroughHoop();
+    }
+
+    public void LockMouse(ushort num) { inputManager.LockMouse(0); }
+    public void UnlockMouse() { inputManager.UnlockMouse(false); }
+    
+    
+    
+    //////// Getters
+    protected Vector3 GetPropellerForwardAxis(bool flip = false)
+    {
+        Vector3 localForward;
+        if (mainPropellerSpinAxis.x != 0) localForward = mainPropellerRb.transform.right;
+        else if (mainPropellerSpinAxis.y != 0) localForward = mainPropellerRb.transform.up;
+        else localForward = mainPropellerRb.transform.forward;
+
+        return flip? -localForward : localForward;
+    }
+
+    public Vector3 GetForwardAxis(bool flip = false)
+    {
+        Vector3 direction;
+        if (bodyForwardAxis.x != 0) direction = mainRb.transform.right;
+        else if (bodyForwardAxis.y != 0) direction = mainRb.transform.up;
+        else direction = mainRb.transform.forward;
+        
+        return flip? -direction : direction;
     }
     
+    public Vector3 GetUpAxis(bool flip = false)
+    {
+        Vector3 direction;
+        if (bodyUpAxis.x != 0) direction = mainRb.transform.right;
+        else if (bodyUpAxis.y != 0) direction = mainRb.transform.up;
+        else direction = mainRb.transform.forward;
+        
+        return flip? -direction : direction;
+    }
     
+    public ScoreManager GetScoreManager() { return scoreManager; }
+
+    // Gets the transform of the actual moving part of the prefab (the parent doesn't move). 
+    public Vector3 GetPosition() { return mainRb.transform.position; }
+    public Quaternion GetRotation() { return mainRb.transform.rotation; }
+
+
     
+    //////// Button Presses
     public void OnPause() { onGamePaused?.Invoke(); }
+    
+    // Used to go to the last hoop the player went through
+    void OnRespawn()
+    {
+        if(scoreManager.score > 0) onRetry?.Invoke(); 
+        else Respawn(false);
+    }
     
     void OnToggleCamera()
     {
@@ -320,23 +338,15 @@ public class AviatorController : MonoBehaviour
         else targetGroup.Targets.Remove(hoopGroupTarget);
         
         cam.Target.TrackingTarget = mainRb.transform;
+        
+        // Don't lock look inputs if the group target doesn't contain the hoop 
+        if (!hoopGroupTarget.Object.gameObject.activeSelf) return;
+        
         CinemachineInputAxisController camInputs = cam.GetComponent<CinemachineInputAxisController>();
         camInputs.enabled = !lookingAtHoop;
     }
-
-    // Called by hoop manager whenever the player goes through a hoop
-    public bool ThroughHoop()
-    {
-        sfxManager.PlaySound(AudioManager.ESounds.ThroughHoop);
-        return scoreManager.ThroughHoop();
-    }
-
-    public ScoreManager GetScoreManager() { return scoreManager; }
-
-    public void LockMouse(ushort num) { inputManager.LockMouse(0); }
-    public void UnlockMouse() { inputManager.UnlockMouse(false); }
-
-    void OnFlip()
+    
+    private void OnFlip()
     {
         bool isMovingSlowly = mainRb.linearVelocity.magnitude < 1;
         bool isUpsideDown = Vector3.Dot(mainRb.transform.up, Vector3.down) > 0.65f;
@@ -347,15 +357,15 @@ public class AviatorController : MonoBehaviour
         mainRb.AddForce(Vector3.up * mainRb.mass * 250);
         mainRb.AddRelativeTorque(0,0,mainRb.mass * 100000);
     }
-
-    void OnChangeAviator()
+    
+    private void OnChangeAviator()
     {
         if(Time.timeScale != 0) OnPause();
         uiManager.ShowAviatorSelect();
     }
     
-    void OnFiveHoops() { onRaceStart?.Invoke(5); }
-    void OnTenHoops() { onRaceStart?.Invoke(10); }
-    void OnTwentyHoops() { onRaceStart?.Invoke(20); }
-    void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
+    private void OnFiveHoops() { onRaceStart?.Invoke(5); }
+    private void OnTenHoops() { onRaceStart?.Invoke(10); }
+    private void OnTwentyHoops() { onRaceStart?.Invoke(20); }
+    private void OnUnlimitedHoops() { onRaceStart?.Invoke(0); }
 }

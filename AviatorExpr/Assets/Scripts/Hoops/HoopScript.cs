@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class HoopScript : MonoBehaviour
 {
-    // Using rigidbody to ensure it's the part of the player prefab that's moving
+    // Using rigid body game object to ensure it's the part of the player prefab that's moving
     private GameObject player;
     [SerializeField] private float lookSpeed = 1;
     
