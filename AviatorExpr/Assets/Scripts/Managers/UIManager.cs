@@ -17,36 +17,40 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI timeTxt;
     
     [SerializeField] 
-    private GameObject timeBkg;
-    
-    [SerializeField] 
-    private GameObject scoreParent;
-    
-    [SerializeField] 
     private TextMeshProUGUI scoreTxt;
 
     [SerializeField] 
     private TextMeshProUGUI hoopTxt;
     
     [SerializeField] 
+    private TextMeshProUGUI popupScoreTxt;
+    
+    [SerializeField] 
+    private TextMeshProUGUI respawnTxt;
+    
+    [Header("Backgrounds")]
+    [SerializeField] 
+    private GameObject timeBkg;
+    
+    [SerializeField] 
+    private GameObject scoreParent;
+    
+    [SerializeField] 
     private RectTransform hoopBkg;
 
-    [SerializeField] 
-    private TextMeshProUGUI popupScoreTxt;
-    [SerializeField] 
-    private float popupFadeSpeed = .7f;
 
     private AviatorController player;
     private ScoreManager scoreManager;
 
+    [Header("Other UI")]
     [SerializeField]
     private RankBoard rankBoard;
     [SerializeField]
     private PauseMenu pauseMenu;
 
-    [Space] 
+    [Space]
     [SerializeField] 
-    private TextMeshProUGUI respawnTxt;
+    private float popupFadeSpeed = .7f;
 
     private Slider respawnSlider;
     

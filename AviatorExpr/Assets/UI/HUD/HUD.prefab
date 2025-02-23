@@ -862,16 +862,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTxt: {fileID: 7288539385934537660}
-  timeBkg: {fileID: 5981452947533226809}
-  scoreParent: {fileID: 6745249714057547513}
   scoreTxt: {fileID: 5675270274296692726}
   hoopTxt: {fileID: 6859848685472991824}
-  hoopBkg: {fileID: 8376585652599431843}
   popupScoreTxt: {fileID: 169229683998658875}
-  popupFadeSpeed: 0.85
+  respawnTxt: {fileID: 3298963877880226613}
+  timeBkg: {fileID: 5981452947533226809}
+  scoreParent: {fileID: 6745249714057547513}
+  hoopBkg: {fileID: 8376585652599431843}
   rankBoard: {fileID: 8691306087456085205}
   pauseMenu: {fileID: 1068277594664729016}
-  respawnTxt: {fileID: 3298963877880226613}
+  popupFadeSpeed: 0.85
 --- !u!82 &7958284838091447733
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2022,27 +2022,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 300
+      value: -834
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 500
+      value: -124
       objectReference: {fileID: 0}
     - target: {fileID: 6937155320736906452, guid: 8eec60de6ce3bbd40a80e6aaf610372a, type: 3}
       propertyPath: m_LocalScale.x
