@@ -17,6 +17,15 @@ public class HoopScript : MonoBehaviour
     public event OnCollided onCollision;
     public delegate void OnCollided();
 
+    // Since the hoops are hidden when the game starts, this is run once they become active 
+    private void Start()
+    {
+        foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            BindDelegates(selector);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // To prevent it from being called from the same collision
@@ -36,7 +45,7 @@ public class HoopScript : MonoBehaviour
     {
         if (!player)
         {
-            // For the first spawn, The player isn't found... (should only need to be run once per hoop)
+            // For the first spawn, The player isn't found... (should only need to be run once per hoop at the start of the game)
             print("getting player ~ hoop script");
             player = FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude).GetComponentInChildren<Rigidbody>(true).gameObject;
             if (!player)
@@ -55,7 +64,7 @@ public class HoopScript : MonoBehaviour
     public void ShowHide(bool show) { gameObject.SetActive(show); }
     
     // Called by the hoop manager since it doesn't work in start??
-    public void BindDelegates(AviatorSelect selector)
+    private void BindDelegates(AviatorSelect selector)
     {
         print("binding ~ hoop script");
         selector.onAviatorChange += NewPlayer;

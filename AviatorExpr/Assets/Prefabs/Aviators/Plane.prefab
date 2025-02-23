@@ -2201,7 +2201,6 @@ MonoBehaviour:
   bodyUpAxis: {x: 0, y: 1, z: 0}
   invertPitch: 0
   mainPropellerSpinAxis: {x: 0, y: 0, z: 1}
-  uiManager: {fileID: 2914590559933009462}
   scoreTimeBonus: 25
   wingSectionChordlineAxis: {x: 0, y: 0, z: 1}
   wingChordlineAxis: {x: 0, y: 1, z: 0}
@@ -2365,8 +2364,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8664713193992619517}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0896498, y: -0.82210064, z: 0.13503765, w: 0.54578227}
-  m_LocalPosition: {x: 9.879174, y: 3.6192813, z: 4.161069}
+  m_LocalRotation: {x: -0.13987821, y: -0.5134941, z: -0.085273385, w: 0.84231013}
+  m_LocalPosition: {x: 9.10144, y: -3.497125, z: -4.6905384}
   m_LocalScale: {x: 0.7692309, y: 0.7692308, z: 0.76923096}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2459,7 +2458,7 @@ MonoBehaviour:
       Time: 0.8
     Restrictions: 0
   VerticalAxis:
-    Value: 24.44922
+    Value: -83.58971
     Center: 17.5
     Range: {x: -90, y: 45}
     Wrap: 0
@@ -3115,6 +3114,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 4.05
       objectReference: {fileID: 0}
+    - target: {fileID: 4049195161385518251, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049195161385518251, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5512021728543517370, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -3229,7 +3236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8691306087456085205, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: avgTimePerHoop
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8725400467786856290, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_IsActive
@@ -3265,14 +3272,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5548786875674807559, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
   m_PrefabInstance: {fileID: 7650665538588667378}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2914590559933009462 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4782307587312182212, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
-  m_PrefabInstance: {fileID: 7650665538588667378}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7583d461b19c1842ba9df3e654e6185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

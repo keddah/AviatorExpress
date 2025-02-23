@@ -52,11 +52,6 @@ public class RankBoard : MonoBehaviour
     [SerializeField] 
     private float fRankPercent = .4f;
 
-    private void Start()
-    {
-        HideBoard();
-    }
-
     public void ShowBoard(List<float> timeStamps, uint score)
     {
         CalculateRank(timeStamps, score);

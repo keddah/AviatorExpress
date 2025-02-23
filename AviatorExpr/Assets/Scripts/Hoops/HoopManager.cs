@@ -51,11 +51,10 @@ public class HoopManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Assign the on change aviator delegate to newplayer function
         foreach (var selector in FindObjectsByType<AviatorSelect>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
             selector.onAviatorChange += NewPlayer;
-            currentHoop.BindDelegates(selector);
-            nextHoop.BindDelegates(selector);
         }
 
         NewPlayer(FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude));

@@ -33,12 +33,10 @@ public class Plane : AviatorController
     
     [Header("Plane Parts")]
     [SerializeField] private GameObject rudder;
-
     [SerializeField] private GameObject elevator;
 
     // left, right
     [SerializeField] private GameObject[] wings;
-    
     [SerializeField] private GameObject[] flaps;
     [SerializeField] private GameObject[] ailerons;
 
@@ -66,7 +64,7 @@ public class Plane : AviatorController
 
         rudderDefaultRot = rudder.transform.localRotation;
         
-        // Add all the wing sections list
+        // Add all the wing sections to the list
         for (var i = 0; i < flaps.Length; i++)
         {
             aeroParts.Add(flaps[i]);
@@ -80,6 +78,7 @@ public class Plane : AviatorController
         aeroParts.Add(rudder);
         aeroParts.Add(elevator);
 
+        
         // Clamp rudder angle
         HingeJoint rudderJoint = rudder.GetComponent<HingeJoint>();
         JointLimits rudderLimits = new JointLimits { max = stats.maxRudderAngle, min = -stats.maxRudderAngle };
@@ -124,7 +123,7 @@ public class Plane : AviatorController
         {
             // brake makes the flaps tip upwards
             // Otherwise it tips downwards to assist with takeoffs
-            flap.transform.localRotation = 
+            flap.transform.localRotation =                                                          // + 90 since the flap's default rotation is 90
                 Quaternion.Lerp(flap.transform.localRotation, Quaternion.Euler(up ? stats.minFlapAngle + 90 : stats.maxFlapAngle + 90, 0, 0), Time.deltaTime * stats.flapSpeed);
         }
     }
@@ -147,6 +146,7 @@ public class Plane : AviatorController
     {
         float input = inputManager.moveInput.x;
 
+        // Move them back to their default rotations
         if (input == 0)
         {
             for(var i = 0; i < ailerons.Length; i++)
@@ -159,6 +159,7 @@ public class Plane : AviatorController
         GameObject leftAileron = ailerons[0];
         GameObject rightAileron = ailerons[1];
         
+        // Rotate the ailerons in opposite directions
         float targetAngle = stats.maxAileronAngle * input;
         Quaternion leftTargetRotation = aileronDefaultRots[0] * Quaternion.AngleAxis(targetAngle, Vector3.right);
         Quaternion rightTargetRotation = aileronDefaultRots[1] * Quaternion.AngleAxis(-targetAngle, Vector3.right);
@@ -182,6 +183,7 @@ public class Plane : AviatorController
         elevator.transform.localRotation = Quaternion.Lerp(elevator.transform.localRotation, Quaternion.Euler(targetAngle, 0, 0), Time.deltaTime * stats.elevatorSpeed);
     }
 
+    // For the propellers...
     protected override void Lift()
     {
         // Hovering
@@ -190,18 +192,21 @@ public class Plane : AviatorController
         mainRb.AddForceAtPosition(GetPropellerForwardAxis(true) * (float)(mainThrust * stats.propellerPowerScaling), mainPropellerRb.transform.position);
     }
 
+    // Lift generated from the wings...
     void ApplyAerodynamicForces(GameObject sectionBody)
     {
         Vector3 velocity = mainRb.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
         
+        // Opposite the direction of velocity
         Vector3 airflow = -velocity.normalized;
-        Vector3 chordline = GetLocalAxis(wingChordlineAxis, sectionBody.transform, false);
+        
+        // The forward axis of the wing section
+        Vector3 chordline = GetLocalAxis(wingChordlineAxis, sectionBody.transform);
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + chordline * 10, Color.green);
 
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
-    
         float wingArea = AeroPhysics.FindWingAreaPerSection(3.5f, 1.8f, 1.5f, 1);
     
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
@@ -212,14 +217,20 @@ public class Plane : AviatorController
         mainRb.AddForceAtPosition(liftForce * liftDirection, sectionBody.transform.position);
     }
 
+    // Lift generated from the wing sections...
     void ApplyWingSurfaceForces(GameObject sectionBody)
     {
         Vector3 velocity = mainRb.GetPointVelocity(sectionBody.transform.position);
         float speed = velocity.magnitude;
     
+        // Opposite the direction of velocity
         Vector3 airflow = -velocity.normalized;  
+        
+        // The forward axis of the wing section
         Vector3 chordline = GetLocalAxis(wingSectionChordlineAxis, sectionBody.transform, true);  
         float angleOfAttack = Vector3.SignedAngle(chordline, airflow, sectionBody.transform.right) * Mathf.Deg2Rad;
+        
+        // Making the aileron's less dependent on the angle of attack to make rolling more responsive
         if (sectionBody.CompareTag("Aileron")) angleOfAttack *= .5f;
 
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + airflow * 10, Color.red);
@@ -231,6 +242,8 @@ public class Plane : AviatorController
 
         float liftForce = stats.liftCoefficient * 0.5f * AeroPhysics.GetAirDensity(altitude) * speed * speed * wingArea * Mathf.Sin(angleOfAttack);
         Vector3 liftDirection = Vector3.Cross(airflow, sectionBody.transform.right).normalized;
+        
+        // Allowing the rudder to generate lift horizontally
         if (sectionBody.CompareTag("Rudder")) liftDirection = chordline;
 
         // Debug.DrawLine(sectionBody.transform.position, sectionBody.transform.position + liftDirection * 10, Color.blue);
@@ -239,7 +252,7 @@ public class Plane : AviatorController
     }
 
 
-    // ASSIGN THE PLANE SECTIONS...
+    ////////////////////////////////// ASSIGN THE PLANE SECTION TAGS IN EDITOR... //////////////////////////////////
     private void GetSectionDimensions(string section, ref float span, ref float chordLength)
     {
         switch (section)
@@ -277,6 +290,7 @@ public class Plane : AviatorController
         return flip? -localForward : localForward;
     }
 
+    // For the VFX that play at the end of each wing
     private void WingTrailActivation()
     {
         float speed = mainRb.linearVelocity.magnitude;

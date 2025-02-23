@@ -140,6 +140,7 @@ public class UIManager : MonoBehaviour
             return;
         }
         
+        print("showing board");
         rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
     }
     

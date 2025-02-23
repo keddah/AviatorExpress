@@ -88,9 +88,11 @@ public class Helicopter : AviatorController
         mainRb.AddForceAtPosition(-tailBladeRb.transform.forward * (float)(tailThrust * stats.propellerPowerScaling), tailBladeRb.transform.position);
     }
 
+    // The exact same function but including the tail propeller
     protected override void SpinPropeller()
     {
         base.SpinPropeller();
+        
         // Decelerate the blades whenever the engine is off
         if (!engineOn)
         {
@@ -111,22 +113,24 @@ public class Helicopter : AviatorController
         tailBladeRb.angularVelocity = Math.Clamp(tailBladeRb.angularVelocity.magnitude, -maxTailSpinRate, maxTailSpinRate) * tailBladeRb.transform.forward;
     }
 
+    // Works similarly to how throttle control works
     protected override void YawControl()
     {
+        // Flip the direction in SpinBlades()
         turningLeft = inputManager.leftPressed;
         
-        // Same max speed
-        // Flip the direction in SpinBlades()
         if (inputManager.rightPressed || turningLeft) maxTailSpinRate = stats.maxTailPropellerAccelSpinRate;
         else maxTailSpinRate = stats.maxTailPropellerIdleSpinRate;
     }
 
+    // Tries to keep the helicopter perfectly upright
     private void Stabiliser()
     {
         Vector3 correctionVector = Vector3.Cross(GetUpAxis(),Vector3.up);
         mainRb.AddTorque(correctionVector * stats.stabilisationStrength);
     }
     
+    // Eases the helicopters angular velocity to make it more controllable
     private void GyroAssist()
     {
         // Constantly fight against the angular velocity to try to stabilise
@@ -135,6 +139,7 @@ public class Helicopter : AviatorController
         Stabiliser();
     }
     
+    // Roll / Pitch control
     private void GyroControl()
     {
         Vector2 input = inputManager.moveInput;
@@ -150,6 +155,7 @@ public class Helicopter : AviatorController
         GyroAssist();
     }
 
+    // Addition - The tail propeller start spinning
     public override void Move(Vector3 pos, Quaternion rot)
     {
         base.Move(pos, rot);

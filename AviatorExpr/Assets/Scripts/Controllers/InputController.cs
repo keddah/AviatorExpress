@@ -26,19 +26,26 @@ public class InputController : MonoBehaviour
     
     public Vector2 moveInput { get; private set; }
 
+    
+    // Throttle control
     public float throttleUpValue { get; private set; }
     public float throttleDownValue { get; private set; }
     
+    
+    // Flap control
     public bool brakePressed { get; private set; }
     public bool takeOffPressed { get; private set; }
     
+    
+    // Yaw control
     public bool leftPressed { get; private set; }
     public bool rightPressed { get; private set; }
-    
-    public bool respawnPressed { get; private set; }
+
+
+    // Respawning
+    private bool respawnPressed;
     
     private float respawnStartTime;
-    
     public float currenetRespawnHoldTime { get; private set; }
     public float respawnActionHoldTime { get; private set; }
 
@@ -78,9 +85,9 @@ public class InputController : MonoBehaviour
         respawnAction.Enable();
         
         // Get the hold time
-        respawnAction.started += ctx =>
+        respawnAction.started += context =>
         {
-            if (ctx.interaction is not HoldInteraction hold) return;
+            if (context.interaction is not HoldInteraction hold) return;
             respawnActionHoldTime = hold.duration;
         };
     }
@@ -138,7 +145,9 @@ public class InputController : MonoBehaviour
         if (!respawnPressed)
         {
             respawnStartTime = -1;
-            currenetRespawnHoldTime = 0; // Reset hold time
+            
+            // Reset hold time
+            currenetRespawnHoldTime = 0; 
             return;
         }
 
