@@ -1,3 +1,13 @@
+/**************************************************************************************************************
+* Aviator Selector  
+*
+*   All the available aviators should be in the main scene. Before the player goes into the main scene, the player has to choose which aviator they want  
+*   to use. When in the main menu, once an aviator has been selected, this loads the main scene and activates the corresponding aviator.
+*   When in-game, when a new aviator is chosen, the new aviator seamlessly transitions to wherever the previous one was.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;

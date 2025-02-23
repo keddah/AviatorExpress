@@ -1,3 +1,23 @@
+/**************************************************************************************************************
+* Helicopter Controller ~ Inherits from AviatorController
+* 
+*   Helicopter aviators generate lift depending on the speed of the propeller. The tail propeller is used for generating horizontal lift (changing yaw).  
+*   When pitching/rolling the helicopter, forces are applied rather than having it be completely procedural.
+*
+*   Overrides:
+*       Awake()
+*       Start()
+*       Update()
+*       FixedUpdate()
+*       OnEngineStart() 
+*       SpinPropeller() 
+*       YawControl()
+*       Move()
+*       Lift()
+* 
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using UnityEngine;
 

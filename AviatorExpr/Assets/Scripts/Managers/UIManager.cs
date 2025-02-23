@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* UI Manager  
+*
+*   The script for the HUD. Displays the time, the score, the hoops counter (for trials).
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,7 +60,6 @@ public class UIManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         scoreManager = player.GetScoreManager();
         scoreManager.onScoreAdded += UpdateScore;
         scoreManager.onEndRace += EndRace;
@@ -65,15 +72,6 @@ public class UIManager : MonoBehaviour
         // Hide time and score
         scoreParent.SetActive(false);
         timeBkg.SetActive(false);
-    }
-
-    private void OnDestroy()
-    {
-        // scoreManager.onScoreAdded -= UpdateScore;
-        // scoreManager.onEndRace -= EndRace;
-        //
-        // player.onRaceStart -= ShowHoops;
-        // player.onGamePaused -= Pause;
     }
 
     // Update is called once per frame

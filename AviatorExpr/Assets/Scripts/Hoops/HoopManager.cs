@@ -1,6 +1,13 @@
-using System;
+/**************************************************************************************************************
+* Hoop Manager  
+*
+*   Keeps track of the hoops that the player flies through. 
+*   It moves the hoops randomly. Where they end up is dependent on the position of the hoop it's paired with.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
@@ -20,7 +27,7 @@ public class HoopManager : MonoBehaviour
     private Vector3 previousHoopPos;
     private Quaternion previousHoopRot;
 
-    [Space]
+    [Header("Move Properties")]
     [SerializeField, Tooltip("The max spawn distance for new hoops.")]
     private float maxSpawnDistance = 600;
     [SerializeField, Tooltip("The min spawn distance for new hoops.")]
@@ -39,7 +46,6 @@ public class HoopManager : MonoBehaviour
         
         currentHoop.ShowHide(false);
         nextHoop.ShowHide(false);
-        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,11 +58,6 @@ public class HoopManager : MonoBehaviour
             nextHoop.BindDelegates(selector);
         }
 
-        // foreach (var aviator in FindObjectsByType<AviatorController>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-        // {
-        //     NewPlayer(aviator);
-        // }
-        
         NewPlayer(FindAnyObjectByType<AviatorController>(FindObjectsInactive.Exclude));
         currentHoop.onCollision += NewHoop;
     }

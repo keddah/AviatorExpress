@@ -1,4 +1,11 @@
-using System.Linq;
+/**************************************************************************************************************
+* Input Controller  
+*
+*   Allows inputs to be read all in one place.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;

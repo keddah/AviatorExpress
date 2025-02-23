@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Aviator Stats  
+*
+*   A container for all the properties that aviators need to work.
+*   Depending on the aviator type, some fields are hidden. ~ Using the EditorScript class 
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AviatorStats", menuName = "Scriptable Objects/AviatorStats")]
@@ -42,7 +50,6 @@ public class AviatorStats : ScriptableObject
     public float gyroAssistStrength = .8f;
     public float stabilisationStrength = 1000;
     public float rollDamping = .4f;
-    
     /////////////////////////////////////////////////////////
     
     /////////////// Hidden in PLANE enum ////////////////////

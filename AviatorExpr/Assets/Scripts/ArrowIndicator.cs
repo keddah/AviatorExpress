@@ -1,4 +1,11 @@
-using System;
+/**************************************************************************************************************
+* Arrow Indicator 
+*
+*   Just sets the rotation of the arrow so that it faces the target hoop.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEngine;
 
 public class ArrowIndicator : MonoBehaviour

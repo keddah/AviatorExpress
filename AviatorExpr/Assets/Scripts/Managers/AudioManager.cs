@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Audio Manager
+* 
+*   Creates an enum for the different sounds that play during gameplay. Sounds are played using PlaySound() using enum as a parameter.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -67,6 +75,7 @@ public class AudioManager : MonoBehaviour
     {
         uiPlayer.spatialize = false;
 
+        // Propeller noises
         propellerPlayer.playOnAwake = false;
         propellerPlayer.loop = true;
         propellerPlayer.dopplerLevel = 4;
@@ -74,6 +83,7 @@ public class AudioManager : MonoBehaviour
         propellerPlayer.spatialBlend = .875f;
         propellerPlayer.spatialize = true;
 
+        // Engine noises
         enginePlayer.playOnAwake = false;
         enginePlayer.loop = true;
         enginePlayer.dopplerLevel = 5;
@@ -81,6 +91,7 @@ public class AudioManager : MonoBehaviour
         enginePlayer.spatialize = true;
         enginePlayer.spatialBlend = 1;
         
+        // Wind noises
         ambiencePlayer.playOnAwake = false;
         ambiencePlayer.loop = true;
         ambiencePlayer.dopplerLevel = 5;
@@ -133,6 +144,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    // Change the pitch depending on the speed of the propellers
     void UpdatePropeller()
     {
         if(!engineOn) return;
@@ -141,6 +153,7 @@ public class AudioManager : MonoBehaviour
         propellerPlayer.pitch = Mathf.Lerp(.95f, maxPropellerPitch, (bladeSpeed / (engineOn ? propellerRb.maxAngularVelocity : 1)) * propellerLerpSpeed);
     }
 
+    // Change the pitch depending on the speed of the aviator.
     void UpdateAmbience()
     {
         float speed = playerRb.linearVelocity.magnitude;
@@ -149,6 +162,7 @@ public class AudioManager : MonoBehaviour
         ambiencePlayer.volume = Mathf.Lerp(ambiencePlayer.volume, percentage * .8f, Time.deltaTime * ambienceSpeed);
     }
     
+    // Change the pitch depending on the speed of the propellers
     void UpdateEngine()
     {
         float bladeSpeed = propellerRb.angularVelocity.magnitude;
@@ -163,9 +177,13 @@ public class AudioManager : MonoBehaviour
         
         startingUp = true;
         engineOn = true;
+        
+        // Play the startup sound from the propeller audio source
         propellerPlayer.loop = false;
         propellerPlayer.clip = startUpClip;
         propellerPlayer.Play();
+        
+        // Swap back to the propeller sound clip after the startup sound finishes
         StartCoroutine(Delay(startUpClip.length, () =>
         {
             propellerPlayer.clip = propellerClip;
@@ -173,7 +191,8 @@ public class AudioManager : MonoBehaviour
             propellerPlayer.Play();
             startingUp = false;
         }));
-        FadeInSound(ESounds.Engine, startUpClip.length + 1.5f);
+        
+        StartCoroutine(FadeInSound(ESounds.Engine, startUpClip.length + 1.5f));
     }
 
     

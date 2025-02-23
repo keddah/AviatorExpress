@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Editor Script  
+*
+*   Only used to show/hide properties for the aviator stats scriptable objects depending on the type of aviator.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEditor;
 using UnityEngine;
 
@@ -26,7 +34,7 @@ public class EditorScript : Editor
         EditorGUILayout.Space();
         
         
-        // Show on enum switch
+        // SHOW ON SWITCH
         switch (aviator.aviationType)
         {
             ///// HELICOPTER
@@ -62,6 +70,7 @@ public class EditorScript : Editor
                 }
                 break;
 
+            
             ///// PLANE
             case AviatorStats.EAviatorType.Plane:
                 EditorGUILayout.LabelField("Plane Settings", EditorStyles.boldLabel);

@@ -1,6 +1,13 @@
+/**************************************************************************************************************
+* Rank Board  
+*
+*   Gives the player a ranking depending on how fast they completed the hoop trial and shows the split timings for each hoop.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics.Geometry;
 using UnityEngine;
 
 public class RankBoard : MonoBehaviour

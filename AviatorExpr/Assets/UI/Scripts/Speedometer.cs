@@ -1,4 +1,11 @@
-using System;
+/**************************************************************************************************************
+* Speed-o-Meter
+*
+*   Gets the player's speed, converts it to miles per hour, then displays it.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using TMPro;
 using UnityEngine;
 

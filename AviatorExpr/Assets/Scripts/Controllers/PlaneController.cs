@@ -1,3 +1,21 @@
+/**************************************************************************************************************
+* Plane Controller ~ Inherits from AviatorController
+* 
+*   Plane aviators generate lift from the wings and their moving parts. They're granted control using the moving parts. By changing the direction/chordline
+*   of the wing part, the plane can rotate.  
+*
+*   Overrides:
+*       Awake()
+*       Update()
+*       FixedUpdate()
+*       PitchControl()
+*       YawControl()
+*       RollControl()
+*       Lift()
+* 
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;

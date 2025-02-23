@@ -1,9 +1,16 @@
+/**************************************************************************************************************
+* Aero Physics 
+*
+*   Contains static functions that are used in the aerodynamics sections of the aviator classes.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using UnityEngine;
 
 static class AeroPhysics
 {
-    
     public static float GetBladeArea(float radius) { return (float)(Math.PI * (radius * radius)); }
     
     public static float GetAirDensity(float altitude)
@@ -41,8 +48,5 @@ static class AeroPhysics
         return   totalWingArea / (wingSectionCount * 2);
     }
     
-    public static float FindWingSectionArea(float wingSpan, float chordLength)
-    {
-        return wingSpan * chordLength;
-    }
+    public static float FindWingSectionArea(float wingSpan, float chordLength) { return wingSpan * chordLength; }
 }

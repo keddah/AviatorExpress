@@ -1,3 +1,12 @@
+/**************************************************************************************************************
+* Aviator Controller
+* 
+*   The parent class to the player vehicles. Only outlines the common parameters and functions that will be used by each aviator type.
+*   Invokes delegates for when the player respawns at hoops, pauses the game and starts a race.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -26,7 +35,7 @@ public class AviatorController : MonoBehaviour
     [SerializeField] 
     protected GameObject centerMass;
 
-    public Rigidbody mainRb { get; private set; }
+    protected Rigidbody mainRb { get; private set; }
     protected Rigidbody mainPropellerRb;
 
     [Space] 

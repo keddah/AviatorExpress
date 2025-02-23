@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Hoop  
+*
+*   Just rotates to face the player and invokes a delegate whenever the player collides with it.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEngine;
 
 public class HoopScript : MonoBehaviour

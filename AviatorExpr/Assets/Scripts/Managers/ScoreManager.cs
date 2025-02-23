@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Score Manager  
+*
+*   Just keeps track of the time and score. Also invokes delegates for when the score changes and when the player finishes hoop trials.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,10 +31,10 @@ public class ScoreManager
     public List<float> timeStamps { get; private set; } = new();
     
     // Getting to the hoop before this time increases the score obtained.
-    public ushort speedBonusTime { get; private set; }
+    private ushort speedBonusTime;
 
     // How much score the player should get per hoop
-    public uint scorePerHoop { get; private set; } = 100;
+    private uint scorePerHoop = 100;
     private float scoreMultiplier = 1;
 
     // How many hoops the player has gone through
@@ -45,8 +53,8 @@ public class ScoreManager
         }
     }
 
-    public void StartTimer() { timerOn = true; }
-    public void StopTimer() { timerOn = false; }
+    private void StartTimer() { timerOn = true; }
+    private void StopTimer() { timerOn = false; }
     
     // Returns whether it's the penultimate hoop
     public bool ThroughHoop()

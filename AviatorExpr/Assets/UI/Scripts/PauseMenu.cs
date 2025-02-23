@@ -1,4 +1,12 @@
-using System;
+/**************************************************************************************************************
+* Pause Menu  
+*
+*   Sets the timescale to 0 (pausing the game) whenever the menu is made visible. Provides functions for the buttons in the menu - showing and hiding menus.
+*   Also allows for music and sfx to be toggles on/off.
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;

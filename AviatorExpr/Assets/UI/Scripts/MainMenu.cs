@@ -1,11 +1,17 @@
+/**************************************************************************************************************
+* Main Menu 
+*
+*   Provides a quit game function and allows for music to loop in a playlist. 
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using System.Collections;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    private AviatorSelect selector;
-
     private AudioSource music;
     
     [SerializeField]
@@ -15,7 +21,6 @@ public class MainMenu : MonoBehaviour
     
     private void Awake()
     {
-        selector = GetComponentInChildren<AviatorSelect>();
         music = FindAnyObjectByType<AudioSource>();
         Loop();
     }

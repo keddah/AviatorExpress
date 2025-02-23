@@ -1,3 +1,11 @@
+/**************************************************************************************************************
+* Attitude Indicator  
+*
+*   Sets the position and rotation of sections of the attitude indicator to make it represent the state of the aviator.  
+*
+* Created by Dean Atkinson-Walker 2025
+***************************************************************************************************************/
+
 using System;
 using UnityEngine;
 
@@ -25,7 +33,6 @@ public class AttitudeIndicator : MonoBehaviour
     
     [SerializeField]
     private float pitchLimit = 20;
-    
     
     void Update()
     {
