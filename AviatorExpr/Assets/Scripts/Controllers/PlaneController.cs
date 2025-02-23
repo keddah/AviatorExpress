@@ -178,7 +178,7 @@ public class Plane : AviatorController
             return;
         }
 
-        float targetAngle = stats.maxElevatorAngle * (invertPitch? input : -input);
+        float targetAngle = stats.maxElevatorAngle * (invertPitch? -input : input);
         elevator.transform.localRotation = Quaternion.Lerp(elevator.transform.localRotation, Quaternion.Euler(targetAngle, 0, 0), Time.deltaTime * stats.elevatorSpeed);
     }
 

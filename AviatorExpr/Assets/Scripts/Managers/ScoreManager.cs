@@ -16,7 +16,7 @@ public class ScoreManager
     public delegate void OnScoreAdded(uint newScore, uint addedScore);
     
     public event OnRaceEnded onEndRace;
-    public delegate void OnRaceEnded();
+    public delegate void OnRaceEnded(bool manually);
 
     public ScoreManager(ushort _speedBonusTime) { speedBonusTime = _speedBonusTime; }
     
@@ -68,7 +68,7 @@ public class ScoreManager
         throughHoops++;
         onScoreAdded?.Invoke(score, (uint)(scorePerHoop * scoreMultiplier));
         
-        if(hoopTarget == throughHoops) EndRace();
+        if(hoopTarget == throughHoops) EndRace(false);
 
         return throughHoops == hoopTarget - 1;
     }
@@ -83,10 +83,10 @@ public class ScoreManager
 
     public void SetHoopTarget(ushort target) { hoopTarget = target; }
 
-    public void EndRace()
+    public void EndRace(bool manually)
     {
         StopTimer();
-        onEndRace?.Invoke();
+        onEndRace?.Invoke(manually);
     }
 
     public void Reset()

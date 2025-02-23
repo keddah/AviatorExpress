@@ -179,7 +179,7 @@ public class HoopManager : MonoBehaviour
         activePlayerBody.angularVelocity = Vector3.zero;
     }
 
-    void EndRace() { HideHoops(); }
+    void EndRace(bool manually) { HideHoops(); }
     void HideHoops() { nextHoop.ShowHide(false); currentHoop.ShowHide(false); }
     void ShowHoops() { currentHoop.ShowHide(true); nextHoop.ShowHide(true); }
 }

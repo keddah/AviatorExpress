@@ -126,7 +126,7 @@ public class InputController : MonoBehaviour
     }
     
     public void LockMouse(ushort num) { Cursor.lockState = CursorLockMode.Locked; }
-    public void UnlockMouse() { Cursor.lockState = CursorLockMode.None; }
+    public void UnlockMouse(bool manually) { if(!manually) Cursor.lockState = CursorLockMode.None; }
 
     void CalculateRespawnTime()
     {

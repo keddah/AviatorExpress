@@ -516,11 +516,11 @@ MonoBehaviour:
   ambiencePlayer: {fileID: 5408252692144821901}
   enginePlayer: {fileID: 4398414517428134476}
   propellerPlayer: {fileID: 7205913685345262737}
+  uiPlayer: {fileID: 3936400304554740934}
   maxPropellerPitch: 4
   propellerLerpSpeed: 0.1
   engineLerpSpeed: 0.3
   ambienceSpeed: 3
-  uiPlayer: {fileID: 3936400304554740934}
 --- !u!1 &4739445356526340174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,8 +1088,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7082199862772109580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18227218, y: -0.71284807, z: 0.20090637, w: 0.6467311}
-  m_LocalPosition: {x: 29.441872, y: 18.112993, z: 2.870336}
+  m_LocalRotation: {x: 0.21688387, y: -0.058700237, z: 0.013066375, w: 0.97434336}
+  m_LocalPosition: {x: 3.5515308, y: 13.856275, z: -29.368284}
   m_LocalScale: {x: 3.6363637, y: 3.6363633, z: 3.636364}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1182,7 +1182,7 @@ MonoBehaviour:
       Time: 0.8
     Restrictions: 0
   VerticalAxis:
-    Value: 38.49483
+    Value: 0.96142715
     Center: 17.5
     Range: {x: -90, y: 45}
     Wrap: 0
@@ -1687,6 +1687,14 @@ PrefabInstance:
     - target: {fileID: 3468242116812695178, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049195161385518251, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049195161385518251, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5512021728543517370, guid: 8572c3faf5cb9464b905cd5b65e23f38, type: 3}
       propertyPath: m_SizeDelta.y

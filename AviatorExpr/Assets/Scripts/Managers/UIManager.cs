@@ -123,12 +123,20 @@ public class UIManager : MonoBehaviour
         hoopBkg.gameObject.SetActive(false);
     }
 
-    private void EndRace()
+    private void EndRace(bool manually)
     {
         // Hide score
-        scoreParent.SetActive(false);
-        rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
         HideHoops();
+        scoreParent.SetActive(false);
+        
+        // Manually means the player forced the race to end by respawning 
+        if (manually)
+        {
+            timeBkg.SetActive(false);
+            return;
+        }
+        
+        rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
     }
     
     public void HideRankBoard()

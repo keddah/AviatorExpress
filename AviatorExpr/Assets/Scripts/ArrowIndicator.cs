@@ -38,5 +38,5 @@ public class ArrowIndicator : MonoBehaviour
     }
 
     void Show(ushort num) { gameObject.SetActive(true); }
-    void Hide() { gameObject.SetActive(false); }
+    void Hide(bool manually= false) { gameObject.SetActive(false); }
 }

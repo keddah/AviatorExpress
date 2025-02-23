@@ -287,7 +287,7 @@ public class AviatorController : MonoBehaviour
         mainRb.WakeUp();
         
         if(pause) OnPause();
-        scoreManager.EndRace();
+        scoreManager.EndRace(true);
     }
 
     public Vector3 GetPosition() { return mainRb.transform.position; }
@@ -334,7 +334,7 @@ public class AviatorController : MonoBehaviour
     public ScoreManager GetScoreManager() { return scoreManager; }
 
     public void LockMouse(ushort num) { inputManager.LockMouse(0); }
-    public void UnlockMouse() { inputManager.UnlockMouse(); }
+    public void UnlockMouse() { inputManager.UnlockMouse(false); }
 
     void OnFlip()
     {

@@ -2199,7 +2199,7 @@ MonoBehaviour:
   centerMass: {fileID: 1114216178900048319}
   bodyForwardAxis: {x: 0, y: 0, z: 1}
   bodyUpAxis: {x: 0, y: 1, z: 0}
-  invertPitch: 1
+  invertPitch: 0
   mainPropellerSpinAxis: {x: 0, y: 0, z: 1}
   uiManager: {fileID: 2914590559933009462}
   scoreTimeBonus: 25
@@ -2244,11 +2244,11 @@ MonoBehaviour:
   ambiencePlayer: {fileID: 4948465746568953661}
   enginePlayer: {fileID: 7799231194137040635}
   propellerPlayer: {fileID: 5208679797813715145}
+  uiPlayer: {fileID: 314440673941467207}
   maxPropellerPitch: 1.75
   propellerLerpSpeed: 0.6
   engineLerpSpeed: 0.6
   ambienceSpeed: 3
-  uiPlayer: {fileID: 314440673941467207}
 --- !u!1 &8056243466071519256
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
         ThroughHoop
     }
     
+    [Header("Rigid Bodies")] 
     [SerializeField] 
     private Rigidbody propellerRb;
     
@@ -51,6 +52,11 @@ public class AudioManager : MonoBehaviour
     private AudioSource propellerPlayer;
 
     [SerializeField] 
+    private AudioSource uiPlayer;
+    
+    [Header("Pitch Control")]
+    
+    [SerializeField] 
     private float maxPropellerPitch = 1.75f;
     
     [SerializeField]
@@ -61,9 +67,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private float ambienceSpeed = 3;
     
-    [SerializeField] 
-    private AudioSource uiPlayer;
-
     private float propellerDefaultVol;
     private float engineDefaultVol;
     
