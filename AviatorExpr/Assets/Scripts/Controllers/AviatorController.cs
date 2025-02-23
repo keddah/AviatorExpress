@@ -217,6 +217,8 @@ public class AviatorController : MonoBehaviour
     public virtual void Move(Vector3 pos, Quaternion rot)
     {
         engineOn = true;
+        sfxManager.PlaySound(AudioManager.ESounds.StartEngine);
+        
         maxPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
         mainPropellerSpinRate = stats.maxMainPropellerAccelSpinRate;
         
@@ -316,7 +318,7 @@ public class AviatorController : MonoBehaviour
     // Used to go to the last hoop the player went through
     void OnRespawn()
     {
-        if(scoreManager.score > 0) onRetry?.Invoke(); 
+        if (scoreManager.score > 0) onRetry?.Invoke();
         else Respawn(false);
     }
     

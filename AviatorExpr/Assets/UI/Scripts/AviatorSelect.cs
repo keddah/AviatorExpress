@@ -58,7 +58,7 @@ public class AviatorSelect : MonoBehaviour
     {
         if (scene.name == "Lvl_MainMenu")
         {
-            print("returned because main menu");
+            print("returned because main menu ~ aviator selector");
             return;
         }
         
@@ -74,8 +74,8 @@ public class AviatorSelect : MonoBehaviour
                 Helicopter heli = FindAnyObjectByType<Helicopter>(FindObjectsInactive.Include);
                 if (!heli) break;
                 
-                if(player) heli.Move(player.GetPosition(), player.GetRotation());
                 heli.SetActive(true);
+                if(player) heli.Move(player.GetPosition(), player.GetRotation());
                 onAviatorChange?.Invoke(heli);
                 break;
                 
@@ -83,8 +83,8 @@ public class AviatorSelect : MonoBehaviour
                 Plane plane = FindAnyObjectByType<Plane>(FindObjectsInactive.Include);
                 if (!plane) break;
                 
-                if(player) plane.Move(player.GetPosition(), player.GetRotation());
                 plane.SetActive(true);
+                if(player) plane.Move(player.GetPosition(), player.GetRotation());
                 onAviatorChange?.Invoke(plane);
                 break;
                 

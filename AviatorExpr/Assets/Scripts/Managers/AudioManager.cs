@@ -206,6 +206,8 @@ public class AudioManager : MonoBehaviour
     
     IEnumerator FadeInSound(ESounds sound, float fadeDuration)
     {
+        print("Fading");
+
         float timer = 0;
         float startVolume = 0, targetVolume = 1;
 

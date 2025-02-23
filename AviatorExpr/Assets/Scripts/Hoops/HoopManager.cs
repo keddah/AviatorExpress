@@ -99,7 +99,7 @@ public class HoopManager : MonoBehaviour
 
     void RandomPos(ref Vector3 randPos)
     {
-        var maxAttempts = 10;
+        var maxAttempts = 12;
         bool positionValid = false;
 
         for (var attempts = 0; attempts < maxAttempts; attempts++)
@@ -117,7 +117,10 @@ public class HoopManager : MonoBehaviour
             // Raycast from nextHoop towards the potential position
             if (Physics.Raycast(nextHoop.transform.position, randDirection, spawnDistance)) continue;
             
+            // Don't allow the hoop to go below sea-level
             randPos = potentialPos;
+            if(randPos.y <= 5) continue;
+            
             positionValid = true;
             break; 
         }
