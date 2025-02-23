@@ -24,9 +24,9 @@ public class AviatorStats : ScriptableObject
     [Header("Propeller")]
     public float mainPropellerRadius = 14; 
     
-    public float maxMainPropellerAccelSpinRate = 300;
-    public float maxMainPropellerIdleSpinRate = 200;
-    public float maxMainPropellerDecelSpinRate = 150;
+    public uint maxMainPropellerAccelSpinRate = 300;
+    public uint maxMainPropellerIdleSpinRate = 200;
+    public uint maxMainPropellerDecelSpinRate = 150;
 
     public float mainPropellerSpinAccel = 1.02f;
     public float mainPropellerSpinDecel = .09f;
@@ -40,15 +40,15 @@ public class AviatorStats : ScriptableObject
     public float tailPropellerSpinAccel = 1.02f;
     public float tailPropellerSpinDecel = .09f;
     
-    public float maxTailPropellerAccelSpinRate = 600;
-    public float maxTailPropellerIdleSpinRate = 30;
+    public uint maxTailPropellerAccelSpinRate = 600;
+    public uint maxTailPropellerIdleSpinRate = 30;
     
     
     // Gyro
     [HideInInspector] public bool showGyro = true;
-    public float gyroPower = 2000;
+    public uint gyroPower = 2000;
     public float gyroAssistStrength = .8f;
-    public float stabilisationStrength = 1000;
+    public uint stabilisationStrength = 1000;
     public float rollDamping = .4f;
     /////////////////////////////////////////////////////////
     
@@ -59,11 +59,11 @@ public class AviatorStats : ScriptableObject
     // Angles
     [HideInInspector] public bool showWingSectionAngles = true;
     public float angleDampener = .75f;
-    public float maxAileronAngle = 75;
-    public float maxElevatorAngle = 45;
-    public float maxFlapAngle = 80;
-    public float minFlapAngle = -60;
-    public float maxRudderAngle = 60;
+    public ushort maxAileronAngle = 75;
+    public ushort maxElevatorAngle = 45;
+    public ushort maxFlapAngle = 80;
+    public short minFlapAngle = -60;
+    public ushort maxRudderAngle = 60;
     
     // Speeds
     [HideInInspector] public bool showWingSectionSpeeds = true;

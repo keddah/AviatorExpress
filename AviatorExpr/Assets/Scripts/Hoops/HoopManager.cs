@@ -29,15 +29,15 @@ public class HoopManager : MonoBehaviour
 
     [Header("Move Properties")]
     [SerializeField, Tooltip("The max spawn distance for new hoops.")]
-    private float maxSpawnDistance = 600;
+    private uint maxSpawnDistance = 600;
     [SerializeField, Tooltip("The min spawn distance for new hoops.")]
-    private float minSpawnDistance = 100;
+    private uint minSpawnDistance = 100;
 
     [SerializeField] 
-    private float maxYawAngle = 60;
+    private ushort maxYawAngle = 60;
     
     [SerializeField] 
-    private float maxPitchAngle = 45;
+    private ushort maxPitchAngle = 45;
 
     private void Awake()
     {
@@ -81,7 +81,7 @@ public class HoopManager : MonoBehaviour
         player.GetScoreManager().onEndRace += EndRace;
     }
 
-    void Init(ushort numHoops)
+    void Init(byte numHoops)
     {
         ShowHoops();
         
@@ -109,6 +109,7 @@ public class HoopManager : MonoBehaviour
             float randomPitch = Random.Range(-maxPitchAngle, maxPitchAngle);
             Quaternion rotationOffset = Quaternion.Euler(randomPitch, randomYaw, 0);
 
+            // Apply random direction to random distance
             Vector3 randDirection = rotationOffset * -nextHoop.transform.forward;
             float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
             Vector3 potentialPos = nextHoop.transform.position + randDirection * spawnDistance;
@@ -125,7 +126,7 @@ public class HoopManager : MonoBehaviour
         if (positionValid) return;
         
         randPos = nextHoop.transform.position + nextHoop.transform.forward * maxSpawnDistance;
-        Debug.LogWarning("Failed to find a valid position, using max spawn distance.");
+        print("Failed to find a valid position, using max spawn distance.");
     }
 
     void NewHoop()

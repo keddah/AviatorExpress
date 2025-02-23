@@ -51,7 +51,7 @@ public class Plane : AviatorController
     private VisualEffect[] wingFx;
 
     [SerializeField]
-    private float fxActivationSpeed = 40;
+    private ushort fxActivationSpeed = 40;
     
     [SerializeField]
     private float fxActivationTorque = .4f;

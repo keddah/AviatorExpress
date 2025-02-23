@@ -24,9 +24,9 @@ public class EditorScript : Editor
         aviator.propellerPowerScaling = EditorGUILayout.FloatField("Propeller Power Scaling", aviator.propellerPowerScaling);
         EditorGUILayout.Space();
         
-        aviator.maxMainPropellerAccelSpinRate = EditorGUILayout.FloatField("Max Acceleration Spin Rate", aviator.maxMainPropellerAccelSpinRate);
-        aviator.maxMainPropellerIdleSpinRate = EditorGUILayout.FloatField("Max Idle Spin Rate", aviator.maxMainPropellerIdleSpinRate);
-        aviator.maxMainPropellerDecelSpinRate = EditorGUILayout.FloatField("Max Deceleration Spin Rate", aviator.maxMainPropellerDecelSpinRate);
+        aviator.maxMainPropellerAccelSpinRate = (uint)EditorGUILayout.IntField("Max Acceleration Spin Rate", (int)aviator.maxMainPropellerAccelSpinRate);
+        aviator.maxMainPropellerIdleSpinRate = (uint)EditorGUILayout.IntField("Max Idle Spin Rate", (int)aviator.maxMainPropellerIdleSpinRate);
+        aviator.maxMainPropellerDecelSpinRate = (uint)EditorGUILayout.IntField("Max Deceleration Spin Rate", (int)aviator.maxMainPropellerDecelSpinRate);
         EditorGUILayout.Space();
         
         aviator.mainPropellerSpinAccel = EditorGUILayout.FloatField("Propeller Acceleration Rate", aviator.mainPropellerSpinAccel);
@@ -51,8 +51,8 @@ public class EditorScript : Editor
                     aviator.tailPropellerSpinDecel = EditorGUILayout.FloatField("Tail Propeller Deceleration", aviator.tailPropellerSpinDecel);
                     EditorGUILayout.Space();
                     
-                    aviator.maxTailPropellerAccelSpinRate = EditorGUILayout.FloatField("Max Tail Propeller Acceleration Spin Rate", aviator.maxTailPropellerAccelSpinRate);
-                    aviator.maxTailPropellerIdleSpinRate = EditorGUILayout.FloatField("Max Tail Propeller Idle Spin Rate", aviator.maxTailPropellerIdleSpinRate);
+                    aviator.maxTailPropellerAccelSpinRate = (uint)EditorGUILayout.IntField("Max Tail Propeller Acceleration Spin Rate", (int)aviator.maxTailPropellerAccelSpinRate);
+                    aviator.maxTailPropellerIdleSpinRate = (uint)EditorGUILayout.IntField("Max Tail Propeller Idle Spin Rate", (int)aviator.maxTailPropellerIdleSpinRate);
                     EditorGUI.indentLevel--;
                 }
                 
@@ -61,9 +61,13 @@ public class EditorScript : Editor
                 if (aviator.showGyro)
                 {
                     EditorGUI.indentLevel++;
-                    aviator.gyroPower = EditorGUILayout.FloatField("Gyro Power", aviator.gyroPower);
-                    aviator.gyroAssistStrength = EditorGUILayout.FloatField(new GUIContent("Gyro Assist Strength","The strength of the easing when moving."), aviator.gyroAssistStrength);
-                    aviator.stabilisationStrength = EditorGUILayout.FloatField(new GUIContent("Stabilisation Strength", "The strength of keeping the Helicopter upright"), aviator.stabilisationStrength);
+                    aviator.gyroPower = (uint)EditorGUILayout.IntField("Gyro Power", (int)aviator.gyroPower);
+                    
+                    aviator.gyroAssistStrength = 
+                        EditorGUILayout.FloatField(new GUIContent("Gyro Assist Strength","The strength of the easing when moving."), aviator.gyroAssistStrength);
+                    aviator.stabilisationStrength = 
+                        (uint)EditorGUILayout.IntField(new GUIContent("Stabilisation Strength", "The strength of keeping the Helicopter upright"), (int)aviator.stabilisationStrength);
+                    
                     aviator.rollDamping = EditorGUILayout.FloatField(new GUIContent("Roll Damping", "Multiplier to be applied to the roll gyro control."), aviator.rollDamping);
                     EditorGUILayout.Space();
                     EditorGUI.indentLevel--;
@@ -85,11 +89,11 @@ public class EditorScript : Editor
                     aviator.angleDampener = EditorGUILayout.FloatField(new GUIContent("Angle Dampening", 
                         "Multiplier to be applied to the angle of attack to make the angle of attack more/less of a factor for plane sections"), aviator.angleDampener);
                     
-                    aviator.maxAileronAngle = EditorGUILayout.FloatField("Max Aileron Angle", aviator.maxAileronAngle);
-                    aviator.maxElevatorAngle = EditorGUILayout.FloatField("Max Elevator Angle", aviator.maxElevatorAngle);
-                    aviator.maxFlapAngle = EditorGUILayout.FloatField("Max Flap Angle", aviator.maxFlapAngle);
-                    aviator.minFlapAngle = EditorGUILayout.FloatField("Min Flap Angle", aviator.minFlapAngle);
-                    aviator.maxRudderAngle = EditorGUILayout.FloatField("Max Rudder Angle", aviator.maxRudderAngle);
+                    aviator.maxAileronAngle = (ushort)EditorGUILayout.IntField("Max Aileron Angle", aviator.maxAileronAngle);
+                    aviator.maxElevatorAngle = (ushort)EditorGUILayout.IntField("Max Elevator Angle", aviator.maxElevatorAngle);
+                    aviator.maxFlapAngle = (ushort)EditorGUILayout.IntField("Max Flap Angle", aviator.maxFlapAngle);
+                    aviator.minFlapAngle = (short)EditorGUILayout.IntField("Min Flap Angle", aviator.minFlapAngle);
+                    aviator.maxRudderAngle = (ushort)EditorGUILayout.IntField("Max Rudder Angle", aviator.maxRudderAngle);
                     EditorGUI.indentLevel--;
                     EditorGUILayout.Space();
                 }
@@ -145,7 +149,6 @@ public class EditorScript : Editor
 
             case AviatorStats.EAviatorType.Blimp:
                 EditorGUILayout.LabelField("Blimp Settings", EditorStyles.boldLabel);
-                // aviator.maxPropellerIdleSpinRate = EditorGUILayout.FloatField("Max Idle Spin Rate", aviator.maxPropellerIdleSpinRate);
                 break;
         }
 

@@ -20,7 +20,7 @@ public class AviatorController : MonoBehaviour
     public delegate void OnGamePaused();
     
     public event OnStartRace onRaceStart;
-    public delegate void OnStartRace(ushort numHoops);
+    public delegate void OnStartRace(byte numHoops);
     
     [SerializeField] 
     protected AviatorStats stats;

@@ -28,29 +28,28 @@ public class ScoreManager
     // The time since the last hoop
     private float sinceLastHoop;
 
-    public List<float> timeStamps { get; private set; } = new();
+    public List<float> timeStamps { get; } = new();
     
     // Getting to the hoop before this time increases the score obtained.
     private ushort speedBonusTime;
 
     // How much score the player should get per hoop
-    private uint scorePerHoop = 100;
+    private ushort scorePerHoop = 100;
     private float scoreMultiplier = 1;
 
     // How many hoops the player has gone through
-    public ushort throughHoops { get; private set; }
+    public byte throughHoops { get; private set; }
     
     // The number of hoops the player is trying to collect
-    public ushort hoopTarget { get; private set; }
+    public byte hoopTarget { get; private set; }
     
     public void Update()
     {
-        if (timerOn)
-        {
-            time += Time.deltaTime;
-            sinceLastHoop += Time.deltaTime;
-            CalculateScoreMultiplier();
-        }
+        if (!timerOn) return;
+        
+        time += Time.deltaTime;
+        sinceLastHoop += Time.deltaTime;
+        CalculateScoreMultiplier();
     }
 
     private void StartTimer() { timerOn = true; }
@@ -62,7 +61,7 @@ public class ScoreManager
         // Turn on the timer when the player goes through the first hoop
         if(score == 0) StartTimer();
 
-        uint addedScore = (uint)(scorePerHoop * scoreMultiplier);
+        ushort addedScore = (ushort)(scorePerHoop * scoreMultiplier);
         score += addedScore;
         
         // Add the time since last hoop to its list then reset it
@@ -84,7 +83,7 @@ public class ScoreManager
         scoreMultiplier = Math.Max(percentage, 1);
     }
 
-    public void SetHoopTarget(ushort target) { hoopTarget = target; }
+    public void SetHoopTarget(byte target) { hoopTarget = target; }
 
     public void EndRace(bool manually)
     {

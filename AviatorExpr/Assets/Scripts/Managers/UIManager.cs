@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] 
     private TextMeshProUGUI respawnTxt;
     
+    
     [Header("Backgrounds")]
     [SerializeField] 
     private GameObject timeBkg;
@@ -39,9 +40,6 @@ public class UIManager : MonoBehaviour
     private RectTransform hoopBkg;
 
 
-    private AviatorController player;
-    private ScoreManager scoreManager;
-
     [Header("Other UI")]
     [SerializeField]
     private RankBoard rankBoard;
@@ -51,6 +49,10 @@ public class UIManager : MonoBehaviour
     [Space]
     [SerializeField] 
     private float popupFadeSpeed = .7f;
+
+    
+    private AviatorController player;
+    private ScoreManager scoreManager;
 
     private Slider respawnSlider;
     
@@ -104,7 +106,7 @@ public class UIManager : MonoBehaviour
         popupScoreTxt.transform.rotation = Quaternion.LookRotation(player.GetForwardAxis());
     }
 
-    private void ShowHoops(ushort numHoops)
+    private void ShowHoops(byte numHoops)
     {
         scoreManager.Reset();
         scoreTxt.text = "0"; 
@@ -138,7 +140,6 @@ public class UIManager : MonoBehaviour
             return;
         }
         
-        print("showing board");
         rankBoard.ShowBoard(scoreManager.timeStamps, scoreManager.score);
     }
     

@@ -31,9 +31,9 @@ public class Helicopter : AviatorController
     private GameObject tailBlade;
     private Rigidbody tailBladeRb;
     
-    private float tailBladeSpeed = 0;
+    private float tailBladeSpeed;
     private float maxTailSpinRate;
-    private float currentTailSpinRate = 0;
+    private float currentTailSpinRate;
 
     private bool turningLeft;
 
@@ -56,8 +56,10 @@ public class Helicopter : AviatorController
 
     protected override void Update()
     {
-        // ThrottleControl() being run and altitude + main propeller spin speed being set
+        // ThrottleControl()
+        // altitude + main propeller spin speed being set
         base.Update();
+        
         altitude *= .75f;
         tailBladeSpeed = tailBladeRb.angularVelocity.magnitude;
 

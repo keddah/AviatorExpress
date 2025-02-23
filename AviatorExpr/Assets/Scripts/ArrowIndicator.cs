@@ -37,6 +37,6 @@ public class ArrowIndicator : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, Time.deltaTime * lookSpeed);
     }
 
-    void Show(ushort num) { gameObject.SetActive(true); }
+    void Show(byte num) { gameObject.SetActive(true); }
     void Hide(bool manually= false) { gameObject.SetActive(false); }
 }

@@ -32,7 +32,7 @@ public class AttitudeIndicator : MonoBehaviour
     private float rollMultiplier = 1;
     
     [SerializeField]
-    private float pitchLimit = 20;
+    private short pitchLimit = 20;
     
     void Update()
     {

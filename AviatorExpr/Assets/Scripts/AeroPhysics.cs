@@ -15,11 +15,8 @@ static class AeroPhysics
     
     public static float GetAirDensity(float altitude)
     {
-        // Sea-level temperature (Kelvin)
-        const float seaLvlTemp = 288.15f; 
-        
-        // Temperature drop per meter (K/m)
-        const float deltaTemp = 0.0065f; 
+        // Sea-level temperature(Kelvin)  Temperature drop per meter (K/m)
+        const float seaLvlTemp = 288.15f, deltaTemp = 0.0065f; 
         
         // Specific gas constant for air (J/kg·K)
         const float gasConstant = 287.05f; 
@@ -43,8 +40,6 @@ static class AeroPhysics
     public static float FindWingAreaPerSection(float wingSpan = 14, float rootChord = 1.8f, float tipChord = 1.5f, float wingSectionCount = 2)
     {
         float totalWingArea = wingSpan * ((rootChord + tipChord) / 2);
-        
-        // Multiply by 2 since there are two wings
-        return   totalWingArea / (wingSectionCount * 2);
+        return totalWingArea / (wingSectionCount * 2);
     }
 }
